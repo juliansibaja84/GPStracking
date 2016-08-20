@@ -1,47 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+  <title>ENOMOTO Main Page</title>
+  <meta charset="utf-8">
 
-    <title>ENOMOTO Main Page</title>
-    <meta name="description" content="The Enomoto Main Page">
-    <meta http-equiv="Refresh" content="2">
-    <meta name="author" content="Mateus">
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
+  <meta name="description" content="The Enomoto Main Page">
+  
+  <meta name="author" content="Mateus">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #a3cdff;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
 
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
+    td, th {
+      border: 0px;
+      text-align: center;
+      padding: 8px;
+    }
 
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
+    tr:nth-child(even) {
+      background-color: #f2f1ed;
+    }
 
+    h1, h3, h5 {
+      text-align: center;
+    }
+
+    #map {
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
-    <h1>ENOMOTO</h1>
-    <h3>Registro de coordenadas geográficas</h3>
-    <h5>Hardware de campo: Módem Syrus 09781700</h5>
-    <table>
-      <tr>
-        <th>Latitud</th>
-        <th>Longitud</th>
-        <th>Fecha</th>
-        <th>IP</th>
-        <th>Puerto</th>
-      </tr>
-      <!-- INI -->
+  <h1>ENOMOTO</h1>
+
+  <div id="map"></div>
+  <script type="text/javascript" src="map_loader.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCREYEOrU09R-W-A0ByBlymc-pZWFuwLec&callback=initMap" async defer></script>
+
+  <h3>Registro de coordenadas geográficas</h3>
+  <h5>Hardware de campo: Módem Syrus 09781700</h5>
+
+  <table>
+    <tr>
+      <th>Latitud</th>
+      <th>Longitud</th>
+      <th>Fecha</th>
+      <th>IP</th>
+      <th>Puerto</th>
+    </tr>
+    <!-- INI -->
 <tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:48:17</th><th>179.14.31.124</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:48:17</th><th>179.14.31.124</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:37:54</th><th>179.14.84.88</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:48:17</th><th>179.14.31.124</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:48:17</th><th>179.14.31.124</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:37:54</th><th>179.14.84.88</th><th>9000</th></tr><tr><th>+10.98995</th><th>-074.82617</th><th>2016-08-17 08:23:53</th><th>186.97.149.168</th><th>9000</th></tr>
-      <!-- FIN -->
-    </table>
+    <!-- FIN -->
+  </table>
 </body>
 </html>
