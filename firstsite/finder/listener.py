@@ -30,7 +30,7 @@ while 1:
     # Crear set de datos
     ti = int(data[3:8].decode(utf-8))
     tv = str(calcH(ti)) 
-    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d''')+tiv[0]+":"+tiv[1]+":"+tiv[2]
+    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d ''')+tiv[0]+":"+tiv[1]+":"+tiv[2]
 
     sent_data = (r_ip, r_port, data, t)
 
