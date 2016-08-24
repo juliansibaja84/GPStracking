@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.template import loader
 
 
@@ -10,4 +11,4 @@ def index(request):
 
 
 def req(request):
-    return HttpResponse('Hello world')
+    return JsonResponse({'lat': '+10.98995', 'lon': '-74.82617'})

@@ -1,26 +1,57 @@
-//var map;
-//var pos = {lat: +10.98995, lng: -74.82617};
-//function initMap() {
-//    map = new google.maps.Map(document.getElementById('map'), {
-//        center: pos,
-//        zoom: 19,
-//    });
-//    var marker = new google.maps.Marker({
-//        position: pos,
-//        map: map,
-//        title: 'Holi',
-//    });
-//}
 setInterval(queryServer, 2000);
+
+var map;
+var marked = [{lat: 1, lng: 2}];
+
+function initMap()
+{
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: new google.maps.LatLng(+10.98995, -74.82617),
+        zoom: 19,
+    });
+    // var marker = new google.maps.Marker({
+    //     position: pos,
+    //     map: map,
+    //     title: 'Holi',
+    // });
+}
 
 function queryServer()
 {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
-            //window.alert(xhttp.responseText);
+            comprehendInput(xhttp.responseText);
         }
     };
     xhttp.open("GET", "http://127.0.0.1:8000/finder/req", true);
     xhttp.send();
+}
+
+function comprehendInput(input)
+{
+    prett = JSON.parse(input);
+
+    latitude  = prett.lat;
+    longitude = prett.lon;
+
+    var check = 1;
+    for(var i = 0; i < marked.length; ++i) {
+        if(marked[i].lat == latitude && marked[i].lon == longitude)
+            check = 0;
+    }
+    if(check == 1) {
+        marked.push(prett);
+        drawPoint(latitude, longitude);
+    }
+}
+
+function drawPoint(latitude, longitude)
+{
+    window.alert("Marked placed");
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: map,
+        title: 'Holi',
+    });
 }
