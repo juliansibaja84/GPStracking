@@ -28,8 +28,10 @@ while 1:
     data, (r_ip, r_port) = sock.recvfrom(1024)
 
     # Crear set de datos
-    t = datetime.datetime.fromtimestamp(time.time()).strftime('''
-        %Y-%m-%d %H:%M:%S''')
+    ti = int(data[3:8].decode(utf-8))
+    tv = str(calcH(ti)) 
+    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d''')+tiv[0]+":"+tiv[1]+":"+tiv[2]
+
     sent_data = (r_ip, r_port, data, t)
 
     # Hacer que se escriban los datos en una base de datos SQLite
@@ -43,3 +45,9 @@ while 1:
         print(row)
 
     os.system("python3 display.py")
+
+def calcH(h):
+    H=h/3600
+    M=(h%3600)/60
+    S=((h%3600)%60)%60
+    return [H,M,S]

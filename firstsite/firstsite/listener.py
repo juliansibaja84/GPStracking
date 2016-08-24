@@ -10,7 +10,7 @@ if method == 'udp':
 else:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-port = 5002
+port = 9001
 sock.bind(("", port))
 
 print('Esperando conexión')

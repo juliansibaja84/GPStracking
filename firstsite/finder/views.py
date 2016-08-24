@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#import codecs
 
 def index(request):
 	return HttpResponse(traduct())

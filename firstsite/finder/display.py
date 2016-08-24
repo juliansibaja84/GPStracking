@@ -46,7 +46,7 @@ if __name__ == '__main__':
         data = row[2].decode('utf-8')
         ip = row[0]
         port = row[1]
-        time = row[3][9:]
+        time = row[3]
         latitude = ''
         longitude = ''
         if data[:4] == '>REV':
@@ -75,3 +75,5 @@ if __name__ == '__main__':
     lines = "".join(lines)
     f.write(lines)
     f.close()
+
+
