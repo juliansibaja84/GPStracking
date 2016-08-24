@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-#import codecs
+from django.template import loader
+
 
 def index(request):
-	return HttpResponse(traduct())
-
-def traduct():
-	datos = open("finder/logger.html",'r')
-	dleidos = datos.read()
-	datos.close()
-	return dleidos
+    template = loader.get_template('finder/logger.html')
+    return HttpResponse(template.render())
