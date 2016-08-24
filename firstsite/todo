@@ -3,4 +3,4 @@ Cosas a hacer
 + Enbeber display en Django                                        3
 + Tratar de usar el modelo de base de datos ofrecida por django    5
 + Ejecutar el javascript desde un archivo externo                  1    [OK]
-+ Servir datos de la base de datos al js                           2    
++ Servir datos de la base de datos al js                           2    [OK]

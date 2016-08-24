@@ -6,7 +6,7 @@ var marked = [{lat: 1, lng: 2}];
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
-        center: new google.maps.LatLng(+10.98995, -74.82617),
+        center: new google.maps.LatLng(10.968840, -74.900124),
         zoom: 19,
     });
     // var marker = new google.maps.Marker({
@@ -34,6 +34,7 @@ function comprehendInput(input)
 
     latitude  = prett.lat;
     longitude = prett.lon;
+    time = prett.time;
 
     var check = 1;
     for(var i = 0; i < marked.length; ++i) {
@@ -42,16 +43,16 @@ function comprehendInput(input)
     }
     if(check == 1) {
         marked.push(prett);
-        drawPoint(latitude, longitude);
+        drawPoint(latitude, longitude, time);
     }
 }
 
-function drawPoint(latitude, longitude)
+function drawPoint(latitude, longitude, time)
 {
-    window.alert("Marked placed");
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
-        title: 'Holi',
+        title: time,
     });
+    map.setCenter(new google.maps.LatLng(latitude, longitude));
 }

@@ -11,4 +11,18 @@ def index(request):
 
 
 def req(request):
-    return JsonResponse({'lat': '+10.98995', 'lon': '-74.82617'})
+    dictio = load_last_element()
+    return JsonResponse(dictio)
+
+
+def load_last_element():
+    d = dict()
+    f = open('top.txt', 'r')
+    line = f.read()
+    f.close()
+    lines = line.split(',')
+    d['lat'] = lines[0]
+    d['lon'] = lines[1]
+    d['time'] = lines[2]
+
+    return d
