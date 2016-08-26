@@ -26,11 +26,14 @@ conn.commit()
 # Escuchar el puerto por un tiempo indefinido
 while 1:
     data, (r_ip, r_port) = sock.recvfrom(1024)
-
+    print(data)
     # Crear set de datos
-    ti = int(data[3:8].decode(utf-8))
-    tv = str(calcH(ti)) 
-    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d ''')+tiv[0]+":"+tiv[1]+":"+tiv[2]
+    ti = int(data.decode('utf-8')[11:16])
+    H = ti/3600
+    M = (ti%3600)/60
+    S = ((ti%3600)%60)%60
+    tv = [H, M, S] 
+    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d ''')+str(tv[0])+":"+str(tv[1])+":"+str(tv[2])
 
     sent_data = (r_ip, r_port, data, t)
 
