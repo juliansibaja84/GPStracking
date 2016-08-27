@@ -21,3 +21,5 @@
 [ ] La página web debe, al cargarse, mostrar todos los puntos que hay en la base de datos
 
 [ ] Mejorar el diseño de la página web
+
+[ ] Hacer que en la página solo se muestre la última ubicación de la DB en la tabla
