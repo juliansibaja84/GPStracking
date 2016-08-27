@@ -1,5 +1,3 @@
-[TODO]
-
 #INSTALACIÓN DEL SERVIDOR
 [ ] Crear servidor con alguno de los proveedores de web servers disponibles
 [ ] Configurar el servidor de la misma forma que se hizo con los computadores de la casa
