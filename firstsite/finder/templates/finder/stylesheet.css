@@ -19,7 +19,8 @@ table {
   text-align: center;
   padding: 8em;
   background-color: #005933;
-  color:#00da7d; 
+  color:#00da7d;
+  text-size:2em; 
 }
 
 td, th {
