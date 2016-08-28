@@ -17,6 +17,26 @@ def req(request):
     return JsonResponse(dictio)
 
 
+def reqOne(request):
+    dictio = loadElement()
+    return JsonResponse(dictio)
+
+
+def loadElement():
+    conn, cc = createConnectionAndCursor()
+    dat = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
+    dat = dat.fetchone()
+
+    d = dict()
+    d['ips'] = dat[1]
+    d['prt'] = dat[2]
+    d['lat'] = dat[3]
+    d['lon'] = dat[4]
+    d['tmp'] = dat[5]
+
+    return d
+
+
 def loadElements():
     conn, cc = createConnectionAndCursor()
     row = cc.execute('SELECT * FROM log ORDER BY ID')
