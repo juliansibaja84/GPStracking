@@ -8,41 +8,42 @@
   
   <meta name="author" content="Mateus, Sibaja">
   <link type="text/css" rel="stylesheet" href="/static/finder/stylesheet.css" />
-  <link type="text/javascript" src="static/finder/map.js" />
+  <link type="text/javascript" src="/static/finder/map.js" />
 </head>
 
 <body>
+<div id="all">
   <h1>ENOMOTO</h1>
-  <!--------------------map------------------------>
-  <div id="map" >
-    <script  src="static/finder/map.js" ></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCREYEOrU09R-W-A0ByBlymc-pZWFuwLec&callback=initMap" async defer></script>
-  </div>
-  <!--------------------Puntual data------------------------>
-  <div id="pdata" >
-    <h3>Registro de coordenadas geográficas</h3>
-    <h4>Hardware de campo: Módem <em><span style="color:red;">Syrus 09781700</span></em></h4>
-  
-    <p>Longitud:</p>
-    <p>Latitud:</p>
-    <p>Tiempo:</p>
-  </div>
-  <!--------------------table------------------------>
-  <div id=tabler>
-    <table>
-      <tr>
-        <th id="#ttitle" colspan="5">Tabla de registro de ubicación</th>
-      </tr>
-      <tr>
-        <th>Latitud</th>
-        <th>Longitud</th>
-        <th>Fecha</th>
-        <th>IP</th>
-        <th>Puerto</th>
-      </tr>
-      <!-- INI -->
-      <!-- FIN -->
-    </table>
+  <div id="mapd">
+    <div id="map" >
+      <script  src="/static/finder/map.js" ></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCREYEOrU09R-W-A0ByBlymc-pZWFuwLec&callback=initMap" async defer></script>
+    </div>
+    <div id="pdata" >
+      <h3>Registro de coordenadas geográficas</h3>
+      <h3>Hardware de campo: Módem <em><span>Syrus 09781700</span></em></h3>
+      
+      <p><span>Longitud</span>:</p>
+      <p><span>Latitud</span>:</p>
+      <p><span>Tiempo</span>:</p>
+    </div>
+    </div>
+    <div id=tabler>
+      <table>
+        <tr>
+          <th id="#ttitle" colspan="5">Tabla de registro de ubicación</th>
+        </tr>
+        <tr>
+          <th>Latitud</th>
+          <th>Longitud</th>
+          <th>Fecha</th>
+          <th>IP</th>
+          <th>Puerto</th>
+        </tr>
+        <!-- INI -->
+        <!-- FIN -->
+      </table>
+    </div>
   </div>
 </body>
 </html>
