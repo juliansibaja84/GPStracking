@@ -17,40 +17,33 @@ sock.bind(("", port))
 print('Esperando conexión')
 
 # Crear base de datos y habilitarla
-conn = sqlite3.connect('log.db')
+conn = sqlite3.connect('log.sqlite3')
 cc = conn.cursor()
 cc.execute('''CREATE TABLE IF NOT EXISTS log
-            (IP TEXT, puerto TEXT, mensaje TEXT, tiempo TEXT)''')
+          (IP TEXT, puerto TEXT, latitud TEXT, longitud TEXT, tiempo TEXT)''')
 conn.commit()
 
 # Escuchar el puerto por un tiempo indefinido
 while 1:
     data, (r_ip, r_port) = sock.recvfrom(1024)
     print(data)
-    # Crear set de datos
-    ti = int(data.decode('utf-8')[11:16])
-    H = ti/3600
-    M = (ti%3600)/60
-    S = ((ti%3600)%60)%60
-    tv = [H, M, S] 
-    t = datetime.datetime.fromtimestamp(time.time()).strftime('''%Y-%m-%d ''')+str(tv[0])+":"+str(tv[1])+":"+str(tv[2])
 
-    sent_data = (r_ip, r_port, data, t)
+    # Procesar datos
+    data = str(data, 'UTF-8')
+    lon = ''
+    lat = ''
+
+    # Crear set de datos
+    sent_data = (r_ip, r_port, lat, lon, t)
 
     # Hacer que se escriban los datos en una base de datos SQLite
     cc.execute('''INSERT INTO log VALUES
-        (?,?,?,?)''', sent_data)
+        (?,?,?,?,?)''', sent_data)
     conn.commit()
 
     # La siguiente línea es para que puedas ver lo que hay en la base de datos
     # actualmente, para la versión final se omite
-    for row in cc.execute('SELECT * FROM log ORDER BY tiempo'):
-        print(row)
+    row cc.execute('SELECT * FROM log ORDER BY tiempo DESC')
+    print(row)
 
     os.system("python3 display.py")
-
-def calcH(h):
-    H=h/3600
-    M=(h%3600)/60
-    S=((h%3600)%60)%60
-    return [H,M,S]
