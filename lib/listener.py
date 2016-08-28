@@ -42,7 +42,7 @@ while 1:
     lat = data[16:19] + '.' + data[19:24]
     lon = data[24:28] + '.' + data[28:33]
 
-    # Obtener tiempo en un formato leible
+    # Obtener tiempo en un formato legible
     m, s = divmod(int(data[11:16]), 60)
     h, m = divmod(m, 60)
 
@@ -60,5 +60,5 @@ while 1:
     # La siguiente línea es para que puedas ver lo que hay en la base de datos
     # actualmente, para la versión final se omite
     row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
-    row = row.fetchall()
+    row = row.fetchone()
     print(row)
