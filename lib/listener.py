@@ -54,8 +54,7 @@ while 1:
     sent_data = (r_ip, r_port, lat, lon, t)
 
     # Hacer que se escriban los datos en una base de datos SQLite
-    cc.execute('''INSERT INTO log VALUES
-        (NULL,?,?,?,?,?)''', sent_data)
+    cc.execute('''INSERT INTO log VALUES(NULL,?,?,?,?,?)''', sent_data)
     conn.commit()
 
     # La siguiente línea es para que puedas ver lo que hay en la base de datos

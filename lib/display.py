@@ -1,3 +1,5 @@
+# Este archivo no se necesita, se guarda como simple referencia
+
 from html.parser import HTMLParser
 import sqlite3
 
