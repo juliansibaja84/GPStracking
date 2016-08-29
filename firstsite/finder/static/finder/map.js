@@ -1,4 +1,3 @@
-setInterval(queryServerOne, 2000);
 var map;
 var old_marker;
 var cur_input = "";
@@ -86,8 +85,10 @@ function comprehendInputa(input)
     thead.innerHTML=current+tdata;
 
     for(var i=0;i<lon.length;++i){
+        cur_input = tmp[i];
         drawPoint(lat[i],lon[i],tmp[i]);
     }
+    setInterval(queryServerOne, 2000);
 }
 
 function drawPoint(latitude, longitude, time)
