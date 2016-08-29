@@ -28,12 +28,12 @@ td, th {
   text-align: center;
   padding: 1em;
   background-color: #00963d;
-  color:#00da7d;  
+  color:#005933;  
 }
 
 tr:nth-child(even) {
-  background-color: #005933;
-  color:#00da7d;
+  background-color: #00da7d;
+  color:#005933;
 }
 
 h1, h3, h4 {
@@ -95,3 +95,4 @@ p span{
 #time{
   color:#ec2191;
 }
+#heading{}

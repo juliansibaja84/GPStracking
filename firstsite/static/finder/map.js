@@ -24,6 +24,14 @@ function queryServer()
     };
     xhttp.open("GET", "http://enomoto.sytes.net:5002/finder/req/one", true);
     xhttp.send();
+    var xhttpa = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttpa.readyState == 4 && xhttpa.status == 200) {
+            comprehendInputa(xhttpa.responseText);
+        }
+    };
+    xhttpa.open("GET", "http://enomoto.sytes.net:5002/finder/req/all", true);
+    xhttpa.send();
 }
 
 function comprehendInput(input)
@@ -31,12 +39,36 @@ function comprehendInput(input)
     prett = JSON.parse(input);
     latitude  = prett.lat;
     longitude = prett.lon;
-    time = prett.time;
+    time = prett.tmp.tostring();
 
     document.getElementById('long').innerHTML = longitude;
     document.getElementById('lati').innerHTML = latitude;
     document.getElementById('time').innerHTML = time;
-    alert(response.ips);
+
+}
+
+function comprehendInputa(input)
+{
+    prett = JSON.parse(input);
+    var thead = document.getElementById('theading');
+    var current = thead.innerHTML;
+    var tnrow = "";
+    var tdata = "";
+    var lon = prett.lon.split(";");
+    var lat = prett.lat.split(";");
+    var prt = prett.prt.split(";");
+    var ips = prett.ips.split(";");
+    var tmp = prett.tmp.split(";");
+
+    for(var j = 0; j<lon.length; ++j){
+
+        tnrow="<td>"+lat[j]+"</td>"+"<td>"+lon[j]+"</td>"+"<td>"+ip[j]+"</td>"+"<td>"+tmp[j]+"</td>"+"<td>"+prt[j]+"</td>";
+        tdata=tdata+"<tr>"+tnrow+"</tr>";
+    
+    }
+
+    thead.innerHTML=thead.innerHTML+tdata;
+
 }
 
 function drawPoint(latitude, longitude, time)

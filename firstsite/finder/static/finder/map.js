@@ -1,4 +1,4 @@
-setInterval(queryServer, 2000);
+setInterval(queryServerOne, 2000);
 var map;
 
 function initMap()
@@ -7,54 +7,59 @@ function initMap()
         center: new google.maps.LatLng(10.968840, -74.900124),
         zoom: 19,
     });
-    // var marker = new google.maps.Marker({
-    //     position: pos,
-    //     map: map,
-    //     title: 'Holi',
-    // });
+    queryServerAll();
 }
 
-function queryServer()
+function queryServerAll()
 {
+    
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            comprehendInputa(xhttp.responseText);
+        }
+    };
+    xhttp.open("GET", "http://localhost:8000/finder/req/all", true);
+    xhttp.send();
+}
+// pay attention. En inputa tienes que hacer lo del drawPoint en un for
+// lo de la tabla está raro
+
+function queryServerOne()
+{
+    //
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             comprehendInput(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "http://enomoto.sytes.net:5002/finder/req/one", true);
+    xhttp.open("GET", "http://localhost:8000/finder/req/one", true);
     xhttp.send();
-    var xhttpa = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (xhttpa.readyState == 4 && xhttpa.status == 200) {
-            comprehendInputa(xhttpa.responseText);
-        }
-    };
-    xhttpa.open("GET", "http://enomoto.sytes.net:5002/finder/req/all", true);
-    xhttpa.send();
 }
-
 function comprehendInput(input)
 {
     prett = JSON.parse(input);
     latitude  = prett.lat;
     longitude = prett.lon;
-    time = prett.tmp;
+    tim = prett.tmp;
 
     document.getElementById('long').innerHTML = longitude;
     document.getElementById('lati').innerHTML = latitude;
-    document.getElementById('time').innerHTML = time;
+    document.getElementById('time').innerHTML = tim;
+    drawPoint(latitude, longitude, tim);
 
 }
 
 function comprehendInputa(input)
 {
+
     prett = JSON.parse(input);
-    var thead = document.getElementById('theading');
+    var thead = document.getElementById('tabla_suprema'); 
     var current = thead.innerHTML;
-    var tnrow = "";
+    var tnrow = ""; 
     var tdata = "";
-    var lon = prett.lon.split(";");
+    var lon = prett.lon.split(";"); 
     var lat = prett.lat.split(";");
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
@@ -62,13 +67,15 @@ function comprehendInputa(input)
 
     for(var j = 0; j<lon.length; ++j){
 
-        tnrow="<td>"+lat[j]+"</td>"+"<td>"+lon[j]+"</td>"+"<td>"+ip[j]+"</td>"+"<td>"+tmp[j]+"</td>"+"<td>"+prt[j]+"</td>";
+        tnrow="<td>"+lat[j]+"</td>"+"<td>"+lon[j]+"</td>"+"<td>"+tmp[j]+"</td>"+"<td>"+ips[j]+"</td>"+"<td>"+prt[j]+"</td>";
         tdata=tdata+"<tr>"+tnrow+"</tr>";
-    
     }
 
-    thead.innerHTML=thead.innerHTML+tdata;
-    
+    thead.innerHTML=current+tdata;
+
+    for(var i=0;i<lon.length;++i){
+        drawPoint(lat[i],lon[i],tmp[i]);
+    }
 }
 
 function drawPoint(latitude, longitude, time)
