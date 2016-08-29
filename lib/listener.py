@@ -15,7 +15,7 @@ else:
 port = 9000
 sock.bind(("", port))
 
-print('Esperando conexión')
+# print('Esperando conexión')
 
 # Crear base de datos y habilitarla
 base = os.path.abspath(os.path.join('.', os.pardir))
@@ -59,6 +59,6 @@ while 1:
 
     # La siguiente línea es para que puedas ver lo que hay en la base de datos
     # actualmente, para la versión final se omite
-    row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
-    row = row.fetchone()
-    print(row)
+    # row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
+    # row = row.fetchone()
+    # print(row)
