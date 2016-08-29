@@ -1,6 +1,7 @@
 setInterval(queryServerOne, 2000);
 var map;
 var old_marker;
+var cur_input = "";
 
 function initMap()
 {
@@ -53,12 +54,13 @@ function comprehendInput(input)
     document.getElementById('lati').innerHTML = latitude;
     document.getElementById('time').innerHTML = tim;
 
-    var thead = document.getElementById('tabla_suprema');
-    var tnrow = "<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+"<td>"+tim+"</td>"+"<td>"+prett.ips+"</td>"+"<td>"+prett.prt+"</td>";
-    thead.innerHTML = thead.innerHTML + "<tr>" + tnrow + "</tr>";
-
-    drawPoint(latitude, longitude, tim);
-
+    if(cur_input != prett.tmp) {
+        cur_input = prett.tmp;
+        var thead = document.getElementById('tabla_suprema');
+        var tnrow = "<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+"<td>"+tim+"</td>"+"<td>"+prett.ips+"</td>"+"<td>"+prett.prt+"</td>";
+        thead.innerHTML = thead.innerHTML + "<tr>" + tnrow + "</tr>";
+        drawPoint(latitude, longitude, tim);
+    }
 }
 
 function comprehendInputa(input)
