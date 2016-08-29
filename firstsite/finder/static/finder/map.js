@@ -90,7 +90,7 @@ function drawPoint(latitude, longitude, time)
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
         title: time,
-        icon: '/static/finder/markeraa.png',
+        icon: '/static/finder/markera.png',
     });
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
