@@ -24,7 +24,7 @@ function queryServerAll()
             comprehendInputa(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "http://www.ennen.org/finder/req/all", true);
+    xhttp.open("GET", "finder/req/all", true);
     xhttp.send();
 }
 // pay attention. En inputa tienes que hacer lo del drawPoint en un for
@@ -39,7 +39,7 @@ function queryServerOne()
             comprehendInput(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "http://www.ennen.org/finder/req/one", true);
+    xhttp.open("GET", "finder/req/one", true);
     xhttp.send();
 }
 function comprehendInput(input)
