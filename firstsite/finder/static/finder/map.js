@@ -1,7 +1,5 @@
 setInterval(queryServer, 2000);
-
 var map;
-var marked = [{lat: 1, lng: 2}];
 
 function initMap()
 {
@@ -24,8 +22,7 @@ function queryServer()
             comprehendInput(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "/finder/req", true);
-    xhttp.send();
+    xhttp.open("GET", "http://enomoto.sytes.net:5002/finder/req/one", true);
 }
 
 function comprehendInput(input)
@@ -35,15 +32,10 @@ function comprehendInput(input)
     longitude = prett.lon;
     time = prett.time;
 
-    var check = 1;
-    for(var i = 0; i < marked.length; ++i) {
-        if(marked[i].lat == latitude && marked[i].lon == longitude)
-            check = 0;
-    }
-    if(check == 1) {
-        marked.push(prett);
-        drawPoint(latitude, longitude, time);
-    }
+    document.getElementById('long').innerHTML = longitude;
+    document.getElementById('lati').innerHTML = latitude;
+    document.getElementById('time').innerHTML = time;
+
 }
 
 function drawPoint(latitude, longitude, time)

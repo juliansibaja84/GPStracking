@@ -17,10 +17,10 @@ table {
 #ttitle{
   border: 0em;
   text-align: center;
-  padding: 8em;
+  padding: 1em;
   background-color: #005933;
   color:#00da7d;
-  text-size:2em; 
+  text-size:3em; 
 }
 
 td, th {
@@ -85,4 +85,13 @@ h3 span{
 }
 p span{
   color:#00ac4b;
+}
+#long{
+  color:#ec2191;
+}
+#lati{
+  color:#ec2191;
+}
+#time{
+  color:#ec2191;
 }
