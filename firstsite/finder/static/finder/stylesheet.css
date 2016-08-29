@@ -20,8 +20,17 @@ table {
   padding: 0.5em;
   background-color: #005933;
   color:#00da7d;
-  text-size:1em;
+  text-size:2em;
 }
+#ttitle:hover{
+  border: 0em;
+  text-align: center;
+  padding: 0.5em;
+  background-color: #00da7d;
+  color:#005933;
+  text-size:2em;
+}
+
 
 td, th {
   border: 0em;
@@ -35,12 +44,23 @@ tr:nth-child(odd) {
   background-color: #00e14f;
   color:#003011;  
 }
+tr:nth-child(odd):hover {
+  
+  background-color: #003011;
+  color:#00e14f;  
+}
 
 tr:nth-child(even) {
   background-color: #009836;
   color:#003011; 
 
 }
+tr:nth-child(even):hover {
+  background-color: #003011;
+  color:#009836; 
+
+}
+
 
 h1, h3, h4 {
   text-align: center;

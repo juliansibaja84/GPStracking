@@ -1,11 +1,16 @@
 setInterval(queryServerOne, 2000);
 var map;
+var old_marker;
 
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(10.968840, -74.900124),
         zoom: 19,
+    });
+    old_marker = new google.maps.Marker({
+        position: new google.maps.LatLng(0, 0),
+        map: map,
     });
     queryServerAll();
 }
@@ -80,10 +85,13 @@ function comprehendInputa(input)
 
 function drawPoint(latitude, longitude, time)
 {
+    old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
         title: time,
+        icon: '/static/finder/markeraa.png',
     });
     map.setCenter(new google.maps.LatLng(latitude, longitude));
+    old_marker = marker;
 }
