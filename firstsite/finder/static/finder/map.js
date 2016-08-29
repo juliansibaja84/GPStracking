@@ -52,6 +52,11 @@ function comprehendInput(input)
     document.getElementById('long').innerHTML = longitude;
     document.getElementById('lati').innerHTML = latitude;
     document.getElementById('time').innerHTML = tim;
+
+    var thead = document.getElementById('tabla_suprema');
+    var tnrow = "<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+"<td>"+tim+"</td>"+"<td>"+prett.ips+"</td>"+"<td>"+prett.prt+"</td>";
+    thead.innerHTML = thead.innerHTML + "<tr>" + tnrow + "</tr>";
+
     drawPoint(latitude, longitude, tim);
 
 }
@@ -60,7 +65,7 @@ function comprehendInputa(input)
 {
 
     prett = JSON.parse(input);
-    var thead = document.getElementById('tabla_suprema'); 
+    var thead = document.getElementById('tabla_suprema');
     var current = thead.innerHTML;
     var tnrow = ""; 
     var tdata = "";
