@@ -99,7 +99,7 @@ function drawPoint(latitude, longitude, time)
 {
     //determine_poly_set(time)
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    
+    //window.alert(poly_pos);
     polyline = new google.maps.Polyline({
         path: poly_pos,
         geodesic: true,
