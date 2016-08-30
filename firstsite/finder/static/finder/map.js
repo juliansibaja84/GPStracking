@@ -1,6 +1,8 @@
 var map;
+var polyline;
 var old_marker;
 var cur_input = "";
+var poly_pos = [];
 
 function initMap()
 {
@@ -12,6 +14,7 @@ function initMap()
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
+
     queryServerAll();
 }
 
@@ -93,6 +96,17 @@ function comprehendInputa(input)
 
 function drawPoint(latitude, longitude, time)
 {
+    //determine_poly_set(time)
+    poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
+    window.alert(poly_pos);
+    polyline = new google.maps.Polyline({
+        path: poly_pos,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+        polyline.setMap(map);
     old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
