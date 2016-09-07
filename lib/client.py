@@ -4,8 +4,8 @@ import sys
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('localhost', 9000)
-message = '>REV051910172780+1102021-0748507800000012;ID=ENOMOTO<\r\n'
+server_address = ('ennen.org', 9000)
+message = '>REV051910172632+1099000-0748272100000012;ID=ENOMOTO<\r\n'
 
 try:
     sent = sock.sendto(bytes(message, 'UTF-8'), server_address)
