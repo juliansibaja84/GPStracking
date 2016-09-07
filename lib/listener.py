@@ -59,6 +59,6 @@ while 1:
 
     # La siguiente línea es para que puedas ver lo que hay en la base de datos
     # actualmente, para la versión final se omite
-    # row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
-    # row = row.fetchone()
-    # print(row)
+    row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
+    row = row.fetchone()
+    print(row)
