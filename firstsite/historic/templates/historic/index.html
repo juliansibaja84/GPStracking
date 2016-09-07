@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ENOMOTO Main Page</title>
+  <meta charset="utf-8">
+
+  <meta name="description" content="The Enomoto Main Page">
+  
+  <meta name="author" content="Mateus, Sibaja">
+  <link type="text/css" rel="stylesheet" href="/static/historic/stylesheet.css" />
+  <link type="text/javascript" src="/static/historic/map.js" />
+  <link rel="shortcut icon" href="/static/historic/favicon.ico" type="image/x-icon" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+
+<body>
+<div id="all">
+  <h1><a href="/finder">ENOMOTO</a></h1>
+  <div id="mapd" class="container">
+    <div id="map" class="fixed">
+      <script  src="/static/historic/map.js" ></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCREYEOrU09R-W-A0ByBlymc-pZWFuwLec&callback=initMap" async defer></script>
+    </div>
+    <div id="pdata" class="flex-item">
+      <form id="contactForm">
+        Enter upper limit:<br>
+        <input type="date" name="bday" id="upper_lim"><br><br>
+        Enter lower limit:<br>
+        <input type="date" name="bday" min="2000-01-02" id="lower_lim"><br><br>
+      </form>
+      <button type="button" onclick="getDateInterval()">Submit</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
