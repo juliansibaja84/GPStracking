@@ -23,7 +23,6 @@ def loadElements(lower, upper):
     com2 = upper + " 00:00:00"
     dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' and '" + com2 + "'")
     dat = dat.fetchall()
-    print(dat)
     return constructDictionary(dat)
 
 
