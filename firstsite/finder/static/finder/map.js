@@ -27,7 +27,7 @@ function queryServerAll()
             comprehendInputa(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "finder/req/all", true);
+    xhttp.open("GET", "req/all", true);
     xhttp.send();
 }
 // pay attention. En inputa tienes que hacer lo del drawPoint en un for
@@ -42,7 +42,7 @@ function queryServerOne()
             comprehendInput(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "finder/req/one", true);
+    xhttp.open("GET", "req/one", true);
     xhttp.send();
 }
 function comprehendInput(input)
@@ -70,24 +70,13 @@ function comprehendInputa(input)
 {
 
     prett = JSON.parse(input);
-    var thead = document.getElementById('tabla_suprema');
-    var current = thead.innerHTML;
-    var tnrow = ""; 
-    var tdata = "";
     var lon = prett.lon.split(";"); 
     var lat = prett.lat.split(";");
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
 
-    for(var j = 0; j<lon.length; ++j){
-
-        tnrow="<td>"+lat[j]+"</td>"+"<td>"+lon[j]+"</td>"+"<td>"+tmp[j]+"</td>"+"<td>"+ips[j]+"</td>"+"<td>"+prt[j]+"</td>";
-        tdata=tdata+"<tr>"+tnrow+"</tr>";
-    }
-
-    thead.innerHTML=current+tdata;
-
+    
     for(var i=0;i<lon.length;++i){
         cur_input = tmp[i];
         drawPoint(lat[i],lon[i],tmp[i]);

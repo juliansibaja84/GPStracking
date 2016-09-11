@@ -16,7 +16,13 @@ body {
   text-align: left;
   font-family: Courier,Verdana;
   padding-left: 0.2em;
-  padding-top: 0.2em; 
+  padding-bottom: 0.2em; 
+  display:inline-block;
+}
+#stance{
+  text-align: left;
+  font-family: Courier,Verdana;
+  padding-left: 0.2em;
   padding-bottom: 0.2em; 
   display:inline-block;
 }
@@ -28,9 +34,8 @@ body {
   display:inline-block; 
 }
 #histo{
-  width:6em;
+  width:2em;
   height: 2em;
-  background-color: #00da7d;
   float:right;
   display:inline-block;
   margin-top:1em;
@@ -40,12 +45,9 @@ body {
   border-radius:0.0001em;
   padding:0.1em 0.1em 0.1em 0.1em;
 }
-#histol a{
-  text-decoration:none;
-  color:#006c3a;
-  display:inline-block;
-  padding-top: 0em;
-  margin:0em;
+#histo:hover{
+  background-color:#30a95b;
+  border-radius:0.5em;
 }
 
 table {
