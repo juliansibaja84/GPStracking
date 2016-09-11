@@ -10,14 +10,16 @@ function initMap()
         center: new google.maps.LatLng(10.968840, -74.900124),
         zoom: 19,
     });
+    
     old_marker = new google.maps.Marker({
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
+    //queryServerAll();
+    setInterval(queryServerOne, 2000);
 
-    queryServerAll();
 }
-
+/*
 function queryServerAll()
 {
     
@@ -30,9 +32,7 @@ function queryServerAll()
     xhttp.open("GET", "req/all", true);
     xhttp.send();
 }
-// pay attention. En inputa tienes que hacer lo del drawPoint en un for
-// lo de la tabla está raro
-
+*/
 function queryServerOne()
 {
     //
@@ -45,6 +45,7 @@ function queryServerOne()
     xhttp.open("GET", "req/one", true);
     xhttp.send();
 }
+
 function comprehendInput(input)
 {
     prett = JSON.parse(input);
@@ -59,13 +60,11 @@ function comprehendInput(input)
     if(cur_input != prett.tmp) {
         cur_input = prett.tmp;
         var thead = document.getElementById('tabla_suprema');
-        var tnrow = "<td>"+latitude+"</td>"+"<td>"+longitude+"</td>"+"<td>"+tim+"</td>"+"<td>"+prett.ips+"</td>"+"<td>"+prett.prt+"</td>";
-        thead.innerHTML = thead.innerHTML + "<tr>" + tnrow + "</tr>";
         drawPoint(latitude, longitude, tim);
     }
 
 }
-
+/*
 function comprehendInputa(input)
 {
 
@@ -83,7 +82,7 @@ function comprehendInputa(input)
     }
     setInterval(queryServerOne, 2000);
 }
-
+*/
 function drawPoint(latitude, longitude, time)
 {
     //determine_poly_set(time)

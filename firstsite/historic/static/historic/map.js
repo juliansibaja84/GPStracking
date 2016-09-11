@@ -5,7 +5,8 @@ var cur_input = "";
 var lower = "";
 var upper = "";
 var poly_pos = [];
-
+var locationll;
+setinterval(getlocation,1000)
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -34,6 +35,13 @@ function getDateInterval()
         queryServerAll()
     }
     return false;
+}
+function getlocation(){
+    locationll = marker.addListener('click', function() {
+        map.setZoom(8);
+        map.setCenter(marker.getPosition());
+    });
+    window.alert(str.toString(locationll));
 }
 
 function queryServerAll()
