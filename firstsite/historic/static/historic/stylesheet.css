@@ -16,7 +16,23 @@ body {
   text-align: left;
   font-family: Courier,Verdana;
   padding-left: 0.2em;
-  padding-top: 0.2em; 
+  padding-bottom: 0.2em; 
+  display:inline-block;
+}
+#logo{
+  display:inline-block;
+  padding-left: 0.7em;
+  padding-bottom: 0.2em; 
+  display:inline-block; 
+}
+#tittlel{
+  text-decoration:none;
+  color:#00da7d;
+}
+#stance{
+  text-align: left;
+  font-family: Courier,Verdana;
+  padding-left: 0.1em;
   padding-bottom: 0.2em; 
   display:inline-block;
 }
@@ -27,63 +43,21 @@ body {
   padding-bottom: 0.2em; 
   display:inline-block; 
 }
-#tittlel{
-  text-decoration:none;
-  color:#00da7d;
-}
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+#histo{
+  width:2em;
+  height: 2em;
   float:right;
-  margin-top: 0em;
+  display:inline-block;
+  margin-top:1em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+  text-align:center;
+  border-radius:0.0001em;
+  padding:0.1em 0.1em 0.1em 0.1em;
 }
-
-#ttitle{
-  border: 0em;
-  text-align: center;
-  padding: 0.5em;
-  background-color: #005933;
-  color:#00da7d;
-  text-size:2em;
-}
-#ttitle:hover{
-  border: 0em;
-  text-align: center;
-  padding: 0.5em;
-  background-color: #00da7d;
-  color:#005933;
-  text-size:2em;
-}
-
-
-td, th {
-  border: 0em;
-  text-align: center;
-  padding: 1em;
-}
-
-
-tr:nth-child(odd) {
-  
-  background-color: #00e14f;
-  color:#003011;  
-}
-tr:nth-child(odd):hover {
-  
-  background-color: #003011;
-  color:#00e14f;  
-}
-
-tr:nth-child(even) {
-  background-color: #009836;
-  color:#003011; 
-
-}
-tr:nth-child(even):hover {
-  background-color: #003011;
-  color:#009836; 
+#histo img:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
 
 }
 

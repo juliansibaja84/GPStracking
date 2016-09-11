@@ -22,7 +22,7 @@ body {
 #stance{
   text-align: left;
   font-family: Courier,Verdana;
-  padding-left: 0.2em;
+  padding-left: 0.1em;
   padding-bottom: 0.2em; 
   display:inline-block;
 }
@@ -45,63 +45,9 @@ body {
   border-radius:0.0001em;
   padding:0.1em 0.1em 0.1em 0.1em;
 }
-#histo:hover{
-  background-color:#30a95b;
-  border-radius:0.5em;
-}
-
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-  float:right;
-  margin-top: 0em;
-}
-
-#ttitle{
-  border: 0em;
-  text-align: center;
-  padding: 0.5em;
-  background-color: #005933;
-  color:#00da7d;
-  text-size:2em;
-}
-#ttitle:hover{
-  border: 0em;
-  text-align: center;
-  padding: 0.5em;
-  background-color: #00da7d;
-  color:#005933;
-  text-size:2em;
-}
-
-
-td, th {
-  border: 0em;
-  text-align: center;
-  padding: 1em;
-}
-
-
-tr:nth-child(odd) {
-  
-  background-color: #00e14f;
-  color:#003011;  
-}
-tr:nth-child(odd):hover {
-  
-  background-color: #003011;
-  color:#00e14f;  
-}
-
-tr:nth-child(even) {
-  background-color: #009836;
-  color:#003011; 
-
-}
-tr:nth-child(even):hover {
-  background-color: #003011;
-  color:#009836; 
+#histo img:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
 
 }
 
