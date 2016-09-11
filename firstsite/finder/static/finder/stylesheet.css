@@ -2,76 +2,105 @@ body {
   height: 100%;
   margin: 0 auto;
   padding: 0;
-  background-color: #00401c;
+  background-color: #ffffff;
 }
-#heading {
-  background-color:#006c3a;
-  color:#00da7d;
-  width: 80em;
+#head1 {
+  margin:0 auto;
+  background-color:#0C3C26;
+  color:#ffffff;
   height: 4em;
+  width: 80em;
   margin-bottom: 1em;
   padding-bottom: 0.2em;
 }
+#heading{
+  background-color:#0C3C26;
+  height: 4em;
+  width: all;
+  margin-bottom: 1em;
+  padding-bottom: 0.2em;
+  display:block;
+}
 #title{
   text-align: left;
-  font-family: Courier,Verdana;
+  font-family: roboto,Verdana;
   padding-left: 0.2em;
-  padding-bottom: 0.2em; 
   display:inline-block;
+  margin: 0;
 }
 #stance{
   text-align: left;
-  font-family: Courier,Verdana;
+  font-family: roboto,Verdana;
+  color:#44B78B;
   padding-left: 0.1em;
-  padding-bottom: 0.2em; 
   display:inline-block;
+  margin: 0;
 }
-#logo{
+/*#logo{
   display:inline-block;
   padding-left: 0.7em;
   padding-top: 0.2em; 
   padding-bottom: 0.2em; 
   display:inline-block; 
-}
-#histo{
-  width:2em;
-  height: 2em;
-  float:right;
-  display:inline-block;
-  margin-top:1em;
-  margin-bottom: 1em;
-  margin-right: 1em;
+}*/
+.histopanel{
+  margin:0em;
   text-align:center;
   border-radius:0.0001em;
   padding:0.1em 0.1em 0.1em 0.1em;
+  display:inline-block;
+  margin-top:1.2em;
+  float:right;
 }
-#histo img:hover{
-    opacity: 0.5;
-    filter: alpha(opacity=50); /* For IE8 and earlier */
+.histopanel ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.histopanel ul li{
+    text-align: center;
+    display: inline;
+}
+
+.histopanel ul li a{
+  color:#ffffff;
+  text-decoration: none;
+  font-family: roboto,Verdana;
+  padding-right:1em;
+
+}
+.histopanel ul li a:hover{
+  color:#b4ffbf;
+  text-decoration: none;
+  font-family: roboto,Verdana;
 
 }
 
 
-h1, h3, h4 {
+
+h3, h4 {
   text-align: center;
-  background-color:#006c3a;
-  color:#00da7d;
+  background-color:#0C3C26;
+  color:#44B78B;
 }
 
-
+h1{
+  padding:0.4em 0.2em 0.2em 0.2em;
+  margin:0em;
+}
 
 #map {
   height: 35em;
   width: 50em; 
   border: 0.1em solid black;
   position:absolute;
-  margin-left:1em
+  margin-left:1em;
 
 }
 #pdata{
   height: 15em;
   width: 25em;
-  background-color:#ffffff;
+  background-color:#edfff0;
   padding-left: 1em;
   padding-right:1em;
   border: 0.1em solid black;
@@ -83,7 +112,6 @@ h1, h3, h4 {
 #mapd {
   width: 80em;
   height:37em;
-  display:block;
 
 }
 
@@ -96,7 +124,7 @@ h3 span{
   color:#00ff70;
 }
 p span{
-  color:#00ac4b;
+  color:#0C3C26;
 }
 #long{
   color:#ec2191;
@@ -107,14 +135,15 @@ p span{
 #time{
   color:#ec2191;
 }
+
 @font-face {
-    font-family: 'cartoonregular';
-    src: url('/static/finder/cartoon_regular-webfont.eot');
-    src: url('/static/finder/cartoon_regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/static/finder/cartoon_regular-webfont.woff2') format('woff2'),
-         url('/static/finder/cartoon_regular-webfont.woff') format('woff'),
-         url('/static/finder/cartoon_regular-webfont.ttf') format('truetype'),
-         url('/static/finder/cartoon_regular-webfont.svg#cartoonregular') format('svg');
+    font-family: 'roboto';
+    src: url('/static/finder/roboto-bold-webfont.eot');
+    src: url('/static/finder/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/finder/roboto-bold-webfont.woff2') format('woff2'),
+         url('/static/finder/roboto-bold-webfont.woff') format('woff'),
+         url('/static/finder/roboto-bold-webfont.ttf') format('truetype'),
+         url('/static/finder/roboto-bold-webfont.svg#robotobold') format('svg');
     font-weight: normal;
     font-style: normal;
 
