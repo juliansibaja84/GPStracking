@@ -16,12 +16,31 @@ def getPoints(request, lower='', upper=''):
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
 
+def getPointsT(request, latit='',longit='', lower='',upper=''):
+    conn, cc = createConnectionAndCursor()
+    dictio = loadElementsT(lower, upper, latit, longit)
+    return JsonResponse(dictio)
+ 
+def loadElementsT(lower, upper, latitude, longitude):
+    com1 = lower + " 00:00:00"
+    com2 = upper + " 00:00:00"
+    dat = cc.execute("""
+                        SELECT fbla.latitud, fbla.longitud, fbla.tiempo 
+                        FROM (SELECT fbt.latitud, fbt.longitud, fbt.tiempo 
+                                FROM (SELECT latitud, longitud, tiempo 
+                                        FROM log WHERE tiempo BETWEEN '"""+com1+"' AND '"com2"""') fbt 
+                                WHERE latitud BETWEEN '"""+latitude-a+"' AND '"latitude+a"""') fbla) 
+                        WHERE longitud BETWEEN '"""+longitud-b+"' AND '"+longitud+b
+                    "'")
+    dat = dat.fetchall()
+    return constructDictionary(dat)    
+
 
 def loadElements(lower, upper):
     conn, cc = createConnectionAndCursor()
     com1 = lower + " 00:00:00"
     com2 = upper + " 00:00:00"
-    dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' and '" + com2 + "'")
+    dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "'")
     dat = dat.fetchall()
     return constructDictionary(dat)
 
@@ -55,3 +74,6 @@ def createConnectionAndCursor():
         longitud TEXT, tiempo TEXT)
         ''')
     return (conn, cc)
+
+def compare():
+    

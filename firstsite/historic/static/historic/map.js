@@ -106,11 +106,29 @@ function drawPoint(latitude, longitude, time)
     old_marker = marker;
 
 }
-
+/*
 function placeMarker(location) {
     markerx = new google.maps.Marker({
         position: location, 
         map: map
     });
+
+}
+*/
+
+function queryServerR(lower, upper, latit, longit){
+        var rhttp = new XMLHttpRequest();
+        rhttp.onreadystatechange = function() {
+            if (rhttp.readyState == 4 && rhttp.status == 200) {
+                recieveAndPutMkr(rhttp.responseText);
+            }
+        };
+    rhttp.open("GET", "req/"+lower+"/"+upper+"/"+latit+"/"+longit, true);
+    rhttp.send();
+}
+
+function recieveAndPutMkr(input){
+
+    var recieved = JSON.parse(input);
 
 }

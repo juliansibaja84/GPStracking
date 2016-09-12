@@ -26,7 +26,7 @@ def loadElement():
     conn, cc = createConnectionAndCursor()
     dat = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
     dat = dat.fetchone()
-
+    
     d = dict()
     d['ips'] = dat[1]
     d['prt'] = dat[2]
