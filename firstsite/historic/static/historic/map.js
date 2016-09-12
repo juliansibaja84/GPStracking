@@ -5,7 +5,10 @@ var cur_input = "";
 var lower = "";
 var upper = "";
 var poly_pos = [];
-var locationll;
+var location_lat;
+var location_lat;
+var markerx = {};
+
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -16,6 +19,13 @@ function initMap()
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
+    google.maps.event.addListener(map, 'click', function(event) {
+        location_lat = event.latLng.lat();
+        location_lng = event.latLng.lng();
+        window.alert(location_lat+" "+location_lng);
+        placeMarker(event.latLng); 
+    });
+
 }
 
 $('#contactForm').submit(function () {
@@ -92,17 +102,15 @@ function drawPoint(latitude, longitude, time)
         title: time,
         icon: '/static/finder/markera.png',
     });
-    //Obtener latitud y longitud con un click-------------------
-    var infowindow = new google.maps.InfoWindow({
-        content: "latitude: "+latitude+"  longitude: "+longitude
-    });
-
-    marker.addListener('click', function() {
-        infowindow.open(marker.get('map'), marker);
-        
-    });
-    //----------------------------------------------------------
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
+
+}
+
+function placeMarker(location) {
+    markerx = new google.maps.Marker({
+        position: location, 
+        map: map
+    });
 
 }
