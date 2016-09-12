@@ -6,7 +6,6 @@ var lower = "";
 var upper = "";
 var poly_pos = [];
 var locationll;
-setinterval(getlocation,1000)
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -24,24 +23,19 @@ $('#contactForm').submit(function () {
     return false;
 });
 
+
+
 function getDateInterval()
 {
     lower = document.getElementById('lower_lim').value;
     upper = document.getElementById('upper_lim').value;
     if(lower > upper) {
-        alert("ERROR");
+        alert("Por favor ingrese una combinación de fechas válida");
     }
     else {
         queryServerAll()
     }
     return false;
-}
-function getlocation(){
-    locationll = marker.addListener('click', function() {
-        map.setZoom(8);
-        map.setCenter(marker.getPosition());
-    });
-    window.alert(str.toString(locationll));
 }
 
 function queryServerAll()
@@ -89,7 +83,6 @@ function drawPoint(latitude, longitude, time)
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
-    
     polyline.setMap(map);
 
     old_marker.setIcon('/static/finder/marker.png');
@@ -99,6 +92,17 @@ function drawPoint(latitude, longitude, time)
         title: time,
         icon: '/static/finder/markera.png',
     });
+    //Obtener latitud y longitud con un click-------------------
+    var infowindow = new google.maps.InfoWindow({
+        content: "latitude: "+latitude+"  longitude: "+longitude
+    });
+
+    marker.addListener('click', function() {
+        infowindow.open(marker.get('map'), marker);
+        
+    });
+    //----------------------------------------------------------
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
+
 }
