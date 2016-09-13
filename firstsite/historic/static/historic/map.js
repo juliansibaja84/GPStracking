@@ -22,8 +22,7 @@ function initMap()
     google.maps.event.addListener(map, 'click', function(event) {
         location_lat = event.latLng.lat();
         location_lng = event.latLng.lng();
-        window.alert(location_lat+" "+location_lng);
-        placeMarker(event.latLng); 
+        queryServerR(location_lat, location_lng, lower, upper) 
     });
 
 }
@@ -32,8 +31,6 @@ $('#contactForm').submit(function () {
     getDateInterval();
     return false;
 });
-
-
 
 function getDateInterval()
 {
@@ -106,29 +103,46 @@ function drawPoint(latitude, longitude, time)
     old_marker = marker;
 
 }
-/*
-function placeMarker(location) {
-    markerx = new google.maps.Marker({
-        position: location, 
-        map: map
+
+function placeMarker(latitude,longitude,time) {
+    var markerx = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: map,
+        title: time,
+        icon: '/static/finder/markera.png',
     });
-
 }
-*/
 
-function queryServerR(lower, upper, latit, longit){
+
+function queryServerR(latit, longit){
+
+    lower = document.getElementById('lower_lim').value;
+    upper = document.getElementById('upper_lim').value;
+    if(lower > upper) {
+        alert("Por favor ingrese una combinación de fechas válida");
+    }
+    else {
         var rhttp = new XMLHttpRequest();
         rhttp.onreadystatechange = function() {
             if (rhttp.readyState == 4 && rhttp.status == 200) {
                 recieveAndPutMkr(rhttp.responseText);
             }
         };
-    rhttp.open("GET", "req/"+lower+"/"+upper+"/"+latit+"/"+longit, true);
-    rhttp.send();
+        rhttp.open("GET", "req/"+latit+"/"+longit+"/"+lower+"/"+upper, true);
+        rhttp.send();
+    }
+    return false;      
 }
 
 function recieveAndPutMkr(input){
 
     var recieved = JSON.parse(input);
+    var longit = recieved.lon.split(";"); 
+    var latit = recieved.lat.split(";");
+    var tiempo = recieved.tmp.split(";");
+
+    for(var i=0;i<longit.length;++i){
+        placeMarker(latit[i],longit[i],tiempo[i]);
+    }
 
 }
