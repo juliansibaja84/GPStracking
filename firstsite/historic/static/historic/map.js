@@ -7,13 +7,12 @@ var upper = "";
 var poly_pos = [];
 var location_lat;
 var location_lat;
-var markerx = {};
 
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(10.968840, -74.900124),
-        zoom: 19,
+        zoom: 12,
     });
     old_marker = new google.maps.Marker({
         position: new google.maps.LatLng(0, 0),
@@ -22,7 +21,8 @@ function initMap()
     google.maps.event.addListener(map, 'click', function(event) {
         location_lat = event.latLng.lat();
         location_lng = event.latLng.lng();
-        queryServerR(location_lat, location_lng, lower, upper) 
+        queryServerR(location_lat, location_lng);
+        window.alert(location_lat+location_lng);
     });
 
 }

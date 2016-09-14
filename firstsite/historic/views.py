@@ -17,7 +17,7 @@ def getPoints(request, lower='', upper=''):
     return JsonResponse(dictio)
 
 def getPointsT(request, latit='',longit='', lower='',upper=''):
-    conn, cc = createConnectionAndCursor()
+
     dictio = loadElementsT(lower, upper, latit, longit)
     return JsonResponse(dictio)
 
@@ -26,6 +26,7 @@ def loadElementsT(lower, upper, latitude, longitude):
     com2 = upper + " 00:00:00"
     a=0.000001
     b=0.000001
+    conn, cc = createConnectionAndCursor()
     dat = cc.execute("""
                         SELECT fbla.*
                         FROM (SELECT fbt.* 
