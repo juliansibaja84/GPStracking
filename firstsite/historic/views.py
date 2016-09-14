@@ -32,7 +32,7 @@ def loadElementsT(lower, upper, latitude, longitude):
     LimLatLow = str(float(latitude)-a)
     LimLatHigh = str(float(latitude)+a)
     conn, cc = createConnectionAndCursor()
-    dat = cc.execute("SELECT fbla.* FROM (SELECT fbt.* FROM (SELECT latitud, longitud, tiempo FROM log WHERE tiempo BETWEEN '"+com1+"' AND '"+com2+"') fbt WHERE latitud BETWEEN '"+LimLatLow+"' AND '"+LimLatHigh+"') fbla WHERE longitud BETWEEN '"+LimLonLow+"' AND '"+LimLonHigh + "'")
+    dat = cc.execute("select * from (SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "') as T WHERE latitud BETWEEN '"+LimLatLow+"' AND '"+LimLatHigh+"' and longitud BETWEEN '"+LimLonLow+"' AND '"+LimLonHigh + "'")
     dat = dat.fetchall()
     return constructDictionary(dat)
 
