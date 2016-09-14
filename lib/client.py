@@ -5,7 +5,7 @@ import sys
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('localhost', 9000)
+server_address = ('ennen.org', 9000)
 
 tim = 70900
 lat = 1101857

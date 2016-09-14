@@ -127,7 +127,7 @@ function queryServerR(latit, longit){
                 recieveAndPutMkr(rhttp.responseText);
             }
         };
-        rhttp.open("GET", "req/"+latit+"/"+longit+"/"+lower+"/"+upper, true);
+        rhttp.open("GET", "rq/"+latit+"/"+longit+"/"+lower+"/"+upper, true);
         rhttp.send();
     }
     return false;      
