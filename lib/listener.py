@@ -30,9 +30,9 @@ if __name__ == '__main__':
     # print('Esperando conexión')
 
     # Crear base de datos y habilitarla
-    #conn, cc = databaseConnection()
-    #conn.commit()
-    #conn.close()
+    conn, cc = databaseConnection()
+    conn.commit()
+    conn.close()
 
     # Escuchar el puerto por un tiempo indefinido
     while 1:
@@ -62,9 +62,9 @@ if __name__ == '__main__':
         sent_data = (r_ip, r_port, lat, lon, t)
 
         # Hacer que se escriban los datos en una base de datos SQLite
-        #conn, cc = databaseConnection()
-        #cc.execute('''INSERT INTO log VALUES(NULL,?,?,?,?,?)''', sent_data)
-        #conn.commit()
+        conn, cc = databaseConnection()
+        cc.execute('''INSERT INTO log VALUES(NULL,?,?,?,?,?)''', sent_data)
+        conn.commit()
 
         # La siguiente línea es para que puedas ver lo que hay en la base de
         # datos actualmente, para la versión final se omite
