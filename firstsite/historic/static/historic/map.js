@@ -33,7 +33,6 @@ function getDateInterval()
     upper = document.getElementById('upper_lim').value;
     lower += ":00";
     upper += ":00";
-    alert(lower);
     if(lower > upper) {
         alert("Por favor ingrese una combinación de fechas válida");
     }
@@ -60,7 +59,7 @@ function queryServerAll()
 
 function comprehendInputAll(input)
 {
-
+    alert(input);
     prett = JSON.parse(input);
 
     var lon = prett.lon.split(";"); 
