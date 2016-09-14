@@ -19,8 +19,8 @@ def getPoints(request, lower='', upper=''):
 
 def loadElements(lower, upper):
     conn, cc = createConnectionAndCursor()
-    com1 = lower.replace('T', ' ')
-    com2 = upper.replace('T', ' ')
+    com1 = '\n            ' + lower.replace('T', ' ')
+    com2 = '\n            ' + upper.replace('T', ' ')
     dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' and '" + com2 + "'")
     dat = dat.fetchall()
     return constructDictionary(dat)
