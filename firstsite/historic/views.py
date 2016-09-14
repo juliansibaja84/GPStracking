@@ -16,10 +16,12 @@ def getPoints(request, lower='', upper=''):
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
 
+
 def getPointsT(request, latit='',longit='', lower='',upper=''):
 
     dictio = loadElementsT(lower, upper, latit, longit)
     return JsonResponse(dictio)
+
 
 def loadElementsT(lower, upper, latitude, longitude):
     com1 = lower + " 00:00:00"
@@ -30,16 +32,9 @@ def loadElementsT(lower, upper, latitude, longitude):
     LimLatLow = str(float(latitude)-a)
     LimLatHigh = str(float(latitude)+a)
     conn, cc = createConnectionAndCursor()
-    dat = cc.execute("""
-                        SELECT fbla.*
-                        FROM (SELECT fbt.* 
-                                FROM (SELECT latitud, longitud, tiempo 
-                                        FROM log WHERE tiempo BETWEEN '"""+com1+"' AND '"+com2+"""') fbt 
-                                WHERE latitud BETWEEN '"""+LimLatLow+"' AND '"+LimLatHigh+"""') fbla) 
-                        WHERE longitud BETWEEN '"""+LimLonLow+"' AND '"+LimLonHigh+
-                    "'")
+    dat = cc.execute("SELECT fbla.* FROM (SELECT fbt.* FROM (SELECT latitud, longitud, tiempo FROM log WHERE tiempo BETWEEN '"""+com1+"' AND '"+com2+"') fbt WHERE latitud BETWEEN '"+LimLatLow+"' AND '"+LimLatHigh+"') fbla WHERE longitud BETWEEN '"+LimLonLow+"' AND '"+LimLonHigh + "'")
     dat = dat.fetchall()
-    return constructDictionary(dat)   
+    return constructDictionary(dat)
 
 
 def loadElements(lower, upper):
