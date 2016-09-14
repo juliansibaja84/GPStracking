@@ -24,16 +24,19 @@ def getPointsT(request, latit='',longit='', lower='',upper=''):
 def loadElementsT(lower, upper, latitude, longitude):
     com1 = lower + " 00:00:00"
     com2 = upper + " 00:00:00"
-    a=0.000001
-    b=0.000001
+    a = 0.0022
+    LimLonLow = str(float(longitude)-a)
+    LimLonHigh = str(float(longitude)+a)
+    LimLatLow = str(float(latitude)-a)
+    LimLatHigh = str(float(latitude)+a)
     conn, cc = createConnectionAndCursor()
     dat = cc.execute("""
                         SELECT fbla.*
                         FROM (SELECT fbt.* 
                                 FROM (SELECT latitud, longitud, tiempo 
                                         FROM log WHERE tiempo BETWEEN '"""+com1+"' AND '"+com2+"""') fbt 
-                                WHERE latitud BETWEEN '"""+latitude-a+"' AND '"+latitude+a+"""') fbla) 
-                        WHERE longitud BETWEEN '"""+longitud-b+"' AND '"+longitud+b+
+                                WHERE latitud BETWEEN '"""+LimLatLow+"' AND '"+LimLatHigh+"""') fbla) 
+                        WHERE longitud BETWEEN '"""+LimLonLow+"' AND '"+LimLonHigh+
                     "'")
     dat = dat.fetchall()
     return constructDictionary(dat)   

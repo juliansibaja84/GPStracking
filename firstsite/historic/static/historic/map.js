@@ -21,8 +21,8 @@ function initMap()
     google.maps.event.addListener(map, 'click', function(event) {
         location_lat = event.latLng.lat();
         location_lng = event.latLng.lng();
-        queryServerR(location_lat, location_lng);
-        window.alert(location_lat+location_lng);
+        document.getElementById('lati').innerHTML = location_lat;
+        document.getElementById('long').innerHTML = location_lng;
     });
 
 }
@@ -112,6 +112,8 @@ function placeMarker(latitude,longitude,time) {
 
 
 function queryServerR(latit, longit){
+    var longit = location_lng;
+    var latit = location_lat;
 
     lower = document.getElementById('lower_lim').value;
     upper = document.getElementById('upper_lim').value;
@@ -132,7 +134,7 @@ function queryServerR(latit, longit){
 }
 
 function recieveAndPutMkr(input){
-
+    window.alert(input)
     var recieved = JSON.parse(input);
     var longit = recieved.lon.split(";"); 
     var latit = recieved.lat.split(";");
