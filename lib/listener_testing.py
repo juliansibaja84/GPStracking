@@ -61,4 +61,4 @@ while 1:
     # actualmente, para la versión final se omite
     # row = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
     # row = row.fetchone()
-    print(data + " ")
+    print(sent_data)

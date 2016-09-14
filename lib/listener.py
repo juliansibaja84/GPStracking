@@ -30,9 +30,9 @@ if __name__ == '__main__':
     # print('Esperando conexión')
 
     # Crear base de datos y habilitarla
-    conn, cc = databaseConnection()
-    conn.commit()
-    conn.close()
+    #conn, cc = databaseConnection()
+    #conn.commit()
+    #conn.close()
 
     # Escuchar el puerto por un tiempo indefinido
     while 1:
@@ -55,20 +55,20 @@ if __name__ == '__main__':
         h, m = divmod(m, 60)
 
         time_high = "%d:%02d:%02d" % (h, m, s)
-        time_low = dt.datetime.fromtimestamp(time.time()).strftime('''
-            %Y-%m-%d''')
+        time_low = dt.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d')
         t = time_low + ' ' + time_high
 
         # Crear set de datos
         sent_data = (r_ip, r_port, lat, lon, t)
 
         # Hacer que se escriban los datos en una base de datos SQLite
-        conn, cc = databaseConnection()
-        cc.execute('''INSERT INTO log VALUES(NULL,?,?,?,?,?)''', sent_data)
-        conn.commit()
+        #conn, cc = databaseConnection()
+        #cc.execute('''INSERT INTO log VALUES(NULL,?,?,?,?,?)''', sent_data)
+        #conn.commit()
 
         # La siguiente línea es para que puedas ver lo que hay en la base de
         # datos actualmente, para la versión final se omite
-        r = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
-        r = r.fetchone()
-        print(r)
+        #r = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
+        #r = r.fetchone()
+        #print(r)
+        print(sent_data)
