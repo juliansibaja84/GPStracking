@@ -1,4 +1,5 @@
 *.html~
 *.pyc
-firstsite/static/admin/*
+firstsite/static/
+firstsite/finder/static/finder/log.sqlite3
 lib/client.py

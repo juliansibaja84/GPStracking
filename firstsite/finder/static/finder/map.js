@@ -15,24 +15,10 @@ function initMap()
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
-    //queryServerAll();
     setInterval(queryServerOne, 2000);
 
 }
-/*
-function queryServerAll()
-{
-    
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            comprehendInputa(xhttp.responseText);
-        }
-    };
-    xhttp.open("GET", "req/all", true);
-    xhttp.send();
-}
-*/
+
 function queryServerOne()
 {
     //
@@ -64,25 +50,7 @@ function comprehendInput(input)
     }
 
 }
-/*
-function comprehendInputa(input)
-{
 
-    prett = JSON.parse(input);
-    var lon = prett.lon.split(";"); 
-    var lat = prett.lat.split(";");
-    var prt = prett.prt.split(";");
-    var ips = prett.ips.split(";");
-    var tmp = prett.tmp.split(";");
-
-    
-    for(var i=0;i<lon.length;++i){
-        cur_input = tmp[i];
-        drawPoint(lat[i],lon[i],tmp[i]);
-    }
-    setInterval(queryServerOne, 2000);
-}
-*/
 function drawPoint(latitude, longitude, time)
 {
     //determine_poly_set(time)
