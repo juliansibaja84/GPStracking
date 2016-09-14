@@ -2,4 +2,3 @@
 *.pyc
 firstsite/static/
 firstsite/finder/static/finder/log.sqlite3
-lib/client.py

@@ -41,8 +41,8 @@ def loadElementsT(lower, upper, latitude, longitude):
 
 def loadElements(lower, upper):
     conn, cc = createConnectionAndCursor()
-    com1 = lower + " 00:00:00"
-    com2 = upper + " 00:00:00"
+    com1 = lower.replace('T', ' ')
+    com2 = upper.replace('T', ' ')
     dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "'")
     dat = dat.fetchall()
     return constructDictionary(dat)

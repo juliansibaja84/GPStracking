@@ -1,14 +1,26 @@
 import socket
+import time
 import sys
 
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('enomoto.sytes.net', 9000)
-message = '>REV051910172628+1099014-0748270400000012;ID=ENOMOTO<\r\n'
+server_address = ('ennen.org', 9000)
 
-try:
-    sent = sock.sendto(bytes(message, 'UTF-8'), server_address)
+tim = 70900
+lat = 1101857
+lon = 7483814
 
-finally:
-    sock.close()
+while(1):
+    m = '>REV0519101' + str(tim) + '+' + str(lat) + '-0' + str(lon) + '00000012;ID=ENOMOTO<\r\n'
+    try:
+        sent = sock.sendto(bytes(m, 'UTF-8'), server_address)
+
+    finally:
+        print('Done')
+    tim += 30
+    lat -= 10
+    lon += 70
+    time.sleep(5)
+
+sock.close()

@@ -27,15 +27,13 @@ function initMap()
 
 }
 
-$('#contactForm').submit(function () {
-    getDateInterval();
-    return false;
-});
-
 function getDateInterval()
 {
     lower = document.getElementById('lower_lim').value;
     upper = document.getElementById('upper_lim').value;
+    lower += ":00";
+    upper += ":00";
+    alert(lower);
     if(lower > upper) {
         alert("Por favor ingrese una combinación de fechas válida");
     }
