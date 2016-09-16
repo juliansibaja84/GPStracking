@@ -6,8 +6,9 @@ var lower = "";
 var upper = "";
 var poly_pos = [];
 var location_lat;
-var location_lat;
-
+var location_lat
+var markers = [];
+var markerus = [];
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -23,8 +24,17 @@ function initMap()
         location_lng = event.latLng.lng();
         document.getElementById('lati').innerHTML = location_lat;
         document.getElementById('long').innerHTML = location_lng;
+        if(markeru != []){
+           deleteMarkers(markerus); 
+        }
+        var markeru = new google.maps.Marker({
+            position: new google.maps.LatLng(location_lat, location_lng),
+            map: map,
+            title: "lat:"+location_lat+"  lon: "+location_lng,
+            icon: '/static/finder/markera_temp.png',
+        });
+        markerus.push(markeru);
     });
-
 }
 
 function getDateInterval()
@@ -98,7 +108,8 @@ function drawPoint(latitude, longitude, time)
     });
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
-
+    markers.push(marker);
+    //poly_pos.push(polyline);
 }
 
 function placeMarker(latitude,longitude,time) {
@@ -108,6 +119,7 @@ function placeMarker(latitude,longitude,time) {
         title: time,
         icon: '/static/finder/markera.png',
     });
+    markers.push(markerx);
 }
 
 
@@ -124,7 +136,14 @@ function queryServerR(latit, longit){
         var rhttp = new XMLHttpRequest();
         rhttp.onreadystatechange = function() {
             if (rhttp.readyState == 4 && rhttp.status == 200) {
+                if(JSON.parse(rhttp.response).lon != ''){
+                    for (var i = 0; i < markers.length; i++) {
+                        markers[i].setMap(null);
+                    }
+                    markers = [];
+                }
                 recieveAndPutMkr(rhttp.responseText);
+
             }
         };
         rhttp.open("GET", "rq/"+latit+"/"+longit+"/"+lower+"/"+upper, true);
@@ -134,14 +153,20 @@ function queryServerR(latit, longit){
 }
 
 function recieveAndPutMkr(input){
-    window.alert(input)
     var recieved = JSON.parse(input);
     var longit = recieved.lon.split(";"); 
     var latit = recieved.lat.split(";");
     var tiempo = recieved.tmp.split(";");
-
+    deleteMarkers(markerus)
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
 
+
+}
+function deleteMarkers(markers){
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = []; 
 }
