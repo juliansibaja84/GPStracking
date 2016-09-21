@@ -42,6 +42,14 @@ function initMap()
             document.getElementById('info_panel').innerHTML = 'Puede Hacer <span>click</span> derecho en el mapa para mostrar coordenadas en ese punto del mapa';
         }
     });
+    polyline = new google.maps.Polyline({
+        map: map,
+        path: poly_pos,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
 }
 
 function drawRectangles()
@@ -113,15 +121,7 @@ function drawPoint(latitude, longitude, time)
 {
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
     deleteMarkers(markerus);
-    polyline = new google.maps.Polyline({
-        map: map,
-        path: poly_pos,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-    });
-
+    polyline.setPath(poly_pos);
     if(old_marker != null)
         old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
@@ -170,6 +170,7 @@ function recieveAndPutMkr(input){
     var tiempo = recieved.tmp.split(";");
     deleteMarkers(markerus);
     deleteMarkers(markers);
+
     polyline.setMap(null);
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
