@@ -38,6 +38,7 @@ function initMap()
             deleteMarkers(markerus);
             rectangle.setMap(null);
             area_status = false;
+            polyline.setMap(null);
             document.getElementById('info_panel').innerHTML = 'Puede Hacer <span>click</span> derecho en el mapa para mostrar coordenadas en ese punto del mapa';
         }
     });
@@ -111,7 +112,7 @@ function comprehendInputAll(input)
 function drawPoint(latitude, longitude, time)
 {
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    deleteMarkers(markers);
+    deleteMarkers(markerus);
     polyline = new google.maps.Polyline({
         map: map,
         path: poly_pos,
@@ -141,7 +142,7 @@ function placeMarker(latitude,longitude,time) {
         title: time,
         icon: '/static/finder/markera.png',
     });
-    markers.push(markerx);
+    markerus.push(markerx);
 }
 
 function queryServerR(lower, upper){
