@@ -53,10 +53,10 @@ function drawRectangles()
         fillOpacity: 0.35,
         map: map,
         bounds: {
-        north: location_lat + 0.0022,
-        south: location_lat - 0.0022,
-        east: location_lng + 0.0022,
-        west: location_lng - 0.0022
+        north: location_lat + 0.0032,
+        south: location_lat - 0.0032,
+        east: location_lng + 0.0032,
+        west: location_lng - 0.0032
         }
     });
 }

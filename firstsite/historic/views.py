@@ -27,7 +27,7 @@ def getPointsT(request, latit='',longit='', lower='',upper=''):
 def loadElementsT(lower, upper, latitude, longitude):
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
-    a = 0.0022
+    a = 0.0032
     limLatLow = str(float(latitude)-a)
     limLatHigh = str(float(latitude)+a)
     limLonLow = str(float(longitude)-a)
