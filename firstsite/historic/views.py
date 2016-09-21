@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.template import loader
+from os.path import expanduser
 import os
 import sqlite3
 
@@ -32,7 +33,7 @@ def loadElementsT(latitude, longitude, lower, upper):
     limLonLow = str(float(longitude)-a)
     limLonHigh = str(float(longitude)+a)
     limits = [limLatLow, limLatHigh, limLonLow, limLonHigh]
-    lim_temp = 0
+
     if float(latitude) < 0:
         lim_temp = limits[0]
         limits[0] = limits[1]
@@ -42,23 +43,55 @@ def loadElementsT(latitude, longitude, lower, upper):
         limits[2] = limits[3]
         limits[3] = lim_temp
 
-    lim=['0','0','0','0']; a = 0
-    for limit in limits:
-        if float(limit) >= 0:
-            if float(limit)%10 < 1:
-                lim[a] = "+0"+limit
-            else:
-                lim[a] = "+"+limit
-        else:
-            if abs(float(limit))%10 < 1:
-                lim[a] = "-00"+str((-1)*float(limit))
-            elif abs(float(limit))%10 < 10:
-                lim[a] = "-0"+str((-1)*float(limit))
-            else:
-                lim[a] = str(limit)
-        a += 1
+    lim = ['', '', '', '']
+    if abs(float(limits[0])) < 10:
+        lim[0] = '0'
+    if abs(float(limits[1])) < 10:
+        lim[1] = '0'
+    if abs(float(limits[2])) < 100:
+        lim[2] += '0'
+        if abs(float(limits[2])) < 10:
+            lim[2] += '0'
+        if abs(float(limits[3])) < 100:
+            lim[3] += '0'
+            if abs(float(limits[3])) < 10:
+                lim[3] += '0'
+
+    if float(limits[0]) < 0:
+        lim[0] = '-' + lim[0] + limits[0]
+    else:
+        lim[0] = '+' + lim[0] + limits[0]
+    if float(limits[1]) < 0:
+        lim[1] = '-' + lim[1] + limits[1]
+    else:
+        lim[1] = '+' + lim[1] + limits[1]
+    if float(limits[2]) < 0:
+        lim[2] = '-' + lim[2] + limits[2]
+    else:
+        lim[2] = '+' + lim[2] + limits[2]
+    if float(limits[3]) < 0:
+        lim[3] = '-' + lim[3] + limits[3]
+    else:
+        lim[3] = '+' + lim[3] + limits[3]
+    # for limit in limits:
+    #    if float(limit) >= 0:
+    #        if float(limit) < 10:
+    #            lim[a] = "+0"+limit
+    #        else:
+    #            lim[a] = "+"+limit
+    #    else:
+    #        if abs(float(limit))%10 < 1:
+    #            lim[a] = "-00"+str((-1)*float(limit))
+    #        elif abs(float(limit))%10 < 10:
+    #            lim[a] = "-0"+str((-1)*float(limit))
+    #        else:
+    #            lim[a] = str(limit)
+    #    a += 1
+    cmd = "SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "'"
+    with open(expanduser('~') + '/cmds.txt', 'a') as file:
+        file.write('input')
     conn, cc = createConnectionAndCursor()
-    dat = cc.execute("SELECT * FROM (SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "') as T WHERE latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' and longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "'")
+    dat = cc.execute(cmd)
     dat = dat.fetchall()
     return constructDictionary(dat)
 
