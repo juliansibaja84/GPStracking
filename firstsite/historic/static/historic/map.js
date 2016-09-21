@@ -111,15 +111,15 @@ function comprehendInputAll(input)
 function drawPoint(latitude, longitude, time)
 {
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    
+    deleteMarkers(markerus);
     polyline = new google.maps.Polyline({
+        map: map,
         path: poly_pos,
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
-    polyline.setMap(map);
 
     if(old_marker != null)
         old_marker.setIcon('/static/finder/marker.png');
