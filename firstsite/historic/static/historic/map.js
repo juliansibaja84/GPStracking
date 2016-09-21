@@ -111,13 +111,12 @@ function comprehendInputAll(input)
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
 
-    document.getElementById("cant").innerHTML = "Se encontraron " + tmp.length + " resultados que satisfacen sus criterios de búsqueda";
-
     polypos = [];
     for(var i=0;i<lon.length;++i){
         cur_input = tmp[i];
         drawPoint(lat[i],lon[i],tmp[i]);
     }
+    document.getElementById("cant").innerHTML = "Se encontraron " + markers.length + " resultados que satisfacen sus criterios de búsqueda";
 }
 
 function drawPoint(latitude, longitude, time)
@@ -174,7 +173,6 @@ function recieveAndPutMkr(input){
     var latit = recieved.lat.split(";");
     var tiempo = recieved.tmp.split(";");
 
-    document.getElementById("cant").innerHTML = "Se encontraron " + tiempo.length + " resultados que satisfacen sus criterios de búsqueda";
     deleteMarkers(markerus);
     deleteMarkers(markers_area);
     deleteMarkers(markers);
@@ -183,6 +181,7 @@ function recieveAndPutMkr(input){
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
+    document.getElementById("cant").innerHTML = "Se encontraron " + markers_area.length + " resultados que satisfacen sus criterios de búsqueda";
 }
 
 function deleteMarkers(marki){
