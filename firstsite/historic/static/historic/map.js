@@ -39,7 +39,6 @@ function initMap()
             deleteMarkers(markerus);
             rectangle.setMap(null);
             area_status = false;
-            polyline.setMap(null);
             document.getElementById('info_panel').innerHTML = 'Puede Hacer <span>click</span> derecho en el mapa para mostrar coordenadas en ese punto del mapa';
         }
     });
