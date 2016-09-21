@@ -53,10 +53,10 @@ function drawRectangles()
         fillOpacity: 0.35,
         map: map,
         bounds: {
-        north: location_lat + 0.022,
-        south: location_lat - 0.022,
-        east: location_lng + 0.022,
-        west: location_lng - 0.022
+        north: location_lat + 0.0022,
+        south: location_lat - 0.0022,
+        east: location_lng + 0.0022,
+        west: location_lng - 0.0022
         }
     });
 }
@@ -167,15 +167,17 @@ function recieveAndPutMkr(input){
     var longit = recieved.lon.split(";"); 
     var latit = recieved.lat.split(";");
     var tiempo = recieved.tmp.split(";");
-    deleteMarkers(markerus)
+    deleteMarkers(markerus);
+    deleteMarkers(markers);
+    polyline.setMap(null);
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
 }
 
-function deleteMarkers(markers){
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
+function deleteMarkers(marki){
+    for (var i = 0; i < marki.length; i++) {
+        marki[i].setMap(null);
     }
-    markers = [];
+    marki = [];
 }
