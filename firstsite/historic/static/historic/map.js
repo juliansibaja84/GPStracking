@@ -111,7 +111,7 @@ function comprehendInputAll(input)
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
 
-    document.getElementById("cant").innerHTML = "Se encontraron " + tmp.length + " resultados que satisfacen sus criterios de búsqueda"
+    document.getElementById("cant").innerHTML = "Se encontraron " + tmp.length + " resultados que satisfacen sus criterios de búsqueda";
 
     polypos = [];
     for(var i=0;i<lon.length;++i){
@@ -173,6 +173,8 @@ function recieveAndPutMkr(input){
     var longit = recieved.lon.split(";"); 
     var latit = recieved.lat.split(";");
     var tiempo = recieved.tmp.split(";");
+
+    document.getElementById("cant").innerHTML = "Se encontraron " + tiempo.length + " resultados que satisfacen sus criterios de búsqueda";
     deleteMarkers(markerus);
     deleteMarkers(markers_area);
     deleteMarkers(markers);
