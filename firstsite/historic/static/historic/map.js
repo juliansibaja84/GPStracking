@@ -111,6 +111,8 @@ function comprehendInputAll(input)
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
 
+    document.getElementById("cant").innerHTML = "Se encontraron " + tmp.length + " resultados que satisfacen sus criterios de búsqueda"
+
     polypos = [];
     for(var i=0;i<lon.length;++i){
         cur_input = tmp[i];
