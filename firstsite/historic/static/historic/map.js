@@ -111,7 +111,7 @@ function comprehendInputAll(input)
 function drawPoint(latitude, longitude, time)
 {
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    deleteMarkers(markerus);
+    deleteMarkers(markers);
     polyline = new google.maps.Polyline({
         map: map,
         path: poly_pos,
