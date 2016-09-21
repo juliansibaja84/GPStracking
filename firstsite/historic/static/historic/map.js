@@ -6,6 +6,7 @@ var poly_pos = [];
 var location_lat;
 var location_lng;
 var markers = [];
+var markers_area = [];
 var markerus = [];
 var area_status = false;
 var rectangle;
@@ -121,8 +122,9 @@ function drawPoint(latitude, longitude, time)
 {
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
     deleteMarkers(markerus);
+    deleteMarkers(markers_area);
     polyline.setPath(poly_pos);
-    polyline.setPath(map);
+    polyline.setMap(map);
     if(old_marker != null)
         old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
@@ -143,7 +145,7 @@ function placeMarker(latitude,longitude,time) {
         title: time,
         icon: '/static/finder/markera.png',
     });
-    markerus.push(markerx);
+    markers_area.push(markerx);
 }
 
 function queryServerR(lower, upper){
@@ -170,6 +172,7 @@ function recieveAndPutMkr(input){
     var latit = recieved.lat.split(";");
     var tiempo = recieved.tmp.split(";");
     deleteMarkers(markerus);
+    deleteMarkers(markers_area);
     deleteMarkers(markers);
 
     polyline.setMap(null);
