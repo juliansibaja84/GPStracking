@@ -1,58 +1,85 @@
 var map;
 var polyline;
-var old_marker;
+var old_marker = null;
 var cur_input = "";
-var lower = "";
-var upper = "";
 var poly_pos = [];
 var location_lat;
-var location_lat
+var location_lng;
 var markers = [];
 var markerus = [];
+var area_status = false;
+var rectangle;
+
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(10.968840, -74.900124),
-        zoom: 12,
+        zoom: 11,
     });
-    old_marker = new google.maps.Marker({
-        position: new google.maps.LatLng(0, 0),
-        map: map,
-    });
-    google.maps.event.addListener(map, 'click', function(event) {
-        location_lat = event.latLng.lat();
-        location_lng = event.latLng.lng();
-        document.getElementById('lati').innerHTML = location_lat;
-        document.getElementById('long').innerHTML = location_lng;
-        if(markeru != []){
-           deleteMarkers(markerus); 
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+        if(area_status == false) {
+            location_lat = event.latLng.lat();
+            location_lng = event.latLng.lng();
+            if(markeru != []){
+               deleteMarkers(markerus); 
+            }
+            var markeru = new google.maps.Marker({
+                position: new google.maps.LatLng(location_lat, location_lng),
+                map: map,
+                title: "lat:"+location_lat+"  lon: "+location_lng,
+                icon: '/static/finder/markera_temp.png',
+            });
+            markerus.push(markeru);
+            drawRectangles();
+            area_status = true;
+            document.getElementById('info_panel').innerHTML = 'Vuelve a hacer <span>click</span> derecho en el mapa para eliminar la selección de coordenadas actual';
         }
-        var markeru = new google.maps.Marker({
-            position: new google.maps.LatLng(location_lat, location_lng),
-            map: map,
-            title: "lat:"+location_lat+"  lon: "+location_lng,
-            icon: '/static/finder/markera_temp.png',
-        });
-        markerus.push(markeru);
+        else {
+            deleteMarkers(markerus);
+            rectangle.setMap(null);
+            area_status = false;
+            document.getElementById('info_panel').innerHTML = 'Puede Hacer <span>click</span> derecho en el mapa para mostrar coordenadas en ese punto del mapa';
+        }
+    });
+}
+
+function drawRectangles()
+{
+    rectangle = new google.maps.Rectangle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        map: map,
+        bounds: {
+        north: location_lat + 0.022,
+        south: location_lat - 0.022,
+        east: location_lng + 0.022,
+        west: location_lng - 0.022
+        }
     });
 }
 
 function getDateInterval()
 {
-    lower = document.getElementById('lower_lim').value;
-    upper = document.getElementById('upper_lim').value;
-    lower += ":00";
-    upper += ":00";
-    if(lower > upper) {
+    var lower = document.getElementById('lower_lim').value;
+    var upper = document.getElementById('upper_lim').value;
+    if(lower > upper || lower == "" || upper == "") {
         alert("Por favor ingrese una combinación de fechas válida");
     }
     else {
-        queryServerAll()
+        lower += ":00";
+        upper += ":00";
+        if(area_status == true)
+            queryServerR(lower, upper);
+        else
+            queryServerAll(lower, upper)
     }
     return false;
 }
 
-function queryServerAll()
+function queryServerAll(lower, upper)
 {
     
     var xhttp = new XMLHttpRequest();
@@ -64,14 +91,10 @@ function queryServerAll()
     xhttp.open("GET", "req/"+lower+"/"+upper, true);
     xhttp.send();
 }
-// pay attention. En inputa tienes que hacer lo del drawPoint en un for
-// lo de la tabla está raro
 
 function comprehendInputAll(input)
 {
-    alert(input);
     prett = JSON.parse(input);
-
     var lon = prett.lon.split(";"); 
     var lat = prett.lat.split(";");
     var prt = prett.prt.split(";");
@@ -87,7 +110,6 @@ function comprehendInputAll(input)
 
 function drawPoint(latitude, longitude, time)
 {
-    //determine_poly_set(time)
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
     
     polyline = new google.maps.Polyline({
@@ -99,7 +121,8 @@ function drawPoint(latitude, longitude, time)
     });
     polyline.setMap(map);
 
-    old_marker.setIcon('/static/finder/marker.png');
+    if(old_marker != null)
+        old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
@@ -109,7 +132,6 @@ function drawPoint(latitude, longitude, time)
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
     markers.push(marker);
-    //poly_pos.push(polyline);
 }
 
 function placeMarker(latitude,longitude,time) {
@@ -122,34 +144,22 @@ function placeMarker(latitude,longitude,time) {
     markers.push(markerx);
 }
 
-
-function queryServerR(latit, longit){
-    var longit = location_lng;
-    var latit = location_lat;
-
-    lower = document.getElementById('lower_lim').value;
-    upper = document.getElementById('upper_lim').value;
-    if(lower > upper) {
-        alert("Por favor ingrese una combinación de fechas válida");
-    }
-    else {
-        var rhttp = new XMLHttpRequest();
-        rhttp.onreadystatechange = function() {
-            if (rhttp.readyState == 4 && rhttp.status == 200) {
-                if(JSON.parse(rhttp.response).lon != ''){
-                    for (var i = 0; i < markers.length; i++) {
-                        markers[i].setMap(null);
-                    }
-                    markers = [];
+function queryServerR(lower, upper){
+    var rhttp = new XMLHttpRequest();
+    rhttp.onreadystatechange = function() {
+        if (rhttp.readyState == 4 && rhttp.status == 200) {
+            if(JSON.parse(rhttp.response).lon != ''){
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
                 }
-                recieveAndPutMkr(rhttp.responseText);
-
+                markers = [];
             }
-        };
-        rhttp.open("GET", "rq/"+latit+"/"+longit+"/"+lower+"/"+upper, true);
-        rhttp.send();
-    }
-    return false;      
+            recieveAndPutMkr(rhttp.responseText);
+
+        }
+    };
+    rhttp.open("GET", "rq/"+location_lat+"/"+location_lng+"/"+lower+"/"+upper, true);
+    rhttp.send();
 }
 
 function recieveAndPutMkr(input){
@@ -161,12 +171,11 @@ function recieveAndPutMkr(input){
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
-
-
 }
+
 function deleteMarkers(markers){
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
     }
-    markers = []; 
+    markers = [];
 }

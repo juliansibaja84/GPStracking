@@ -48,7 +48,7 @@ def loadElementsT(lower, upper, latitude, longitude):
             if float(limit)%10 < 1:
                 lim[a] = "+0"+limit
             else:
-                lim[a] = "+"+limit       
+                lim[a] = "+"+limit
         else:
             if abs(float(limit))%10 < 1:
                 lim[a] = "-00"+str((-1)*float(limit))

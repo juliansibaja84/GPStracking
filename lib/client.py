@@ -7,9 +7,9 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_address = ('ennen.org', 9000)
 
-tim = 70900
-lat = 1101857
-lon = 7483814
+tim = 71500
+lat = 1101880
+lon = 7483880
 
 while(1):
     m = '>REV0519101' + str(tim) + '+' + str(lat) + '-0' + str(lon) + '00000012;ID=ENOMOTO<\r\n'
@@ -20,7 +20,7 @@ while(1):
         print('Done')
     tim += 30
     lat -= 10
-    lon += 70
+    lon -= 70
     time.sleep(5)
 
 sock.close()
