@@ -14,7 +14,7 @@ function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
         center: new google.maps.LatLng(10.968840, -74.900124),
-        zoom: 11,
+        zoom: 12,
     });
     google.maps.event.addListener(map, 'rightclick', function(event) {
         if(area_status == false) {
@@ -122,6 +122,7 @@ function drawPoint(latitude, longitude, time)
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
     deleteMarkers(markerus);
     polyline.setPath(poly_pos);
+    polyline.setPath(map);
     if(old_marker != null)
         old_marker.setIcon('/static/finder/marker.png');
     var marker = new google.maps.Marker({
