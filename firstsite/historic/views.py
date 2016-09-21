@@ -23,7 +23,7 @@ def getPointsT(request, latit='',longit='', lower='',upper=''):
     return JsonResponse(dictio)
 
 
-def loadElementsT(lower, upper, latitude, longitude):
+def loadElementsT(latitude, longitude, lower, upper):
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
     a = 0.0022
@@ -61,8 +61,6 @@ def loadElementsT(lower, upper, latitude, longitude):
     dat = cc.execute("SELECT * FROM (SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "') as T WHERE latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' and longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "'")
     dat = dat.fetchall()
     return constructDictionary(dat)
-
-    
 
 
 def loadElements(lower, upper):
