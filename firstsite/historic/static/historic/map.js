@@ -181,7 +181,8 @@ function recieveAndPutMkr(input){
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
-    document.getElementById("cant").innerHTML = "Se encontraron " + tiempo.length + " resultados que satisfacen sus criterios de búsqueda";
+    var c_res = tiempo.length - 1;
+    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
 }
 
 function deleteMarkers(marki){
