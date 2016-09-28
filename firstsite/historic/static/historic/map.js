@@ -109,7 +109,7 @@ function comprehendInputAll(input)
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
-    var c_res = temp.length - 1;
+    var c_res = tmp.length - 1;
     document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
 
     polypos = [];
