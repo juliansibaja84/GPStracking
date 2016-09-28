@@ -76,7 +76,7 @@ def loadElementsT(lower, upper, latitude, longitude):
 
     lim = [limit[:10] for limit in lim]
 
-    cmd = "SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "'"
+    cmd = "SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "' ORDER BY tiempo"
     with open(expanduser('~') + '/cmds.txt', 'a') as file:
         file.write(cmd + '\n')
     conn, cc = createConnectionAndCursor()
@@ -89,7 +89,7 @@ def loadElements(lower, upper):
     conn, cc = createConnectionAndCursor()
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
-    dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "'")
+    dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY tiempo")
     dat = dat.fetchall()
     return constructDictionary(dat)
 
