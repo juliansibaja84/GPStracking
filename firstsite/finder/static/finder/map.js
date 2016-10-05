@@ -44,7 +44,7 @@ function queryServerOne()
         xhttp.open("GET", "req/one", true);
         xhttp.send();
     }else if (truck == "truck2") {
-        xhttp.open("GET", "req/oneoanother", true);
+        xhttp.open("GET", "req/oneanother", true);
         xhttp.send();
     }
 }
