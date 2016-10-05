@@ -6,7 +6,7 @@ var poly_pos = [];
 var truck = 'truck1'
 
 function getTruck(){
-    var e = document.getElementByID("truck");
+    var e = document.getElementById("truck");
     truck = e.options[e.selectedIndex].value;
     old_marker = undefined;
     poly_pos = [];
