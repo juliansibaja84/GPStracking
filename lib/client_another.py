@@ -5,11 +5,11 @@ import sys
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('ennen.org', 9000)
+server_address = ('ennen.org', 9001)
 
-tim = 60088
+tim = 60023
 lat = 1099001
-lon = 7482090
+lon = 7482000
 
 m = '>REV0519101' + str(tim) + '+' + str(lat) + '-0' + str(lon) + '00000012;ID=ENOMOTO<\r\n'
 try:

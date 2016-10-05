@@ -3,10 +3,11 @@ var polyline;
 var old_marker;
 var cur_input = "";
 var poly_pos = [];
+var truck = 'truck1'
 
 function getTruck(){
     var e = document.getElementByID("truck");
-    var truck = e.options[e.selectedIndex].value;
+    truck = e.options[e.selectedIndex].value;
     old_marker = undefined;
     poly_pos = [];
     polyline.setPath(poly_pos);
