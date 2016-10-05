@@ -72,11 +72,13 @@ function drawPoint(latitude, longitude, time)
 {
     //determine_poly_set(time)
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    
+    var colorin = '#FF0000'
+    if (truck == 'truck2')
+        colorin = '#017f18';
     polyline = new google.maps.Polyline({
         path: poly_pos,
         geodesic: true,
-        strokeColor: '#FF0000',
+        strokeColor: colorin,
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
