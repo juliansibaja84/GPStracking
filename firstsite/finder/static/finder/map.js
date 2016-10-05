@@ -4,6 +4,16 @@ var old_marker;
 var cur_input = "";
 var poly_pos = [];
 
+function getTruck(){
+    var e = document.getElementByID("truck");
+    var truck = e.options[e.selectedIndex].value;
+    old_marker = undefined;
+    poly_pos = [];
+    polyline.setPath(poly_pos);
+    marker = undefined;
+    initMap();
+}
+
 function initMap()
 {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -15,6 +25,7 @@ function initMap()
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
+    
     setInterval(queryServerOne, 2000);
 
 }
@@ -28,8 +39,13 @@ function queryServerOne()
             comprehendInput(xhttp.responseText);
         }
     };
-    xhttp.open("GET", "req/one", true);
-    xhttp.send();
+    if (truck == "truck1"){
+        xhttp.open("GET", "req/one", true);
+        xhttp.send();
+    }else if (truck == "truck2") {
+        xhttp.open("GET", "req/oneoanother", true);
+        xhttp.send();
+    }
 }
 
 function comprehendInput(input)
@@ -65,8 +81,10 @@ function drawPoint(latitude, longitude, time)
     });
     
     polyline.setMap(map);
-
-    old_marker.setIcon('/static/finder/marker.png');
+    if (old_marker != undefined){
+        old_marker.setIcon('/static/finder/marker.png');
+    }
+    
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
