@@ -4,13 +4,41 @@
     <item android:title="Choose information to track">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/t_codes"
+                android:icon="@drawable/ic_trouble_code"
+                android:title="Trouble Codes" />
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/e_rpm"
+                android:icon="@drawable/ic_rpm"
+                android:title="Engine RPM" />
+            <item
+                android:id="@+id/e_load"
+                android:icon="@drawable/ic_e_load"
+                android:title="Engine Load" />
+            <item
+                android:id="@+id/f_pressure"
+                android:icon="@drawable/ic_f_pressure"
+                android:title="Fuel Pressure" />
+            <item
+                android:id="@+id/v_speed"
+                android:icon="@drawable/ic_speed"
+                android:title="Vehicle Speed" />
+            <item
+                android:id="@+id/t_position"
+                android:icon="@drawable/ic_t_position"
+                android:title="Throttle Position" />
+            <item
+                android:id="@+id/t_e_start"
+                android:icon="@drawable/ic_time"
+                android:title="Time since engine start" />
+            <item
+                android:id="@+id/t_distance"
+                android:icon="@drawable/ic_distance"
+                android:title="Distance traveled" />
+            <item
+                android:id="@+id/batt_voltage"
+                android:icon="@drawable/ic_battery"
+                android:title="Battery Voltage" />
         </menu>
     </item>
 

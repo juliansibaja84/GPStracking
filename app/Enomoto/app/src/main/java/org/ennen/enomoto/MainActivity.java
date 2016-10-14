@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(info_bar_status == 0) {
-                    info = Snackbar.make(view, "No OBD-II adapter Found, please check Bluetooth connection", Snackbar.LENGTH_INDEFINITE);
+                    info = Snackbar.make(view, "No OBD-II adapter found, please check Bluetooth connection", Snackbar.LENGTH_INDEFINITE);
                     info.setAction("Action", null).show();
                     info_bar_status = 1;
                 }

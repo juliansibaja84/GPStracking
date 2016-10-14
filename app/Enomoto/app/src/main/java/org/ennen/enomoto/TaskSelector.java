@@ -80,9 +80,31 @@ public class TaskSelector extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_share) {
+        if (id == R.id.t_codes) {
 
-        } else if (id == R.id.nav_send) {
+        }
+        else if (id == R.id.e_rpm) {
+
+        }
+        else if (id == R.id.e_load) {
+
+        }
+        else if (id == R.id.f_pressure) {
+
+        }
+        else if (id == R.id.v_speed) {
+
+        }
+        else if (id == R.id.t_position) {
+
+        }
+        else if (id == R.id.t_e_start) {
+
+        }
+        else if (id == R.id.t_distance) {
+
+        }
+        else if (id == R.id.batt_voltage) {
 
         }
 
