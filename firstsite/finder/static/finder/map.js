@@ -8,6 +8,7 @@ var truck = 'truck1'
 function getTruck(){
     var e = document.getElementById("truck");
     truck = e.options[e.selectedIndex].value;
+    //window.alert(truck)
     old_marker = undefined;
     poly_pos = [];
     polyline.setPath(poly_pos);
