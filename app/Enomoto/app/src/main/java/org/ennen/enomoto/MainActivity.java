@@ -1,50 +1,37 @@
 package org.ennen.enomoto;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+{
 
     private ArrayList<String> elements_to_record = new ArrayList<>();
     private int info_bar_status = 0;
     private Snackbar info;
+    private CustomListMember adapter = new CustomListMember(elements_to_record, this);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_selector);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        elements_to_record.add("Android");
-        elements_to_record.add("IPhone");
-        elements_to_record.add("WindowsMobile");
-        elements_to_record.add("Blackberry");
-        elements_to_record.add("WebOS");
-        elements_to_record.add("Ubuntu");
-        elements_to_record.add("Windows7");
-        elements_to_record.add("Max OS X");
-        elements_to_record.add("Arch Linux");
-        elements_to_record.add("Elementary OS");
-        elements_to_record.add("Gentoo");
-        elements_to_record.add("Nginx");
-        elements_to_record.add("Django");
-        elements_to_record.add("Tensor Flow");
-        elements_to_record.add("Python");
-        elements_to_record.add("Haskell");
-        elements_to_record.add("Ennen");
-        elements_to_record.add("Trovador");
-
-        CustomListMember adapter = new CustomListMember(elements_to_record, this);
 
         ListView listView = (ListView) findViewById(R.id.tracking_list);
         listView.setAdapter(adapter);
@@ -54,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(info_bar_status == 0) {
-                    info = Snackbar.make(view, "No OBD-II adapter found, please check Bluetooth connection", Snackbar.LENGTH_INDEFINITE);
+                    String mess = buildInfoMessage();
+                    info = Snackbar.make(view, mess, Snackbar.LENGTH_INDEFINITE);
                     info.setAction("Action", null).show();
                     info_bar_status = 1;
                 }
@@ -64,5 +52,104 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.task_selector, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        String task_title = "";
+
+        if (id == R.id.t_codes) {
+            task_title = "Trouble codes";
+        }
+        else if (id == R.id.e_rpm) {
+            task_title = "Engine RPM";
+        }
+        else if (id == R.id.e_load) {
+            task_title = "Engine load";
+        }
+        else if (id == R.id.f_pressure) {
+            task_title = "Fuel pressure";
+        }
+        else if (id == R.id.v_speed) {
+            task_title = "Vehicle speed";
+        }
+        else if (id == R.id.t_position) {
+            task_title = "Throttle position";
+        }
+        else if (id == R.id.t_e_start) {
+            task_title = "Time since engine start";
+        }
+        else if (id == R.id.t_distance) {
+            task_title = "Distance traveled";
+        }
+        else if (id == R.id.batt_voltage) {
+            task_title = "Battery voltage";
+        }
+
+        adapter.addItem(task_title);
+        adapter.notifyDataSetChanged();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private String buildInfoMessage()
+    {
+        String mess = "";
+        if(this.elements_to_record.size() == 0)
+            mess += "No Tasks selected to track\n";
+        else
+            mess += "Tracking " + this.elements_to_record.size() + " Tasks\n";
+
+        if(!getOBDConnectionState())
+            mess += "No OBD-II adapter found";
+        else
+            mess += "Device " + "212499CFe3X" + " connected";
+
+        return mess;
+    }
+
+    private boolean getOBDConnectionState()
+    {
+        return true;
     }
 }

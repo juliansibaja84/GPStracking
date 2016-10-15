@@ -6,7 +6,7 @@
             <item
                 android:id="@+id/t_codes"
                 android:icon="@drawable/ic_trouble_code"
-                android:title="Trouble Codes" />
+                android:title="Trouble codes" />
             <item
                 android:id="@+id/e_rpm"
                 android:icon="@drawable/ic_rpm"
@@ -14,19 +14,19 @@
             <item
                 android:id="@+id/e_load"
                 android:icon="@drawable/ic_e_load"
-                android:title="Engine Load" />
+                android:title="Engine load" />
             <item
                 android:id="@+id/f_pressure"
                 android:icon="@drawable/ic_f_pressure"
-                android:title="Fuel Pressure" />
+                android:title="Fuel pressure" />
             <item
                 android:id="@+id/v_speed"
                 android:icon="@drawable/ic_speed"
-                android:title="Vehicle Speed" />
+                android:title="Vehicle speed" />
             <item
                 android:id="@+id/t_position"
                 android:icon="@drawable/ic_t_position"
-                android:title="Throttle Position" />
+                android:title="Throttle position" />
             <item
                 android:id="@+id/t_e_start"
                 android:icon="@drawable/ic_time"
@@ -38,7 +38,7 @@
             <item
                 android:id="@+id/batt_voltage"
                 android:icon="@drawable/ic_battery"
-                android:title="Battery Voltage" />
+                android:title="Battery voltage" />
         </menu>
     </item>
 

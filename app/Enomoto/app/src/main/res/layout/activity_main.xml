@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <ListView
+        android:layout_marginTop="50dp"
         android:id="@+id/tracking_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

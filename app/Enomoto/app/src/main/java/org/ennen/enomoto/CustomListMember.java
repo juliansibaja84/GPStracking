@@ -31,6 +31,11 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
         // Hide delete button on start
     }
 
+    public void addItem(String task)
+    {
+        this.list.add(task);
+    }
+
     @Override
     public int getCount() {
         return list.size();
