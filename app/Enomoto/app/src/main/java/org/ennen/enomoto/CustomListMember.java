@@ -23,6 +23,9 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<>();
     private Context context;
     private final Map<String, Integer> ICON_CASES = new HashMap<String, Integer>();
+    private final Map<String, Integer> ID_CASES = new HashMap<String, Integer>();
+
+    private TaskSpawner tasky = new TaskSpawner();
 
     public CustomListMember(ArrayList<String> list, Context context) {
         // Fill ICON_CASES
@@ -36,6 +39,17 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
         ICON_CASES.put("Distance traveled" , R.drawable.ic_distance);
         ICON_CASES.put("Battery voltage" , R.drawable.ic_battery);
 
+        // Fill ID_CASES
+        ID_CASES.put("Trouble codes" , 1);
+        ID_CASES.put("Engine RPM" , 2);
+        ID_CASES.put("Engine load" , 3);
+        ID_CASES.put("Fuel pressure" , 4);
+        ID_CASES.put("Vehicle speed" , 5);
+        ID_CASES.put("Throttle position" , 6);
+        ID_CASES.put("Time since engine start" , 7);
+        ID_CASES.put("Distance traveled" , 8);
+        ID_CASES.put("Battery voltage" , 9);
+
         this.list = list;
         this.context = context;
 
@@ -44,7 +58,10 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
 
     public void addItem(String task)
     {
-        this.list.add(task);
+        if(!this.list.contains(task)) {
+            this.list.add(task);
+            this.tasky.createTask(ID_CASES.get(task));
+        }
     }
 
     @Override
@@ -85,6 +102,7 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 //do something
+                tasky.deleteTask(ID_CASES.get(position));
                 list.remove(position); //or some other task
                 notifyDataSetChanged();
             }
