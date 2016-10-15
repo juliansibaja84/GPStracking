@@ -44,7 +44,8 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
 
     public void addItem(String task)
     {
-        this.list.add(task);
+        if(!this.list.contains(task))
+            this.list.add(task);
     }
 
     @Override
