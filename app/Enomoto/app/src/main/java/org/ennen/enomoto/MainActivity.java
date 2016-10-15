@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Init server connection
         this.collected_info_stack.push("taskid=C02G8416DRJM&datetime=12-12-16_11:22:33&val=12345");
-        ServerConnector server_connection = new ServerConnector("ennen.org/historic/stats/", 80, this);
+        ServerConnector server_connection = new ServerConnector("ennen.org", 80, this);
     }
 
     @Override

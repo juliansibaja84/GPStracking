@@ -7,8 +7,10 @@ package org.ennen.enomoto;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.concurrent.Executor;
@@ -16,12 +18,12 @@ import java.util.concurrent.Executor;
 public class ServerConnector implements Executor {
 
     private URL url;
-    private final String USER_AGENT = "Mozilla/5.0";
+    private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
     public ServerConnector(String url, int port, MainActivity master)
     {
         try {
-            this.url = new URL("http://" + url);
+            this.url = new URL("http", url, port, "/historic/stats/");
         }
         catch (MalformedURLException e) {
             Log.d("connection_error", e.toString());
@@ -56,6 +58,7 @@ public class ServerConnector implements Executor {
         {
             if(!master.collected_info_stack.empty())
                 try {
+                    //get();
                     post(master.collected_info_stack.pop());
                 }
                 catch (Exception e) {
@@ -64,6 +67,28 @@ public class ServerConnector implements Executor {
             else
                 Log.d("stack_empty", "Stack empty, nothing to do");
         }
+        public void get() throws Exception
+        {
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestProperty("User-Agent", USER_AGENT);
+
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'GET' request to URL : " + url);
+            System.out.println("Response Code : " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            //print result
+            Log.d("server_response", response.toString());
+        }
 
         // Data is a string which values are separated by @
         public void post(String data) throws Exception
@@ -71,7 +96,6 @@ public class ServerConnector implements Executor {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("User-Agent", USER_AGENT);
-            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
             //String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
 

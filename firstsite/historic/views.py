@@ -14,10 +14,11 @@ def index(request):
 
 
 def statsRequests(request):
+    template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
-        return HttpResponse('Hello world, GET method detected')
+        return HttpResponse("GET DETECTED")
     else:
-        return HttpResponse('Hello world, POST method detected')
+        return HttpResponse(template.render)
 
 
 def getPoints(request, lower='', upper=''):
