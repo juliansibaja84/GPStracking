@@ -6,6 +6,7 @@ package org.ennen.enomoto;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -46,6 +47,7 @@ public class ServerConnector implements Executor {
     class ServerUpdater implements Runnable {
         private URL url;
         private MainActivity master;
+        private String data_pop;
 
         public ServerUpdater(URL url, MainActivity master)
         {
@@ -56,38 +58,29 @@ public class ServerConnector implements Executor {
         @Override
         public void run()
         {
-            if(!master.collected_info_stack.empty())
+            while(true) {
+                if(!master.collected_info_stack.empty()) {
+                    data_pop = master.collected_info_stack.pop();
+                    try {
+                        post(data_pop);
+                    } catch (Exception e) {
+
+                        // Undo stack pop;
+                        master.collected_info_stack.push(data_pop);
+                        Log.d("Conn_ex", "Error connecting " + e.toString());
+                    }
+                }
+                else {
+                    Log.d("stack_empty", "Stack empty, nothing to do");
+                }
+
+                // Timeout of 2 seconds
                 try {
-                    //get();
-                    post(master.collected_info_stack.pop());
+                    Thread.sleep(2000);
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
                 }
-                catch (Exception e) {
-                    Log.d("Conn_ex", "Error connecting " + e.toString());
-                }
-            else
-                Log.d("stack_empty", "Stack empty, nothing to do");
-        }
-        public void get() throws Exception
-        {
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("User-Agent", USER_AGENT);
-
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
             }
-            in.close();
-
-            //print result
-            Log.d("server_response", response.toString());
         }
 
         // Data is a string which values are separated by @
@@ -110,6 +103,13 @@ public class ServerConnector implements Executor {
             Log.d("URL", "Sending 'POST' request to URL : " + url);
             Log.d("Post_param", "Post parameters : " + data);
             Log.d("response_code", "Response Code : " + responseCode);
+
+            if(responseCode == 200) {
+                master.server_conn_status = true;
+            }
+            else {
+                master.server_conn_status = false;
+            }
 
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));

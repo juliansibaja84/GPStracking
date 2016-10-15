@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Snackbar info;
     private CustomListMember adapter = new CustomListMember(elements_to_record, this);
 
+    public boolean server_conn_status = false;
     public Stack<String> collected_info_stack = new Stack();
 
     @Override
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Init server connection
         this.collected_info_stack.push("taskid=C02G8416DRJM&datetime=12-12-16_11:22:33&val=12345");
+        this.collected_info_stack.push("id=C02G8416DRJM&time=12-12-16_11:22:33&vali=12345");
         ServerConnector server_connection = new ServerConnector("ennen.org", 80, this);
     }
 
@@ -145,6 +147,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String buildInfoMessage()
     {
         String mess = "";
+        if(server_conn_status == false) {
+            return "Can not connect to ennen.org";
+        }
+
         if(this.elements_to_record.size() == 0)
             mess += "No Tasks selected to track\n";
         else
