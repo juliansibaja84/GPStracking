@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Choose information to track">
+        <menu>
+            <item
+                android:id="@+id/t_codes"
+                android:icon="@drawable/ic_trouble_code"
+                android:title="Trouble codes" />
+            <item
+                android:id="@+id/e_rpm"
+                android:icon="@drawable/ic_rpm"
+                android:title="Engine RPM" />
+            <item
+                android:id="@+id/e_load"
+                android:icon="@drawable/ic_e_load"
+                android:title="Engine load" />
+            <item
+                android:id="@+id/f_pressure"
+                android:icon="@drawable/ic_f_pressure"
+                android:title="Fuel pressure" />
+            <item
+                android:id="@+id/v_speed"
+                android:icon="@drawable/ic_speed"
+                android:title="Vehicle speed" />
+            <item
+                android:id="@+id/t_position"
+                android:icon="@drawable/ic_t_position"
+                android:title="Throttle position" />
+            <item
+                android:id="@+id/t_e_start"
+                android:icon="@drawable/ic_time"
+                android:title="Time since engine start" />
+            <item
+                android:id="@+id/t_distance"
+                android:icon="@drawable/ic_distance"
+                android:title="Distance traveled" />
+            <item
+                android:id="@+id/batt_voltage"
+                android:icon="@drawable/ic_battery"
+                android:title="Battery voltage" />
+        </menu>
+    </item>
+
+</menu>
