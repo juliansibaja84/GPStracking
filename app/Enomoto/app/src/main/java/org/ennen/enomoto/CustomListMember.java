@@ -75,11 +75,7 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public long getItemId(int pos) {
-        return 0;
-        //return list.get(pos).getId();
-        //just return 0 if your list items do not have an Id variable.
-    }
+    public long getItemId(int pos) {return 0;}
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -101,9 +97,8 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
-                tasky.deleteTask(ID_CASES.get(position));
-                list.remove(position); //or some other task
+                tasky.deleteTask(ID_CASES.get(list.get(position)));
+                list.remove(position);
                 notifyDataSetChanged();
             }
         });

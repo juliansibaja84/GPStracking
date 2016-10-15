@@ -1,5 +1,7 @@
 package org.ennen.enomoto;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
@@ -14,24 +16,31 @@ public class TaskSpawner implements Executor
     @Override
     public void execute(Runnable r)
     {
-        this.execute(r);
+        Log.d("tasking", "CREATING NEW TASK");
+        new Thread(r).start();
     }
 
     public void createTask(int task_id)
     {
         int i = 0;
-        while(this.tasks.get(i).task_id != task_id && i < this.tasks.size()) ++i;
-        if(this.tasks.get(i).task_id != task_id) {
+        if(this.tasks.isEmpty()) {
             tasks.add(new Task(task_id));
             execute(tasks.get(tasks.size() - 1));
+        }
+        else {
+            while(i < this.tasks.size() && this.tasks.get(i).task_id != task_id) ++i;
+            if(i == this.tasks.size()) {
+                tasks.add(new Task(task_id));
+                execute(tasks.get(tasks.size() - 1));
+            }
         }
     }
 
     public void deleteTask(int task_id)
     {
         int i = 0;
-        while(this.tasks.get(i).task_id != task_id && i < this.tasks.size()) ++i;
-        if(this.tasks.get(i).task_id == task_id) {
+        while(i < this.tasks.size() && this.tasks.get(i).task_id != task_id) ++i;
+        if(i != this.tasks.size()) {
             this.tasks.get(i).stop();
             this.tasks.remove(i);
         }
@@ -53,6 +62,7 @@ public class TaskSpawner implements Executor
             while(!shutdown) {
 
                 try {
+                    Log.d("tasking2", "HELLO FROM TASK " + task_id);
                     Thread.sleep(3000);
                 }
                 catch (Exception e) {}
