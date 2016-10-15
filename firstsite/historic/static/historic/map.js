@@ -114,7 +114,9 @@ function getDateInterval()
 {
     var lower = document.getElementById('lower_lim').value;
     var upper = document.getElementById('upper_lim').value;
-    if(lower > upper || lower == "" || upper == "") {
+    c_res = 0;
+    c_resAnother = 0;
+    if(lower >= upper || lower == "" || upper == "") {
         alert("Por favor ingrese una combinación de fechas válida");
     }
     else {
@@ -131,34 +133,45 @@ function getDateInterval()
             if(area_status == true){
                 queryServerR(lower, upper);
                 queryServerRAnother(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";
             }
             else{
                 queryServerAll(lower, upper);
                 queryServerAllAnother(lower, upper);
-            }            
+                document.getElementById("cant").innerHTML = "";
+            }
+                        
         }else if(c == 2){
             old_markerAnother = undefined;
             poly_posAnother = [];
             polylineAnother.setPath(poly_posAnother);
             initMap();
             if(area_status == true){
-
                 queryServerR(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";            
             }
             else{
                 queryServerAll(lower, upper);
+                document.getElementById("cant").innerHTML = "";
             }
+            
         }else if(c == 3){
             old_marker = undefined;
             poly_pos = [];
             polyline.setPath(poly_pos);
             initMap();
-            if(area_status == true){
+            if(area_status == true){   
                 queryServerRAnother(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda"; 
             }
             else{
                 queryServerAllAnother(lower, upper);
+                document.getElementById("cant").innerHTML = "";
             }
+            
         }else{
             old_marker = undefined;
             poly_pos = [];
@@ -198,11 +211,10 @@ function comprehendInputAll(input)
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
     var c_res = tmp.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
-
     for(var i=0;i<lon.length;++i){
         drawPoint(lat[i],lon[i],tmp[i]);
     }
+    return c_res
 }
 
 function drawPoint(latitude, longitude, time)
@@ -268,7 +280,8 @@ function recieveAndPutMkr(input){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
     var c_res = tiempo.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
+    window.alert(c_res)
+    return c_res
 }
 
 /* Aquí termina lo que concierne al primer camión*/
@@ -296,12 +309,12 @@ function comprehendInputAllAnother(input)
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
-    var c_resAnother = tmp.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_resAnother + " resultados que satisfacen sus criterios de búsqueda";
 
     for(var i=0;i<lon.length;++i){
         drawPointAnother(lat[i],lon[i],tmp[i]);
     }
+    var c_resAnother = tmp.length;
+    return c_resAnother
 }
 
 function drawPointAnother(latitude, longitude, time)
@@ -366,8 +379,8 @@ function recieveAndPutMkrAnother(input){
     for(var i=0;i<longit.length;++i){
         placeMarkerAnother(latit[i],longit[i],tiempo[i]);
     }
-    var c_resAnother = tiempo.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_resAnother + " resultados que satisfacen sus criterios de búsqueda";
+    var c_resAnother = tiempo.length;
+    return c_resAnother
 }
 
 /* Aquí termina lo que concierne al segundo camión*/
