@@ -1,20 +1,19 @@
 package org.ennen.enomoto;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.Context;
-import android.util.Log;
-import android.view.ContextMenu;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by asmateus on 14/10/16.
@@ -23,8 +22,20 @@ import java.util.ArrayList;
 public class CustomListMember extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<>();
     private Context context;
+    private final Map<String, Integer> ICON_CASES = new HashMap<String, Integer>();
 
     public CustomListMember(ArrayList<String> list, Context context) {
+        // Fill ICON_CASES
+        ICON_CASES.put("Trouble codes" , R.drawable.ic_trouble_code);
+        ICON_CASES.put("Engine RPM" , R.drawable.ic_rpm);
+        ICON_CASES.put("Engine load" , R.drawable.ic_e_load);
+        ICON_CASES.put("Fuel pressure" , R.drawable.ic_f_pressure);
+        ICON_CASES.put("Vehicle speed" , R.drawable.ic_speed);
+        ICON_CASES.put("Throttle position" , R.drawable.ic_t_position);
+        ICON_CASES.put("Time since engine start" , R.drawable.ic_time);
+        ICON_CASES.put("Distance traveled" , R.drawable.ic_distance);
+        ICON_CASES.put("Battery voltage" , R.drawable.ic_battery);
+
         this.list = list;
         this.context = context;
 
@@ -63,7 +74,9 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
 
         //Handle TextView and display string from your list
         TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
+        ImageView img = (ImageView)view.findViewById(R.id.image_list);
         listItemText.setText(list.get(position));
+        img.setImageResource(this.ICON_CASES.get(list.get(position)));
 
         //Handle buttons and add onClickListeners
         ImageButton deleteBtn = (ImageButton)view.findViewById(R.id.delete_btn);
