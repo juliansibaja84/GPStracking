@@ -13,12 +13,19 @@ def index(request):
     return HttpResponse(template.render())
 
 
+def statsRequests(request):
+    if request.method == 'GET':
+        return HttpResponse('Hello world, GET method detected')
+    else:
+        return HttpResponse('Hello world, POST method detected')
+
+
 def getPoints(request, lower='', upper=''):
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
 
 
-def getPointsT(request, latit='',longit='', lower='',upper=''):
+def getPointsT(request, latit='', longit='', lower='', upper=''):
 
     dictio = loadElementsT(lower, upper, latit, longit)
     return JsonResponse(dictio)
@@ -93,15 +100,14 @@ def loadElements(lower, upper):
     dat = dat.fetchall()
     return constructDictionary(dat)
 
-# Aquí empieza lo que concierne a el segundo camión
 
+# Aquí empieza lo que concierne a el segundo camión
 def getPointsAnother(request, lower='', upper=''):
     dictio = loadElementsAnother(lower, upper)
     return JsonResponse(dictio)
 
 
-def getPointsTAnother(request, latit='',longit='', lower='',upper=''):
-
+def getPointsTAnother(request, latit='', longit='', lower='', upper=''):
     dictio = loadElementsTAnother(lower, upper, latit, longit)
     return JsonResponse(dictio)
 
