@@ -7,9 +7,9 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_address = ('localhost', 9000)
 
-tim = 60171
+tim = 60180
 lat = 1099001
-lon = 7482172
+lon = 7482180
 
 m = '>REV0519101' + str(tim) + '+' + str(lat) + '-0' + str(lon) + '00000012;ID=ENOMOTO<\r\n'
 try:

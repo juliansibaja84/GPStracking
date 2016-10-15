@@ -1,3 +1,8 @@
+*{
+  margin: 0 auto; 
+  padding: 0;
+}
+
 body {
   height: 100%;
   margin: 0 auto;
@@ -76,8 +81,6 @@ body {
 
 }
 
-
-
 h3, h4 {
   text-align: center;
   background-color:#0C3C26;
@@ -99,7 +102,7 @@ h1{
 }
 #pdata{
   height: 21em;
-  width: 14em;
+  width: 18em;
   background-color:#edfff0;
   padding-top: 1em;
   padding-left: 1em;
@@ -150,3 +153,4 @@ p span{
     font-style: normal;
 
 }
+
