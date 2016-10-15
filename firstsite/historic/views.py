@@ -16,7 +16,7 @@ def index(request):
 def statsRequests(request):
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
-        return HttpResponse("GET DETECTED")
+        return HttpResponse(template.render)
     else:
         return HttpResponse(template.render)
 
