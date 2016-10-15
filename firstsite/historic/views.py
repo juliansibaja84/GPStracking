@@ -13,12 +13,13 @@ def index(request):
     return HttpResponse(template.render())
 
 
+@csrf_exempt
 def statsRequests(request):
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
         return HttpResponse(template.render)
     else:
-        return HttpResponse(template.render)
+        return HttpResponse(request.POST)
 
 
 def getPoints(request, lower='', upper=''):
