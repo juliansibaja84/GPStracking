@@ -72,6 +72,7 @@ function initMap()
             document.getElementById('info_panel').innerHTML = 'Puede Hacer <span>click</span> derecho en el mapa para mostrar coordenadas en ese punto del mapa';
         }
     });
+
     polyline = new google.maps.Polyline({
         map: map,
         path: poly_pos,
@@ -80,6 +81,15 @@ function initMap()
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
+    polylineAnother = new google.maps.Polyline({
+        map: map,
+        path: poly_posAnother,
+        geodesic: true,
+        strokeColor: '#00FF00',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
 }
 
 function drawRectangles()
@@ -104,35 +114,72 @@ function getDateInterval()
 {
     var lower = document.getElementById('lower_lim').value;
     var upper = document.getElementById('upper_lim').value;
-    if(lower > upper || lower == "" || upper == "") {
+    c_res = 0;
+    c_resAnother = 0;
+    if(lower >= upper || lower == "" || upper == "") {
         alert("Por favor ingrese una combinación de fechas válida");
     }
     else {
         lower += ":00";
         upper += ":00";
         if (c == 1){
+            old_marker = undefined;
+            poly_pos = [];
+            polyline.setPath(poly_pos);
+            old_markerAnother = undefined;
+            poly_posAnother = [];
+            polylineAnother.setPath(poly_posAnother);
+            initMap();
             if(area_status == true){
                 queryServerR(lower, upper);
                 queryServerRAnother(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";
             }
             else{
                 queryServerAll(lower, upper);
                 queryServerAllAnother(lower, upper);
-            }            
+                document.getElementById("cant").innerHTML = "";
+            }
+                        
         }else if(c == 2){
+            old_markerAnother = undefined;
+            poly_posAnother = [];
+            polylineAnother.setPath(poly_posAnother);
+            initMap();
             if(area_status == true){
                 queryServerR(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";            
             }
             else{
                 queryServerAll(lower, upper);
+                document.getElementById("cant").innerHTML = "";
             }
+            
         }else if(c == 3){
-            if(area_status == true){
+            old_marker = undefined;
+            poly_pos = [];
+            polyline.setPath(poly_pos);
+            initMap();
+            if(area_status == true){   
                 queryServerRAnother(lower, upper);
+                window.alert(c_res+c_resAnother)
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda"; 
             }
             else{
                 queryServerAllAnother(lower, upper);
+                document.getElementById("cant").innerHTML = "";
             }
+            
+        }else{
+            old_marker = undefined;
+            poly_pos = [];
+            polyline.setPath(poly_pos);
+            old_markerAnother = undefined;
+            poly_posAnother = [];
+            polylineAnother.setPath(poly_posAnother);
+            initMap();
         }
 
     }
@@ -164,11 +211,10 @@ function comprehendInputAll(input)
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
     var c_res = tmp.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
-
     for(var i=0;i<lon.length;++i){
         drawPoint(lat[i],lon[i],tmp[i]);
     }
+    return c_res
 }
 
 function drawPoint(latitude, longitude, time)
@@ -234,7 +280,8 @@ function recieveAndPutMkr(input){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
     var c_res = tiempo.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
+    window.alert(c_res)
+    return c_res
 }
 
 /* Aquí termina lo que concierne al primer camión*/
@@ -243,7 +290,7 @@ function recieveAndPutMkr(input){
 
 function queryServerAllAnother(lower, upper)
 {
-    
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -262,15 +309,12 @@ function comprehendInputAllAnother(input)
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
-    var c_resAnother = tmp.length - 1;
-    window.alert(lon)
-    window.alert(lat)
-    window.alert(tmp)
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_resAnother + " resultados que satisfacen sus criterios de búsqueda";
 
     for(var i=0;i<lon.length;++i){
         drawPointAnother(lat[i],lon[i],tmp[i]);
     }
+    var c_resAnother = tmp.length;
+    return c_resAnother
 }
 
 function drawPointAnother(latitude, longitude, time)
@@ -281,16 +325,16 @@ function drawPointAnother(latitude, longitude, time)
     polylineAnother.setPath(poly_posAnother);
     polylineAnother.setMap(map);
     if(old_markerAnother != null)
-        old_markerAnother.setIcon('/static/finder/marker.png');
-    var marker = new google.maps.Marker({
+        old_markerAnother.setIcon('/static/finder/markerAnother.png');
+    var markerAnother = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
         title: time,
-        icon: '/static/finder/markera.png',
+        icon: '/static/finder/markeraAnother.png',
     });
     map.setCenter(new google.maps.LatLng(latitude, longitude));
-    old_markerAnother = marker;
-    markersAnother.push(marker);
+    old_markerAnother = markerAnother;
+    markersAnother.push(markerAnother);
 }
 
 function placeMarkerAnother(latitude,longitude,time) {
@@ -298,7 +342,7 @@ function placeMarkerAnother(latitude,longitude,time) {
         position: new google.maps.LatLng(latitude, longitude),
         map: map,
         title: time,
-        icon: '/static/finder/markera.png',
+        icon: '/static/finder/markeraAnother.png',
     });
     markers_areaAnother.push(markerx);
 }
@@ -335,8 +379,8 @@ function recieveAndPutMkrAnother(input){
     for(var i=0;i<longit.length;++i){
         placeMarkerAnother(latit[i],longit[i],tiempo[i]);
     }
-    var c_resAnother = tiempo.length - 1;
-    document.getElementById("cant").innerHTML = "Se encontraron " + c_res + " resultados que satisfacen sus criterios de búsqueda";
+    var c_resAnother = tiempo.length;
+    return c_resAnother
 }
 
 /* Aquí termina lo que concierne al segundo camión*/
