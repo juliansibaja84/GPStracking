@@ -27,10 +27,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<String> elements_to_record = new ArrayList<>();
     private int info_bar_status = 0;
     private Snackbar info;
-    private CustomListMember adapter = new CustomListMember(elements_to_record, this);
 
     public boolean server_conn_status = false;
     public Stack<String> collected_info_stack = new Stack();
+
+    // Main panel list
+    private CustomListMember adapter = new CustomListMember(elements_to_record, this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
