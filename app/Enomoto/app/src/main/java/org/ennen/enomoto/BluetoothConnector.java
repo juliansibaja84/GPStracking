@@ -3,12 +3,16 @@ package org.ennen.enomoto;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by asmateus on 15/10/16.
@@ -20,7 +24,9 @@ public class BluetoothConnector
     private ArrayList<String> paired_adapter_list = new ArrayList<>();
     private BluetoothAdapter mBlAdapter;
     private MainActivity master;
+    private ConnectThread conn_t = null;
 
+    public boolean conn_status = false;
     public String selected_device_MAC = "";
 
     public BluetoothConnector(MainActivity master)
@@ -36,14 +42,24 @@ public class BluetoothConnector
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 master.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
-            else
+            else {
                 searchPairedDevices();
+            }
         }
     }
 
     public boolean blStatus()
     {
         return (this.mBlAdapter != null && this.mBlAdapter.getBondedDevices().size() > 0);
+    }
+
+    private void connectThroughMAC()
+    {
+        if(this.selected_device_MAC != "") {
+            Log.d("Address", this.selected_device_MAC);
+            conn_t = new ConnectThread(this.mBlAdapter.getRemoteDevice(this.selected_device_MAC));
+            conn_t.start();
+        }
     }
 
     private void searchPairedDevices()
@@ -77,8 +93,59 @@ public class BluetoothConnector
                         selected_device_MAC = paired_adapter_list.get(which).split("\n")[1];
                         Toast toast = Toast.makeText(master.getApplicationContext(), "Selected " + selected_device_MAC, Toast.LENGTH_LONG);
                         toast.show();
+                        connectThroughMAC();
                     }
                 });
         builder.show();
+    }
+
+    private class ConnectThread extends Thread
+    {
+        private final BluetoothSocket mmSocket;
+        private final BluetoothDevice mmDevice;
+
+        public ConnectThread(BluetoothDevice device)
+        {
+            // Create a temp socket because mmSocket is final
+            BluetoothSocket temp = null;
+            this.mmDevice = device;
+
+            // Get a BluetoothSocket to connect with the given BluetoothDevice
+            try {
+                // UUID is specific to the ELM327
+                temp = this.mmDevice.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+            }
+            catch (IOException e) {
+                conn_status = false;
+                Log.d("UUID_ERROR", "Error from UUID creating Bluetooth connecting Socket");
+            }
+            this.mmSocket = temp;
+        }
+
+        public void run() {
+            // Cancel discovery because it will slow down the connection
+            mBlAdapter.cancelDiscovery();
+
+            try {
+                // Connect the device through the socket. This will block
+                // until it succeeds or throws an exception
+                mmSocket.connect();
+                conn_status = true;
+            } catch (IOException connectException) {
+                conn_status = false;
+                Log.d("IO_ERROR", "Error from IO creating Bluetooth connecting Socket " + connectException.toString());
+                try {
+                    mmSocket.close();
+                } catch (IOException closeException) { }
+                return;
+            }
+        }
+
+        public void cancel() {
+            try {
+                conn_status = false;
+                mmSocket.close();
+            } catch (IOException e) { }
+        }
     }
 }

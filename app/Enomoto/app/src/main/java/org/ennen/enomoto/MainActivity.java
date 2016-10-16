@@ -177,6 +177,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         if(this.bl_conn == null) return false;
         if(this.bl_conn.selected_device_MAC == "") return false;
-        return true;
+        return this.bl_conn.conn_status;
     }
 }

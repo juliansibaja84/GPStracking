@@ -70,9 +70,6 @@ public class ServerConnector implements Executor {
                         Log.d("Conn_ex", "Error connecting " + e.toString());
                     }
                 }
-                else {
-                    Log.d("stack_empty", "Stack empty, nothing to do");
-                }
 
                 // Timeout of 2 seconds
                 try {
