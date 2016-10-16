@@ -14,6 +14,8 @@ var location_lng;
 var markerus = [];
 var area_status = false;
 var rectangle;
+var c_res;
+var c_resAnother;
 var c=4;
 
 function getTruck(){
@@ -79,7 +81,7 @@ function initMap()
         geodesic: true,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeWeight: 1
     });
     polylineAnother = new google.maps.Polyline({
         map: map,
@@ -87,7 +89,7 @@ function initMap()
         geodesic: true,
         strokeColor: '#00FF00',
         strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeWeight: 1
     });
 
 }
@@ -114,8 +116,6 @@ function getDateInterval()
 {
     var lower = document.getElementById('lower_lim').value;
     var upper = document.getElementById('upper_lim').value;
-    c_res = 0;
-    c_resAnother = 0;
     if(lower >= upper || lower == "" || upper == "") {
         alert("Por favor ingrese una combinación de fechas válida");
     }
@@ -131,9 +131,10 @@ function getDateInterval()
             polylineAnother.setPath(poly_posAnother);
             initMap();
             if(area_status == true){
+                c_res = 0;
+                c_resAnother = 0; 
                 queryServerR(lower, upper);
                 queryServerRAnother(lower, upper);
-                window.alert(c_res+c_resAnother)
                 document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";
             }
             else{
@@ -148,8 +149,9 @@ function getDateInterval()
             polylineAnother.setPath(poly_posAnother);
             initMap();
             if(area_status == true){
+                c_res = 0;
+                c_resAnother = 0; 
                 queryServerR(lower, upper);
-                window.alert(c_res+c_resAnother)
                 document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";            
             }
             else{
@@ -162,9 +164,10 @@ function getDateInterval()
             poly_pos = [];
             polyline.setPath(poly_pos);
             initMap();
-            if(area_status == true){   
+            if(area_status == true){
+                c_res = 0;
+                c_resAnother = 0;   
                 queryServerRAnother(lower, upper);
-                window.alert(c_res+c_resAnother)
                 document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda"; 
             }
             else{
@@ -210,7 +213,7 @@ function comprehendInputAll(input)
     var prt = prett.prt.split(";");
     var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
-    var c_res = tmp.length - 1;
+    c_res = tmp.length - 1;
     for(var i=0;i<lon.length;++i){
         drawPoint(lat[i],lon[i],tmp[i]);
     }
@@ -279,9 +282,7 @@ function recieveAndPutMkr(input){
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
-    var c_res = tiempo.length - 1;
-    window.alert(c_res)
-    return c_res
+    c_res = tiempo.length - 1;
 }
 
 /* Aquí termina lo que concierne al primer camión*/
@@ -313,7 +314,7 @@ function comprehendInputAllAnother(input)
     for(var i=0;i<lon.length;++i){
         drawPointAnother(lat[i],lon[i],tmp[i]);
     }
-    var c_resAnother = tmp.length;
+    c_resAnother = tmp.length;
     return c_resAnother
 }
 
@@ -379,7 +380,7 @@ function recieveAndPutMkrAnother(input){
     for(var i=0;i<longit.length;++i){
         placeMarkerAnother(latit[i],longit[i],tiempo[i]);
     }
-    var c_resAnother = tiempo.length;
+    c_resAnother = tiempo.length;
     return c_resAnother
 }
 
