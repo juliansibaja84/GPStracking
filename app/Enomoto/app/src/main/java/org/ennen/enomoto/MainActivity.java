@@ -1,5 +1,6 @@
 package org.ennen.enomoto;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<String> elements_to_record = new ArrayList<>();
     private int info_bar_status = 0;
     private Snackbar info;
+    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+    private BluetoothConnector bl_conn;
 
     public boolean server_conn_status = false;
     public Stack<String> collected_info_stack = new Stack();
@@ -97,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.secure_connect_scan) {
+            bl_conn = new BluetoothConnector(this);
+            //Intent obd_conn_intent = new Intent(this.getParent(), DeviceListActivity.class);
+            //startActivityForResult(obd_conn_intent, REQUEST_CONNECT_DEVICE_SECURE);
             return true;
         }
 
