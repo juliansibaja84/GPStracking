@@ -18,29 +18,37 @@ public class BluetoothConnector
 {
     private static final int REQUEST_ENABLE_BT = 1;
     private ArrayList<String> paired_adapter_list = new ArrayList<>();
+    private BluetoothAdapter mBlAdapter;
     private MainActivity master;
+
+    public String selected_device_MAC = "";
 
     public BluetoothConnector(MainActivity master)
     {
         this.master = master;
-        BluetoothAdapter mBlAdapter = BluetoothAdapter.getDefaultAdapter();
+        this.mBlAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBlAdapter == null) {
             Toast toast = Toast.makeText(master.getApplicationContext(), "Bluetooth not Supported", Toast.LENGTH_LONG);
             toast.show();
         }
         else {
-            if (!mBlAdapter.isEnabled()) {
+            if (!this.mBlAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 master.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
             else
-                searchPairedDevices(mBlAdapter);
+                searchPairedDevices();
         }
     }
 
-    private void searchPairedDevices(BluetoothAdapter mBlAdapter)
+    public boolean blStatus()
     {
-        Set<BluetoothDevice> pairedDevices = mBlAdapter.getBondedDevices();
+        return (this.mBlAdapter != null && this.mBlAdapter.getBondedDevices().size() > 0);
+    }
+
+    private void searchPairedDevices()
+    {
+        Set<BluetoothDevice> pairedDevices = this.mBlAdapter.getBondedDevices();
         // If there are paired devices
         if (pairedDevices.size() > 0) {
             // Loop through paired devices
@@ -66,9 +74,11 @@ public class BluetoothConnector
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                    // the user clicked on colors[which]
-                }
-        });
+                        selected_device_MAC = paired_adapter_list.get(which).split("\n")[1];
+                        Toast toast = Toast.makeText(master.getApplicationContext(), "Selected " + selected_device_MAC, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                });
         builder.show();
     }
 }

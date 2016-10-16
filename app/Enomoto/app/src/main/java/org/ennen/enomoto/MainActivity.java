@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //noinspection SimplifiableIfStatement
         if (id == R.id.secure_connect_scan) {
             bl_conn = new BluetoothConnector(this);
+            Log.d("BL_CONN", "Conn status " + bl_conn.blStatus());
             //Intent obd_conn_intent = new Intent(this.getParent(), DeviceListActivity.class);
             //startActivityForResult(obd_conn_intent, REQUEST_CONNECT_DEVICE_SECURE);
             return true;
@@ -167,13 +168,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!getOBDConnectionState())
             mess += "No OBD-II adapter found";
         else
-            mess += "Device " + "212499CFe3X" + " connected";
+            mess += "Device " + bl_conn.selected_device_MAC + " connected";
 
         return mess;
     }
 
     private boolean getOBDConnectionState()
     {
+        if(this.bl_conn == null) return false;
+        if(this.bl_conn.selected_device_MAC == "") return false;
         return true;
     }
 }
