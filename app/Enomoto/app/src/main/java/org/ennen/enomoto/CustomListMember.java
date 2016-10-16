@@ -25,9 +25,12 @@ public class CustomListMember extends BaseAdapter implements ListAdapter {
     private final Map<String, Integer> ICON_CASES = new HashMap<String, Integer>();
     private final Map<String, Integer> ID_CASES = new HashMap<String, Integer>();
 
-    private TaskSpawner tasky = new TaskSpawner();
+    private TaskSpawner tasky;
 
-    public CustomListMember(ArrayList<String> list, Context context) {
+    public CustomListMember(ArrayList<String> list, Context context, MainActivity master) {
+
+        this.tasky = new TaskSpawner(master);
+
         // Fill ICON_CASES
         ICON_CASES.put("Trouble codes" , R.drawable.ic_trouble_code);
         ICON_CASES.put("Engine RPM" , R.drawable.ic_rpm);

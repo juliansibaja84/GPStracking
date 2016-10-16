@@ -99,9 +99,14 @@ public class BluetoothConnector
         builder.show();
     }
 
+    public BluetoothSocket getSocket()
+    {
+        return this.conn_t.mmSocket;
+    }
+
     private class ConnectThread extends Thread
     {
-        private final BluetoothSocket mmSocket;
+        public final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
 
         public ConnectThread(BluetoothDevice device)
