@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 public class TaskSpawner implements Executor
 {
-    ArrayList<Task> tasks = new ArrayList<>();
+    ArrayList<Task> tasks = new ArrayList<Task>();
     MainActivity master;
 
     public TaskSpawner(MainActivity master)
@@ -91,10 +91,13 @@ public class TaskSpawner implements Executor
                         Log.d("tasking2", "HELLO FROM TASK " + task_id);
                         initializeOBD(master.bl_conn.getSocket());
                         queryOBD(task_id);
-                        Thread.sleep(3000);
                     }
                     catch (Exception e) {}
                 }
+                try {
+                    Thread.sleep(3000);
+                }
+                catch (Exception e) {}
             }
         }
 

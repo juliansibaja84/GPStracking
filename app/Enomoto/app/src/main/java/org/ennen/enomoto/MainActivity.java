@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // Init server connection
+        this.collected_info_stack.push("taskid=10&datetime=00-00-00_00:00:00&val=testbyte");
         ServerConnector server_connection = new ServerConnector("ennen.org", 80, this);
     }
 
