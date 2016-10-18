@@ -20,7 +20,10 @@ def statsRequests(request):
     if request.method == 'GET':
         return HttpResponse(template.render)
     else:
-        return HttpResponse(request.POST)
+        base = os.path.abspath(os.path.join('.', os.pardir))
+        with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
+            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'])
+        return HttpResponse('GOT IT')
 
 
 def getPoints(request, lower='', upper=''):
