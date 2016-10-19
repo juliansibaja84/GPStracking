@@ -85,16 +85,30 @@ function drawPoint(latitude, longitude, time)
     });
     
     polyline.setMap(map);
-    if (old_marker != undefined){
-        old_marker.setIcon('/static/finder/marker.png');
-    }
+    if (truck == "truck1"){
+        if (old_marker != undefined){
+            old_marker.setIcon('/static/finder/marker.png');
+        }
     
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(latitude, longitude),
-        map: map,
-        title: time,
-        icon: '/static/finder/markera.png',
-    });
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            map: map,
+            title: time,
+            icon: '/static/finder/markera.png',
+        });
+    }else if (truck == "truck2"){
+        if (old_marker != undefined){
+            old_marker.setIcon('/static/finder/markerAnother.png');
+        }
+    
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(latitude, longitude),
+            map: map,
+            title: time,
+            icon: '/static/finder/markeraAnother.png',
+        });
+    }
+
     map.setCenter(new google.maps.LatLng(latitude, longitude));
     old_marker = marker;
 }

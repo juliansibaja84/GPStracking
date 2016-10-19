@@ -131,11 +131,9 @@ function getDateInterval()
             polylineAnother.setPath(poly_posAnother);
             initMap();
             if(area_status == true){
-                c_res = 0;
-                c_resAnother = 0; 
                 queryServerR(lower, upper);
                 queryServerRAnother(lower, upper);
-                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";
+                document.getElementById("cant").innerHTML = "";
             }
             else{
                 queryServerAll(lower, upper);
@@ -149,10 +147,8 @@ function getDateInterval()
             polylineAnother.setPath(poly_posAnother);
             initMap();
             if(area_status == true){
-                c_res = 0;
-                c_resAnother = 0; 
                 queryServerR(lower, upper);
-                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";            
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda";            
             }
             else{
                 queryServerAll(lower, upper);
@@ -164,11 +160,9 @@ function getDateInterval()
             poly_pos = [];
             polyline.setPath(poly_pos);
             initMap();
-            if(area_status == true){
-                c_res = 0;
-                c_resAnother = 0;   
+            if(area_status == true){   
                 queryServerRAnother(lower, upper);
-                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)+parseInt(c_res)) + " resultados que satisfacen sus criterios de búsqueda"; 
+                document.getElementById("cant").innerHTML = "Se encontraron " + String(parseInt(c_resAnother)) + " resultados que satisfacen sus criterios de búsqueda"; 
             }
             else{
                 queryServerAllAnother(lower, upper);
@@ -282,7 +276,7 @@ function recieveAndPutMkr(input){
     for(var i=0;i<longit.length;++i){
         placeMarker(latit[i],longit[i],tiempo[i]);
     }
-    c_res = tiempo.length - 1;
+    c_res = tiempo.length-1;
 }
 
 /* Aquí termina lo que concierne al primer camión*/
