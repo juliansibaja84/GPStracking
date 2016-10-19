@@ -22,7 +22,7 @@ def statsRequests(request):
     else:
         base = os.path.abspath(os.path.join('.', os.pardir))
         with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
-            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'])
+            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
         return HttpResponse('GOT IT')
 
 
