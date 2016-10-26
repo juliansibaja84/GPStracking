@@ -71,4 +71,6 @@ if __name__ == '__main__':
         #r = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
         #r = r.fetchone()
         #print(r)
+        print(lat)
+        print(lon)
         print(sent_data)

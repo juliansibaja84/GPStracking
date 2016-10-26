@@ -8,9 +8,7 @@ import sqlite3
 
 def index(request):
     template = loader.get_template('finder/logger.html')
-
     return HttpResponse(template.render())
-
 
 def req(request):
     dictio = loadElements()
@@ -27,53 +25,41 @@ def reqOneAnother(request):
 
 def loadElement():
     conn, cc = createConnectionAndCursor()
-    dat = cc.execute('SELECT * FROM log WHERE ID=(SELECT MAX(ID) FROM log)')
+    dat = cc.execute('SELECT * FROM truck1 WHERE ID=(SELECT MAX(ID) FROM truck1)')
     dat = dat.fetchone()
+
+    conn.close()
     
     d = dict()
-    d['ips'] = dat[1]
-    d['prt'] = dat[2]
-    d['lat'] = dat[3]
-    d['lon'] = dat[4]
-    d['tmp'] = dat[5]
+    d['tmp'] = dat[1]
+    d['lat'] = dat[2]
+    d['lon'] = dat[3]
 
     return d
 
 def loadElementAnother():
     conn, cc = createConnectionAndCursorAnother()
-    dat = cc.execute('SELECT * FROM log2 WHERE ID=(SELECT MAX(ID) FROM log2)')
+    dat = cc.execute('SELECT * FROM truck2 WHERE ID=(SELECT MAX(ID) FROM truck2)')
     dat = dat.fetchone()
-    
+
+    conn.close()
     d = dict()
-    d['ips'] = dat[1]
-    d['prt'] = dat[2]
-    d['lat'] = dat[3]
-    d['lon'] = dat[4]
-    d['tmp'] = dat[5]
+    d['tmp'] = dat[1]
+    d['lat'] = dat[2]
+    d['lon'] = dat[3]
 
     return d
-
 
 def createConnectionAndCursor():
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute(
-        '''
-        CREATE TABLE IF NOT EXISTS log
-        (ID INTEGER PRIMARY KEY, IP TEXT, puerto TEXT, latitud TEXT,
-        longitud TEXT, tiempo TEXT)
-        ''')
+    cc.execute('CREATE TABLE IF NOT EXISTS truck1 (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)
 
 def createConnectionAndCursorAnother():
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute(
-        '''
-        CREATE TABLE IF NOT EXISTS log2
-        (ID INTEGER PRIMARY KEY, IP TEXT, puerto TEXT, latitud TEXT,
-        longitud TEXT, tiempo TEXT)
-        ''')
+    cc.execute('CREATE TABLE IF NOT EXISTS truck2 (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)

@@ -1,7 +1,13 @@
 <script type="text/javascript">
 function sendP(){
 	var http = new XMLHttpRequest();
-	var params = "idT=2&lat=10&lon=20&time=10-10-2000_00:00:00";
+	var idT = "1";
+	var lat = "1099005";
+	var lon = "07482194";
+	var time = "10-10-2000_00:00:15";
+
+	var params = "idT="+idT+"&lat="+lat+"&lon="+lon+"&time="+time;
+
 	http.open("POST", " http://127.0.0.1:8000/historic/savep/", true);
 
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

@@ -242,16 +242,22 @@ def savePos(request):
     lon = request.POST['lon']
     time = request.POST['time']
     idT = request.POST['idT']
+    lat = "+"+lat[0:2]+"."+lat[2:7]
+    lon = "-"+lon[0:3]+"."+lon[3:8]
+    time = time.replace("_"," ")
+    
     data = (time,lat,lon)
     conn, cc = connectionDB(idT)
-    cc.execute('INSERT INTO truck'+idT+' VALUES(?,?,?)', data)
+    cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
     conn.commit()
-
+    conn.close()
+    print(lat)
+    print(lon)
     return 0
     
 def connectionDB(i):
     base = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(base+'/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute('CREATE TABLE IF NOT EXISTS truck'+i+' (tiempo TEXT, latitud TEXT,longitud TEXT)')
+    cc.execute('CREATE TABLE IF NOT EXISTS truck'+i+' (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)

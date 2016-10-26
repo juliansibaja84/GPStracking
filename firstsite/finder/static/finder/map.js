@@ -3,16 +3,16 @@ var polyline;
 var old_marker;
 var cur_input = "";
 var poly_pos = [];
-var truck = 'truck1'
+var truck = 'truck1';
+var truck_last = 'truck1';
 
 function getTruck(){
     var e = document.getElementById("truck");
     truck = e.options[e.selectedIndex].value;
     //window.alert(truck)
-    old_marker = undefined;
+    old_marker = null;
     poly_pos = [];
     polyline.setPath(poly_pos);
-    marker = undefined;
     initMap();
 }
 
@@ -27,7 +27,7 @@ function initMap()
         position: new google.maps.LatLng(0, 0),
         map: map,
     });
-    
+
     setInterval(queryServerOne, 2000);
 
 }
@@ -52,7 +52,9 @@ function queryServerOne()
 
 function comprehendInput(input)
 {
+
     prett = JSON.parse(input);
+
     latitude  = prett.lat;
     longitude = prett.lon;
     tim = prett.tmp;
@@ -60,11 +62,15 @@ function comprehendInput(input)
     document.getElementById('long').innerHTML = longitude;
     document.getElementById('lati').innerHTML = latitude;
     document.getElementById('time').innerHTML = tim;
-
-    if(cur_input != prett.tmp) {
-        cur_input = prett.tmp;
-        var thead = document.getElementById('tabla_suprema');
+    if (truck == truck_last){
+        if(cur_input != prett.tmp) {
+            cur_input = prett.tmp;
+            drawPoint(latitude, longitude, tim);
+        }
+    }else{
         drawPoint(latitude, longitude, tim);
+        truck_last = truck;
+        cur_input = "";
     }
 
 }
