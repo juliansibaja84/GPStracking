@@ -246,7 +246,7 @@ def connectionDB(i):
 def statsRequests(request):
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
-        return HttpResponse(template.render)
+        return HttpResponse(template.render())
     else:
         base = os.path.abspath(os.path.join('.', os.pardir))
         with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
@@ -262,26 +262,30 @@ def statsRequests(request):
         return HttpResponse('GOT IT')
 
 
-def createConnectionAndCursorData():
+def createConnectionAndCursorData(task):
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute('CREATE TABLE IF NOT EXISTS data (ID INTEGER PRIMARY KEY, taskid TEXT, datetime TEXT,value TEXT)')
+    cc.execute('CREATE TABLE IF NOT EXISTS data' + task + ' (ID INTEGER PRIMARY KEY, taskid TEXT,value TEXT, datetime TEXT)')
     return (conn, cc)
 
+
 def getData(request, lower='', upper='', taskid=''):
-    conn, cc = createConnectionAndCursorData()
+    conn, cc = createConnectionAndCursorData(taskid)
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
-    dat = cc.execute("SELECT * FROM data WHERE (select * FROM data WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "') AND WHERE taskid = "+taskid+" ORDER BY tiempo")
+    print(com1)
+    print(com2)
+    print(taskid)
+    dat = cc.execute("SELECT * FROM data"+taskid+" WHERE datetime BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY datetime")
     dat = dat.fetchall()
 
     dictionary = dict()
-    tmp = [dat[x][2] for x in range(len(dat))]
-    val = [dat[x][3] for x in range(len(dat))]
+    tmp = [dat[x][3] for x in range(len(dat))]
+    val = [dat[x][2] for x in range(len(dat))]
     
     #Esto es lo que hay que cambiar, los valores de tmp tienen fechas y eso y los de val
     #supuestamente unidades
-    dictionary['tmp'] = ';'.join(tmp)
-    dictionary['val'] = ';'.join(val)
-    return dictionary
+    dictionary['x'] = ';'.join(tmp)
+    dictionary['y'] = ';'.join(val)
+    return JsonResponse(dictionary)

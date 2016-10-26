@@ -1,90 +1,111 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <script type="text/javascript" src="jquery-2.2.3.min.js"></script>
-        <script type="text/javascript" src="canvasjs.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="/static/historic/stylesheet.css" />
+        <link type="text/css" rel="stylesheet" href="/static/historic/stats.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/historic/canvasjs.min.js"></script>
         <script type="text/javascript">
-        	var tmp = [];
-        	var val = [];
+            var tmp = [];
+            var val = [];
+            var pret = {};
+            var taskid = 0;
+
+            function queryServerAll(lower, upper){
+                alert(taskid);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        getData(xhttp.responseText);
+                    }
+                };
+                xhttp.open("GET", "req/stats/"+lower+"/"+upper+"/"+taskid+"/", true);
+                xhttp.send();
+            }
+            function getData(input){
+                prett = JSON.parse(input);
+                tmp = prett.tmp.split(";");
+                val = prett.val.split(";");
+            }
+
             function drawChart() {
-            	var lower = document.getElementById('lower_lim').value;
-    			var upper = document.getElementById('upper_lim').value;
+                var lower = document.getElementById('lower_lim').value;
+                var upper = document.getElementById('upper_lim').value;
+                taskid = document.getElementById("taskid").selectedIndex;
+                //Falta obtener el valor a taskid en base a value, para poder hacer el request mas abajo
 
-    			//Falta obtener el valor a taskid en base a value, para poder hacer el request mas abajo
+                if(lower >= upper || lower == "" || upper == "") {
+                    alert("Por favor ingrese una combinación de fechas válida");
+                }else {
+                    lower += ":00";
+                    upper += ":00";
+                    queryServerAll(lower, upper);
+                    alert(pret.tmp);
+                    alert(pret.val);
 
-    			if(lower >= upper || lower == "" || upper == "") {
-        			alert("Por favor ingrese una combinación de fechas válida");
-    			}else {
-        			lower += ":00";
-        			upper += ":00";
-        			function queryServerAll(lower, upper){
-						var xhttp = new XMLHttpRequest();
-						xhttp.onreadystatechange = function() {
-						    if (xhttp.readyState == 4 && xhttp.status == 200) {
-						        getData(xhttp.responseText);
-						    }
-						};
-						xhttp.open("GET", "req/"+lower+"/"+upper+"/"+taskid+"/", true);
-						xhttp.send();
-					}
-					function getData(input){
-						prett = JSON.parse(input);
-					    tmp = prett.tmp.split(";");
-					    val = prett.val.split(";");
-					}
-
-					//obteniendo la opcion seleccionada
-					var e = document.getElementById("taskid");
-					document.getElementById("recomendaciones").innerHTML=e.options[e.selectedIndex].value;
-
-					var data = [];
-					for(i=0;i<tmp.length;i++){
-						data.push({
-	                            x: tmp[i],
-	                            y: val[i]
-	                        });
-					}
-					
-	                var chart = new CanvasJS.Chart("chart", {
-	                    title: {
-	                        text: "Valores X vs. Valores Y"
-	                    },
-	                    axisX: {
-	                        title: "Valores X",
-	                    },
-	                    axisY: {
-	                        title: "Valores Y",
-	                    },
-	                    data: [{type: "line", dataPoints: data}],
-	                });
-					chart.render();
-				}
+                    var data = [];
+                    for(i=0;i<tmp.length;i++){
+                        data.push({
+                                x: tmp[i],
+                                y: val[i]
+                            });
+                    }
+                    
+                    var chart = new CanvasJS.Chart("chart", {
+                        title: {
+                            text: "Valores X vs. Valores Y"
+                        },
+                        axisX: {
+                            title: "Valores X",
+                        },
+                        axisY: {
+                            title: "Valores Y",
+                        },
+                        data: [{type: "line", dataPoints: data}],
+                    });
+                    chart.render();
+                }
             }
         </script>
     </head>
     <body>
+        <div id="heading">
+          <div id="head1">
+            <!--<div id="logo"><img src="/static/finder/logo.png" /></div>-->
+            <div id="title"><h1 >Enomoto</h1></div>
+            <div id="stance"><h5 >Historic records of your vehicle</h5></div>
+            <div class="histopanel">
+              <ul>
+                 <li><img src="/static/historic/miconm.png"/><a href="/finder">Main</a></li>
+                 <!--<li><a href="/historic">Info</a></li>-->
+              </ul>
+            </div> 
+          </div>
+        </div>
         <div>
-			<select id="taskid" onchange="drawChart()">
-			  <option value="trouble_codes">Trouble codes</option>
-			  <option value="Engine_RPM">Engine RPM</option>
-			  <option value="engine_load">Engine load</option>
-			  <option value="fuel_pressure">Fuel pressure</option>
-			  <option value="vehicle_speed">Vehicle speed</option>
-			  <option value="throttle_position">Throttle position</option>
-			  <option value="time_since_engine_start">Time since engine start</option>
-			  <option value="distance_traveled">Distance Traveled</option>
-			  <option value="battery_voltage">Battery voltage</option>
-			</select>
-			
-			Enter lower limit:<br>
-        	<input type="datetime-local" name="bdaytime" id="lower_lim"><br><br>
-        	Enter upper limit:<br>
-        	<input type="datetime-local" name="bdaytime" id="upper_lim"><br><br>
-			</div>
-		<div id="recomendaciones">
-		
-		</div>
+            <select id="taskid">
+              <option value="trouble_codes">Trouble codes</option>
+              <option value="Engine_RPM">Engine RPM</option>
+              <option value="engine_load">Engine load</option>
+              <option value="fuel_pressure">Fuel pressure</option>
+              <option value="vehicle_speed">Vehicle speed</option>
+              <option value="throttle_position">Throttle position</option>
+              <option value="time_since_engine_start">Time since engine start</option>
+              <option value="distance_traveled">Distance Traveled</option>
+              <option value="battery_voltage">Battery voltage</option>
+            </select>
+            
+            Initial date:
+            <input type="datetime-local" name="bdaytime" id="lower_lim">
+            final date:
+            <input type="datetime-local" name="bdaytime" id="upper_lim">
+            <button type="button" onclick="drawChart()">Search</button>
+            </div>
         <div id="chart">
-			
+            
+        </div>
+        <div id="recomendaciones">
+            <span id="ad">In the select box choose the value you want to see in the Chart, giving an accurate date range</span>
         </div>
     </body>
 </html>
