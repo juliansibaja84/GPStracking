@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^rqanother/(?P<latit>.+)/(?P<longit>.+)/(?P<lower>.+)/(?P<upper>.+)/$', views.getPointsTAnother),
     url(r'stats/', views.statsRequests),
     url(r'^savep/$', views.savePos),
+    url(r'^req/stats/(?P<lower>.+)/(?P<upper>.+)/(?P<taskid>.+)/$', views.getData),
 ]

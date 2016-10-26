@@ -14,17 +14,6 @@ def index(request):
     return HttpResponse(template.render())
 
 
-@csrf_exempt
-def statsRequests(request):
-    template = loader.get_template('historic/stats/index.html')
-    if request.method == 'GET':
-        return HttpResponse(template.render)
-    else:
-        base = os.path.abspath(os.path.join('.', os.pardir))
-        with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
-            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
-        return HttpResponse('GOT IT')
-
 def getPoints(request, lower='', upper=''):
  
     dictio = loadElements(lower, upper)
@@ -240,8 +229,6 @@ def savePos(request):
     cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
     conn.commit()
     conn.close()
-    print(lat)
-    print(lon)
     return 0
     
 def connectionDB(i):
@@ -250,3 +237,51 @@ def connectionDB(i):
     cc = conn.cursor()
     cc.execute('CREATE TABLE IF NOT EXISTS truck'+i+' (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)
+
+
+# esto de aquí abajo corresponde a las estadisticas
+
+
+@csrf_exempt
+def statsRequests(request):
+    template = loader.get_template('historic/stats/index.html')
+    if request.method == 'GET':
+        return HttpResponse(template.render)
+    else:
+        base = os.path.abspath(os.path.join('.', os.pardir))
+        with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
+            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
+        
+
+        # Guardar en base de datos
+        data = (request.POST['taskid'], request.POST['datetime'], request.POST['val'])
+        conn, cc = createConnectionAndCursorData()
+        cc.execute('INSERT INTO data VALUES(null,?,?,?)', data)
+        conn.commit()
+        conn.close()
+        return HttpResponse('GOT IT')
+
+
+def createConnectionAndCursorData():
+    b = os.path.abspath(os.path.join('.', os.pardir))
+    conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
+    cc = conn.cursor()
+    cc.execute('CREATE TABLE IF NOT EXISTS data (ID INTEGER PRIMARY KEY, taskid TEXT, datetime TEXT,value TEXT)')
+    return (conn, cc)
+
+def getData(request, lower='', upper='', taskid=''):
+    conn, cc = createConnectionAndCursorData()
+    com1 = lower.replace('T', ' ')
+    com2 = upper.replace('T', ' ')
+    dat = cc.execute("SELECT * FROM data WHERE (select * FROM data WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "') AND WHERE taskid = "+taskid+" ORDER BY tiempo")
+    dat = dat.fetchall()
+
+    dictionary = dict()
+    tmp = [dat[x][2] for x in range(len(dat))]
+    val = [dat[x][3] for x in range(len(dat))]
+    
+    #Esto es lo que hay que cambiar, los valores de tmp tienen fechas y eso y los de val
+    #supuestamente unidades
+    dictionary['tmp'] = ';'.join(tmp)
+    dictionary['val'] = ';'.join(val)
+    return dictionary

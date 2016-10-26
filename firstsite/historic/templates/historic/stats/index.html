@@ -1,27 +1,90 @@
 <html>
     <head>
+        <script type="text/javascript" src="jquery-2.2.3.min.js"></script>
+        <script type="text/javascript" src="canvasjs.min.js"></script>
         <script type="text/javascript">
-            window.onload = function () {
-                
-                var chart = new CanvasJS.Chart("chart", {
-                    title: {
-                        text: "Valores X vs. Valores Y"
-                    },
-                    axisX: {
-                        title: "Valores X",
-                    },
-                    axisY: {
-                        title: "Valores Y",
-                    },
-                    data: [{type: "line", dataPoints: data}],
-                });
+        	var tmp = [];
+        	var val = [];
+            function drawChart() {
+            	var lower = document.getElementById('lower_lim').value;
+    			var upper = document.getElementById('upper_lim').value;
+
+    			//Falta obtener el valor a taskid en base a value, para poder hacer el request mas abajo
+
+    			if(lower >= upper || lower == "" || upper == "") {
+        			alert("Por favor ingrese una combinación de fechas válida");
+    			}else {
+        			lower += ":00";
+        			upper += ":00";
+        			function queryServerAll(lower, upper){
+						var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+						    if (xhttp.readyState == 4 && xhttp.status == 200) {
+						        getData(xhttp.responseText);
+						    }
+						};
+						xhttp.open("GET", "req/"+lower+"/"+upper+"/"+taskid+"/", true);
+						xhttp.send();
+					}
+					function getData(input){
+						prett = JSON.parse(input);
+					    tmp = prett.tmp.split(";");
+					    val = prett.val.split(";");
+					}
+
+					//obteniendo la opcion seleccionada
+					var e = document.getElementById("taskid");
+					document.getElementById("recomendaciones").innerHTML=e.options[e.selectedIndex].value;
+
+					var data = [];
+					for(i=0;i<tmp.length;i++){
+						data.push({
+	                            x: tmp[i],
+	                            y: val[i]
+	                        });
+					}
+					
+	                var chart = new CanvasJS.Chart("chart", {
+	                    title: {
+	                        text: "Valores X vs. Valores Y"
+	                    },
+	                    axisX: {
+	                        title: "Valores X",
+	                    },
+	                    axisY: {
+	                        title: "Valores Y",
+	                    },
+	                    data: [{type: "line", dataPoints: data}],
+	                });
+					chart.render();
+				}
             }
         </script>
-        <script type="text/javascript" src="assets/script/canvasjs.min.js"></script>
-        <script type="text/javascript" src="assets/script/jquery-2.2.3.min.js"></script>
     </head>
     <body>
+        <div>
+			<select id="taskid" onchange="drawChart()">
+			  <option value="trouble_codes">Trouble codes</option>
+			  <option value="Engine_RPM">Engine RPM</option>
+			  <option value="engine_load">Engine load</option>
+			  <option value="fuel_pressure">Fuel pressure</option>
+			  <option value="vehicle_speed">Vehicle speed</option>
+			  <option value="throttle_position">Throttle position</option>
+			  <option value="time_since_engine_start">Time since engine start</option>
+			  <option value="distance_traveled">Distance Traveled</option>
+			  <option value="battery_voltage">Battery voltage</option>
+			</select>
+			
+			Enter lower limit:<br>
+        	<input type="datetime-local" name="bdaytime" id="lower_lim"><br><br>
+        	Enter upper limit:<br>
+        	<input type="datetime-local" name="bdaytime" id="upper_lim"><br><br>
+			</div>
+		<div id="recomendaciones">
+		
+		</div>
         <div id="chart">
+			
         </div>
     </body>
 </html>

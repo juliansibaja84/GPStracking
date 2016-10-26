@@ -16,7 +16,7 @@ var area_status = false;
 var rectangle;
 var c_res;
 var c_resAnother;
-var c=4;
+var c = 4;
 
 function getTruck(){
     var e1 = document.getElementById("truck1");
