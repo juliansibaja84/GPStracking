@@ -8,7 +8,7 @@
         <script type="text/javascript">
             var tmp = [];
             var val = [];
-            var pret = {};
+            var prett = {};
             var taskid = 0;
 
             function queryServerAll(lower, upper){
@@ -19,13 +19,42 @@
                         getData(xhttp.responseText);
                     }
                 };
-                xhttp.open("GET", "req/stats/"+lower+"/"+upper+"/"+taskid+"/", true);
+                xhttp.open("GET", "/historic/rx/stats/"+lower+"/"+upper+"/"+taskid+"/", true);
                 xhttp.send();
             }
             function getData(input){
                 prett = JSON.parse(input);
-                tmp = prett.tmp.split(";");
-                val = prett.val.split(";");
+                tmp = prett.x.split(";");
+                val = prett.y.split(";");
+                draw();
+            }
+
+            function draw()
+            {
+                alert(prett.x);
+                alert(prett.y);
+
+                var data = [];
+                for(i=0;i<tmp.length;i++){
+                    data.push({
+                            x: i,
+                            y: i,
+                        });
+                }
+                
+                var chart = new CanvasJS.Chart("chart", {
+                    title: {
+                        text: "Valores X vs. Valores Y"
+                    },
+                    axisX: {
+                        title: "Valores X",
+                    },
+                    axisY: {
+                        title: "Valores Y",
+                    },
+                    data: [{type: "line", dataPoints: data}],
+                });
+                chart.render();
             }
 
             function drawChart() {
@@ -40,30 +69,6 @@
                     lower += ":00";
                     upper += ":00";
                     queryServerAll(lower, upper);
-                    alert(pret.tmp);
-                    alert(pret.val);
-
-                    var data = [];
-                    for(i=0;i<tmp.length;i++){
-                        data.push({
-                                x: tmp[i],
-                                y: val[i]
-                            });
-                    }
-                    
-                    var chart = new CanvasJS.Chart("chart", {
-                        title: {
-                            text: "Valores X vs. Valores Y"
-                        },
-                        axisX: {
-                            title: "Valores X",
-                        },
-                        axisY: {
-                            title: "Valores Y",
-                        },
-                        data: [{type: "line", dataPoints: data}],
-                    });
-                    chart.render();
                 }
             }
         </script>

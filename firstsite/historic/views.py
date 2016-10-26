@@ -244,6 +244,7 @@ def connectionDB(i):
 
 @csrf_exempt
 def statsRequests(request):
+    print("hello")
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
         return HttpResponse(template.render())
@@ -288,4 +289,5 @@ def getData(request, lower='', upper='', taskid=''):
     #supuestamente unidades
     dictionary['x'] = ';'.join(tmp)
     dictionary['y'] = ';'.join(val)
+    print(dictionary)
     return JsonResponse(dictionary)
