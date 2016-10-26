@@ -19,7 +19,7 @@ def req(request):
 
 def reqOne(request):
     dictio = loadElement()
-    return JsonResponse(dictio)
+    return JsonResponse(dictio) 
 
 def reqOneAnother(request):
     dictio = loadElementAnother()

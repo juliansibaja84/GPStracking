@@ -25,7 +25,6 @@ def statsRequests(request):
             myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
         return HttpResponse('GOT IT')
 
-
 def getPoints(request, lower='', upper=''):
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
@@ -232,3 +231,27 @@ def constructDictionary(list_of_sets):
     dictionary['tmp'] = ';'.join(tmp)
 
     return dictionary
+
+
+
+# ---------------The real thing begins here--------------
+
+@csrf_exempt
+def savePos(request):
+    lat = request.POST['lat']
+    lon = request.POST['lon']
+    time = request.POST['time']
+    idT = request.POST['idT']
+    data = (time,lat,lon)
+    conn, cc = connectionDB(idT)
+    cc.execute('INSERT INTO truck'+idT+' VALUES(?,?,?)', data)
+    conn.commit()
+
+    return 0
+    
+def connectionDB(i):
+    base = os.path.abspath(os.path.join('.', os.pardir))
+    conn = sqlite3.connect(base+'/firstsite/finder/static/finder/log.sqlite3')
+    cc = conn.cursor()
+    cc.execute('CREATE TABLE IF NOT EXISTS truck'+i+' (tiempo TEXT, latitud TEXT,longitud TEXT)')
+    return (conn, cc)

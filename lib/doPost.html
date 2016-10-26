@@ -1,0 +1,21 @@
+<script type="text/javascript">
+function sendP(){
+	var http = new XMLHttpRequest();
+	var params = "idT=2&lat=10&lon=20&time=10-10-2000_00:00:00";
+	http.open("POST", " http://127.0.0.1:8000/historic/savep/", true);
+
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.setRequestHeader("Content-length", params.length);
+	http.setRequestHeader("Connection", "close");
+
+	http.onreadystatechange = function() {//Call a function when the state changes.
+	    if(http.readyState == 4 && http.status == 200) {
+	        alert(http.responseText);
+	        window.alert("ok")
+	    }
+	}
+	http.send(params);
+}
+</script>
+
+<button type="button" onclick="sendP()">send post</button>
