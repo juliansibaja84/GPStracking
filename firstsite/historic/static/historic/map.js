@@ -204,9 +204,8 @@ function comprehendInputAll(input)
     prett = JSON.parse(input);
     var lon = prett.lon.split(";"); 
     var lat = prett.lat.split(";");
-    var prt = prett.prt.split(";");
-    var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
+
     c_res = tmp.length - 1;
     for(var i=0;i<lon.length;++i){
         drawPoint(lat[i],lon[i],tmp[i]);
@@ -301,8 +300,6 @@ function comprehendInputAllAnother(input)
     prett = JSON.parse(input);
     var lon = prett.lon.split(";"); 
     var lat = prett.lat.split(";");
-    var prt = prett.prt.split(";");
-    var ips = prett.ips.split(";");
     var tmp = prett.tmp.split(";");
 
     for(var i=0;i<lon.length;++i){

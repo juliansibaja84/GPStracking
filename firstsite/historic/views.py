@@ -26,6 +26,7 @@ def statsRequests(request):
         return HttpResponse('GOT IT')
 
 def getPoints(request, lower='', upper=''):
+ 
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
 
@@ -88,7 +89,7 @@ def loadElementsT(lower, upper, latitude, longitude):
 
     lim = [limit[:10] for limit in lim]
 
-    cmd = "SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "' ORDER BY tiempo"
+    cmd = "SELECT * FROM truck1 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "' ORDER BY tiempo"
     with open(expanduser('~') + '/cmds.txt', 'a') as file:
         file.write(cmd + '\n')
     conn, cc = createConnectionAndCursor()
@@ -98,16 +99,18 @@ def loadElementsT(lower, upper, latitude, longitude):
 
 
 def loadElements(lower, upper):
+
     conn, cc = createConnectionAndCursor()
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
-    dat = cc.execute("SELECT * FROM log WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY tiempo")
+    dat = cc.execute("SELECT * FROM truck1 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY tiempo")
     dat = dat.fetchall()
     return constructDictionary(dat)
 
 
 # Aquí empieza lo que concierne a el segundo camión
 def getPointsAnother(request, lower='', upper=''):
+
     dictio = loadElementsAnother(lower, upper)
     return JsonResponse(dictio)
 
@@ -169,7 +172,7 @@ def loadElementsTAnother(lower, upper, latitude, longitude):
 
     lim = [limit[:10] for limit in lim]
 
-    cmd = "SELECT * FROM log2 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "' ORDER BY tiempo"
+    cmd = "SELECT * FROM truck2 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' AND latitud BETWEEN '"+lim[0]+"' AND '"+lim[1]+"' AND longitud BETWEEN '"+lim[2]+"' AND '"+lim[3] + "' ORDER BY tiempo"
     with open(expanduser('~') + '/cmds.txt', 'a') as file:
         file.write(cmd + '\n')
     conn, cc = createConnectionAndCursorAnother()
@@ -182,7 +185,7 @@ def loadElementsAnother(lower, upper):
     conn, cc = createConnectionAndCursorAnother()
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
-    dat = cc.execute("SELECT * FROM log2 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY tiempo")
+    dat = cc.execute("SELECT * FROM truck2 WHERE tiempo BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY tiempo")
     dat = dat.fetchall()
     return constructDictionary(dat)
 
@@ -193,12 +196,7 @@ def createConnectionAndCursor():
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute(
-        '''
-        CREATE TABLE IF NOT EXISTS log
-        (ID INTEGER PRIMARY KEY, IP TEXT, puerto TEXT, latitud TEXT,
-        longitud TEXT, tiempo TEXT)
-        ''')
+    cc.execute('CREATE TABLE IF NOT EXISTS truck1 (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)
 
 
@@ -206,29 +204,20 @@ def createConnectionAndCursorAnother():
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute(
-        '''
-        CREATE TABLE IF NOT EXISTS log2
-        (ID INTEGER PRIMARY KEY, IP TEXT, puerto TEXT, latitud TEXT,
-        longitud TEXT, tiempo TEXT)
-        ''')
+    cc.execute('CREATE TABLE IF NOT EXISTS truck2 (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT,longitud TEXT)')
     return (conn, cc)
 
 
 def constructDictionary(list_of_sets):
     dictionary = dict()
+    tmp = [list_of_sets[x][1] for x in range(len(list_of_sets))]
+    lat = [list_of_sets[x][2] for x in range(len(list_of_sets))]
+    lon = [list_of_sets[x][3] for x in range(len(list_of_sets))]
 
-    ips = [list_of_sets[x][1] for x in range(len(list_of_sets))]
-    prt = [list_of_sets[x][2] for x in range(len(list_of_sets))]
-    lat = [list_of_sets[x][3] for x in range(len(list_of_sets))]
-    lon = [list_of_sets[x][4] for x in range(len(list_of_sets))]
-    tmp = [list_of_sets[x][5] for x in range(len(list_of_sets))]
-
-    dictionary['ips'] = ';'.join(ips)
-    dictionary['prt'] = ';'.join(prt)
+    dictionary['tmp'] = ';'.join(tmp)
     dictionary['lat'] = ';'.join(lat)
     dictionary['lon'] = ';'.join(lon)
-    dictionary['tmp'] = ';'.join(tmp)
+
 
     return dictionary
 
