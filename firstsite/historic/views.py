@@ -244,30 +244,34 @@ def connectionDB(i):
 
 @csrf_exempt
 def statsRequests(request):
+
     print("hello")
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
         return HttpResponse(template.render())
     else:
-        base = os.path.abspath(os.path.join('.', os.pardir))
-        with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
-            myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
-        
-
+    #    base = os.path.abspath(os.path.join('.', os.pardir))
+    #    with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
+    #        myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
+        taskid = request.POST['taskid']
+        val = request.POST['val']
+        datetime = request.POST['datetime']
+        datetime = datetime.replace("_"," ")
         # Guardar en base de datos
-        data = (request.POST['taskid'], request.POST['datetime'], request.POST['val'])
-        conn, cc = createConnectionAndCursorData()
-        cc.execute('INSERT INTO data VALUES(null,?,?,?)', data)
+        idT = request.POST['idT']
+        data = (taskid, datetime, val)
+        conn, cc = createConnectionAndCursorData(idT)
+        cc.execute('INSERT INTO data' + idT + ' VALUES(null,?,?,?)', data)
         conn.commit()
         conn.close()
         return HttpResponse('GOT IT')
 
 
-def createConnectionAndCursorData(task):
+def createConnectionAndCursorData(i):
     b = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(b + '/firstsite/finder/static/finder/log.sqlite3')
     cc = conn.cursor()
-    cc.execute('CREATE TABLE IF NOT EXISTS data' + task + ' (ID INTEGER PRIMARY KEY, taskid TEXT,value TEXT, datetime TEXT)')
+    cc.execute('CREATE TABLE IF NOT EXISTS data' + i + ' (ID INTEGER PRIMARY KEY, taskid TEXT, datetime TEXT, val TEXT)')
     return (conn, cc)
 
 

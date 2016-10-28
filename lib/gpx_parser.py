@@ -12,8 +12,8 @@ gpx = gpxpy.parse(gpx_file)
 base = os.path.abspath(os.path.join('.', os.pardir))
 conn = sqlite3.connect(base+'/firstsite/finder/static/finder/log.sqlite3')
 cc = conn.cursor()
-cc.execute('''CREATE TABLE IF NOT EXISTS log2
-                      (ID INTEGER PRIMARY KEY, IP TEXT, puerto TEXT, latitud TEXT, longitud TEXT, tiempo TEXT)''')
+cc.execute('''CREATE TABLE IF NOT EXISTS truck2
+                      (ID INTEGER PRIMARY KEY, tiempo TEXT, latitud TEXT, longitud TEXT)''')
 conn.commit()
 
 
@@ -33,7 +33,7 @@ for track in gpx.tracks:
                 lon = lon[0:-1]
             while(len(lon) < 9):
                 lon += '0'
-            sent_data = ('9001', 'localhost', lat, lon, time)
-            cc.execute('''INSERT INTO log2 VALUES(NULL,?,?,?,?,?)''', sent_data)
+            sent_data = (time, lat, lon)
+            cc.execute('''INSERT INTO truck2 VALUES(NULL,?,?,?)''', sent_data)
             # print(str(lat) + ' ' + str(lon) + ' ' + str(time))
 conn.commit()

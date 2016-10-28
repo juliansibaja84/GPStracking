@@ -1,10 +1,10 @@
 <script type="text/javascript">
 function sendP(){
 	var http = new XMLHttpRequest();
-	var idT = "2";
+	var idT = "1";
 	var lat = "1099008";
 	var lon = "07482184";
-	var time = "2000-10-10_00:00:18";
+	var time = "2016-10-10_02:50:10";
 
 	var params = "idT="+idT+"&lat="+lat+"&lon="+lon+"&time="+time;
 
@@ -14,7 +14,7 @@ function sendP(){
 	http.setRequestHeader("Content-length", params.length);
 	http.setRequestHeader("Connection", "close");
 
-	http.onreadystatechange = function() {//Call a function when the state changes.
+	http.onreadystatechange = function() {
 	    if(http.readyState == 4 && http.status == 200) {
 	        alert(http.responseText);
 	        window.alert("ok")
@@ -23,5 +23,5 @@ function sendP(){
 	http.send(params);
 }
 </script>
-
+Enviar coordenadas:
 <button type="button" onclick="sendP()">send post</button>

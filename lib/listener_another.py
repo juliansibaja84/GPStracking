@@ -4,8 +4,7 @@ import time
 import datetime as dt
 import math
 import os
-
-
+#nombre, cedula y placa #id mplabx cuando el compiler xc8 68f728cc96cf
 def databaseConnection():
     base = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(base+'/firstsite/finder/static/finder/log.sqlite3')

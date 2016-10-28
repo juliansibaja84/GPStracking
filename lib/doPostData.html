@@ -1,0 +1,27 @@
+<script type="text/javascript">
+function sendP(){
+	var http = new XMLHttpRequest();
+	var idT = "1"
+	var taskid = "2";
+	var datetime = "2016-10-10_02:50:10";
+	var val = "22 Km/h";
+
+	var params = "idT="+idT+"&taskid="+taskid+"&datetime="+datetime+"&val="+val;
+
+	http.open("POST", "http://127.0.0.1:8000/historic/stats/", true);
+
+	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	http.setRequestHeader("Content-length", params.length);
+	http.setRequestHeader("Connection", "close");
+
+	http.onreadystatechange = function() {
+	    if(http.readyState == 4 && http.status == 200) {
+	        alert(http.responseText);
+	        window.alert("ok")
+	    }
+	}
+	http.send(params);
+}
+</script>
+Enviar datos "truck":
+<button type="button" onclick="sendP()">send post</button>
