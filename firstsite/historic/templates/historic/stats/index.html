@@ -10,8 +10,9 @@
             var val = [];
             var prett = {};
             var taskid = 0;
+            var truck = "1";
 
-            function queryServerAll(lower, upper){
+            function getValuesAndPlot(idT, taskid, lower, upper){
                 alert(taskid);
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -19,17 +20,20 @@
                         getData(xhttp.responseText);
                     }
                 };
-                xhttp.open("GET", "/historic/rx/stats/"+lower+"/"+upper+"/"+taskid+"/", true);
+                xhttp.open("GET", "/historic/rx/stats/"+lower+"/"+upper+"/"+taskid+"/"+idT+"/", true);
                 xhttp.send();
             }
             function getData(input){
+
                 prett = JSON.parse(input);
                 tmp = prett.x.split(";");
                 val = prett.y.split(";");
-                draw();
+                window.alert(val)
+                window.alert(tmp)
+                draw(tmp,val);
             }
 
-            function draw()
+            function draw(x,y)
             {
                 alert(prett.x);
                 alert(prett.y);
@@ -37,8 +41,8 @@
                 var data = [];
                 for(i=0;i<tmp.length;i++){
                     data.push({
-                            x: i,
-                            y: i,
+                            x: tmp[i],
+                            y: val[i],
                         });
                 }
                 
@@ -61,14 +65,15 @@
                 var lower = document.getElementById('lower_lim').value;
                 var upper = document.getElementById('upper_lim').value;
                 taskid = document.getElementById("taskid").selectedIndex;
-                //Falta obtener el valor a taskid en base a value, para poder hacer el request mas abajo
+                var e = document.getElementById("truck");
+                truck = e.options[e.selectedIndex].value;
 
                 if(lower >= upper || lower == "" || upper == "") {
                     alert("Por favor ingrese una combinación de fechas válida");
                 }else {
                     lower += ":00";
                     upper += ":00";
-                    queryServerAll(lower, upper);
+                    getValuesAndPlot(truck, taskid, lower, upper);
                 }
             }
         </script>
@@ -88,16 +93,20 @@
           </div>
         </div>
         <div>
+            <select id="truck">
+                <option value="1" >Truck 1</option>
+                <option value="2" >Truck 2</option>
+            </select>
             <select id="taskid">
-              <option value="trouble_codes">Trouble codes</option>
-              <option value="Engine_RPM">Engine RPM</option>
-              <option value="engine_load">Engine load</option>
-              <option value="fuel_pressure">Fuel pressure</option>
-              <option value="vehicle_speed">Vehicle speed</option>
-              <option value="throttle_position">Throttle position</option>
-              <option value="time_since_engine_start">Time since engine start</option>
-              <option value="distance_traveled">Distance Traveled</option>
-              <option value="battery_voltage">Battery voltage</option>
+              <option value="0">Trouble codes</option>
+              <option value="1">Engine RPM</option>
+              <option value="2">Engine load</option>
+              <option value="3">Fuel pressure</option>
+              <option value="4">Vehicle speed</option>
+              <option value="5">Throttle position</option>
+              <option value="6">Time since engine start</option>
+              <option value="7">Distance Traveled</option>
+              <option value="8">Battery voltage</option>
             </select>
             
             Initial date:

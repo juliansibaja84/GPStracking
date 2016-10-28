@@ -216,20 +216,25 @@ def constructDictionary(list_of_sets):
 
 @csrf_exempt
 def savePos(request):
-    lat = request.POST['lat']
-    lon = request.POST['lon']
-    time = request.POST['time']
-    idT = request.POST['idT']
-    lat = "+"+lat[0:2]+"."+lat[2:7]
-    lon = "-"+lon[0:3]+"."+lon[3:8]
-    time = time.replace("_"," ")
-    
-    data = (time,lat,lon)
-    conn, cc = connectionDB(idT)
-    cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
-    conn.commit()
-    conn.close()
-    return 0
+    print("hello")
+    template = loader.get_template('historic/stats/index.html')
+    if request.method == 'GET':
+        return HttpResponse(template.render())
+    else:
+        lat = request.POST['lat']
+        lon = request.POST['lon']
+        time = request.POST['time']
+        idT = request.POST['idT']
+        lat = "+"+lat[0:2]+"."+lat[2:7]
+        lon = "-"+lon[0:3]+"."+lon[3:8]
+        time = time.replace("_"," ")
+        
+        data = (time,lat,lon)
+        conn, cc = connectionDB(idT)
+        cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
+        conn.commit()
+        conn.close()
+        return HttpResponse("")
     
 def connectionDB(i):
     base = os.path.abspath(os.path.join('.', os.pardir))
@@ -244,7 +249,6 @@ def connectionDB(i):
 
 @csrf_exempt
 def statsRequests(request):
-
     print("hello")
     template = loader.get_template('historic/stats/index.html')
     if request.method == 'GET':
@@ -275,14 +279,14 @@ def createConnectionAndCursorData(i):
     return (conn, cc)
 
 
-def getData(request, lower='', upper='', taskid=''):
+def getData(request, lower='', upper='', taskid='',idT=''):
     conn, cc = createConnectionAndCursorData(taskid)
     com1 = lower.replace('T', ' ')
     com2 = upper.replace('T', ' ')
     print(com1)
     print(com2)
     print(taskid)
-    dat = cc.execute("SELECT * FROM data"+taskid+" WHERE datetime BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY datetime")
+    dat = cc.execute("SELECT * FROM data"+idT+" WHERE taskid="+taskid+" AND datetime BETWEEN '" + com1 + "' AND '" + com2 + "' ORDER BY datetime")
     dat = dat.fetchall()
 
     dictionary = dict()
