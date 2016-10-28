@@ -1,4 +1,3 @@
 *.html~
 *.pyc
 firstsite/static/
-firstsite/finder/static/finder/log.sqlite3
