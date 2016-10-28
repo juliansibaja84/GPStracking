@@ -1,7 +1,10 @@
 package org.ennen.enomoto;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -71,9 +74,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new PositionGuesser(this.collected_info_stack);
+        try {
+            locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+        }
+        catch(SecurityException e) {Log.d("SecExc", e.toString());}
+
         // Init server connection
         this.collected_info_stack.push("taskid=10&datetime=00-00-00_00:00:00&val=testbyte");
-        ServerConnector server_connection = new ServerConnector("ennen.org", 80, this);
+        ServerConnector server_connection = new ServerConnector("ennen.org", 80, "/historic/stats/", this);
     }
 
     @Override

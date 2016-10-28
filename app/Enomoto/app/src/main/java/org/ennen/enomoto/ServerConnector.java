@@ -21,10 +21,10 @@ public class ServerConnector implements Executor {
     private URL url;
     private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
 
-    public ServerConnector(String url, int port, MainActivity master)
+    public ServerConnector(String url, int port, String file, MainActivity master)
     {
         try {
-            this.url = new URL("http", url, port, "/historic/stats/");
+            this.url = new URL("http", url, port, file);
         }
         catch (MalformedURLException e) {
             Log.d("connection_error", e.toString());
