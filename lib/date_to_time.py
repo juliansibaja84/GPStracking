@@ -43,11 +43,13 @@ def dateToList(ini, fin):
     time_list = list()
 
     # Date scheme
-    scale = dateScheme(significance, time_list, diff)
+    ini = int(date_low[significance])
+    fin = int(date_high[significance])
+    scale = dateScheme(significance, time_list, diff, ini, fin)
 
     # Time scheme
     if not time_list:
-        scale = timeScheme(significance, time_list, diff)
+        scale = timeScheme(significance, time_list, diff, ini, fin)
 
     time_dict['scale'] = scale
     time_dict['array'] = ','.join(str(x) for x in time_list)
@@ -55,10 +57,10 @@ def dateToList(ini, fin):
     return time_dict
 
 
-def dateScheme(significance, time_list, diff):
+def dateScheme(significance, time_list, diff, ini, fin):
     scale = 'wek'
     if significance == 'yhr':
-        time_list.extend(range(1, diff*12 + 1))
+        time_list.extend(range(1, diff*48 + 1))
     elif significance == 'mon':
         if diff*4 < MIN:
             time_list.extend(range(1, 11))
@@ -66,42 +68,17 @@ def dateScheme(significance, time_list, diff):
             time_list.extend(range(1, diff*4 + 1))
     elif significance == 'day':
         scale = 'day'
-        if diff < MIN:
-            time_list.extend(range(1, 11))
+        if diff < MIN and ini + 10 < 30:
+            time_list.extend(range(ini, ini + 10))
         else:
-            time_list.extend(range(1, diff + 1))
+            time_list.extend(range(ini, fin + 1))
     return scale
 
 
-def timeScheme(significance, time_list, diff):
-    scale = 'hur'
-    if significance == 'hur':
-        if diff < 2:
-            scale = 'min'
-            time_list.extend(range(1, diff*60 + 1))
-        else:
-            if diff < MIN:
-                time_list.extend(range(1, 11))
-            else:
-                time_list.extend(range(1, diff + 1))
-    elif significance == 'min':
-        scale = 'min'
-        if diff < 2:
-            scale = 'sec'
-            time_list.extend(range(1, diff*60 + 1))
-        else:
-            if diff < MIN:
-                time_list.extend(range(1, 11))
-            else:
-                time_list.extend(range(1, diff + 1))
-    elif significance == 'sec':
-        scale = 'sec'
-        if diff < MIN:
-            time_list.extend(range(1, 11))
-        else:
-            time_list.extend(range(1, diff + 1))
-    return scale
+def timeScheme(significance, time_list, diff, ini, fin):
+    time_list.extend(range(ini, fin + 1))
+    return significance
 
 if __name__ == '__main__':
-    time_dict = dateToList('0000-00-00 22:05:06', '0000-00-00 04:15:16')
+    time_dict = dateToList('0002-12-10 22:15:06', '0002-12-22 22:15:16')
     print(time_dict)
