@@ -2,6 +2,61 @@
 MIN = 10
 
 
+def dataGrouper(time_dict, data_time, data_value):
+    # Data list is ordered by time
+    # Data time has the format YYYY-MM-DD HH:MM:SS
+    # Easy case is with days, hours and minutes
+    data = list()
+    scale = time_dict['scale']
+
+    ini = 8
+    fin = 10
+    if scale == 'yhr':
+        ini = 0
+        fin = 4
+    elif scale == 'mon':
+        ini = 5
+        fin = 7
+    elif scale == 'hur':
+        ini = 11
+        fin = 13
+    elif scale == 'min':
+        ini = 14
+        fin = 16
+
+    # Merge data according to scale
+    data_time, data_value = mergeData(data_time, data_value, ini, fin)
+
+    for x in time_dict['array'].split(','):
+        for i in range(0, len(data_time)):
+            if int(x) == int(data_time[i]):
+                data.append(data_value[i])
+                break
+            if int(x) < int(data_time[i]) + 1:
+                data.append('0')
+                break
+
+    print('***********************************')
+    return data
+
+
+def mergeData(d_time, d_value, ini, fin):
+    f_time = list()
+    f_value = list()
+    for x in d_time:
+        check = False
+        for i in range(0, len(d_time)):
+            if x[ini:fin] not in f_time:
+                check = True
+                f_time.append(x[ini:fin])
+                f_value.append([])
+            if x[ini:fin] == d_time[i][ini:fin] and check:
+                f_value[-1].append(d_value[i])
+    print(f_time)
+    print(f_value)
+    return [f_time, f_value]
+
+
 def dateToList(ini, fin):
     # Final list
     time_dict = dict()
@@ -39,7 +94,7 @@ def dateToList(ini, fin):
     diff = abs(int(date_high[significance]) - int(date_low[significance]))
 
     # Interpret difference
-    # Output values are: weeks, days, hours, minutes or seconds
+    # Output values are the same as significance
     time_list = list()
 
     # Date scheme
@@ -58,27 +113,20 @@ def dateToList(ini, fin):
 
 
 def dateScheme(significance, time_list, diff, ini, fin):
-    scale = 'wek'
-    if significance == 'yhr':
-        time_list.extend(range(1, diff*48 + 1))
-    elif significance == 'mon':
-        if diff*4 < MIN:
-            time_list.extend(range(1, 11))
-        else:
-            time_list.extend(range(1, diff*4 + 1))
-    elif significance == 'day':
-        scale = 'day'
-        if diff < MIN and ini + 10 < 30:
-            time_list.extend(range(ini, ini + 10))
-        else:
-            time_list.extend(range(ini, fin + 1))
-    return scale
+    time_list.extend(range(ini, fin + 1))
+    return significance
 
 
 def timeScheme(significance, time_list, diff, ini, fin):
     time_list.extend(range(ini, fin + 1))
     return significance
 
+
 if __name__ == '__main__':
-    time_dict = dateToList('0002-12-10 22:15:06', '0002-12-22 22:15:16')
+    time_dict = dateToList('0002-12-10 01:15:06', '0002-12-10 22:15:16')
+
     print(time_dict)
+    timed = ['0002-12-10 01:15:06', '0002-12-10 01:15:06', '0002-12-10 05:15:06', '0002-12-10 06:15:06', '0002-12-10 06:15:06', '0002-12-10 06:15:06', '0002-12-10 08:15:06', '0002-12-10 08:15:06', '0002-12-10 09:15:06', '0002-12-10 10:15:06', '0002-12-10 11:15:06', '0002-12-10 20:15:06', '0002-12-10 21:15:06']
+    datad = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+    print('***********************************')
+    print(dataGrouper(time_dict, timed, datad))
