@@ -17,7 +17,6 @@
             var taskname;
             var e;
             function getValuesAndPlot(idT, taskid, lower, upper){
-                window.alert(taskid);
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -33,8 +32,6 @@
                 tmp = prett.x.split(";");
                 val = prett.y.split(";");
                 scale = prett.scale;
-                window.alert(val)
-                window.alert(tmp)
                 draw(tmp,val);
             }
 
