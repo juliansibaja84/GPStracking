@@ -8,9 +8,14 @@
         <script type="text/javascript">
             var tmp = [];
             var val = [];
+            var scale = "";
             var prett = {};
             var truck = "1";
-
+            var lower;
+            var upper;
+            var taskid;
+            var taskname;
+            var e;
             function getValuesAndPlot(idT, taskid, lower, upper){
                 window.alert(taskid);
                 var xhttp = new XMLHttpRequest();
@@ -27,6 +32,7 @@
                 prett = JSON.parse(input);
                 tmp = prett.x.split(";");
                 val = prett.y.split(";");
+                scale = prett.scale;
                 window.alert(val)
                 window.alert(tmp)
                 draw(tmp,val);
@@ -44,13 +50,13 @@
                 
                 var chart = new CanvasJS.Chart("chart", {
                     title: {
-                        text: "Valores X vs. Valores Y"
+                        text: "tiempo vs. "+taskname,
                     },
                     axisX: {
-                        title: "Valores X",
+                        title: "Tiempo["+scale+"]",
                     },
                     axisY: {
-                        title: "Valores Y",
+                        title: taskname,
                     },
                     data: [{type: "line", dataPoints: data}],
                 });
@@ -58,13 +64,14 @@
             }
 
             function drawChart() {
-                var lower = document.getElementById('lower_lim').value;
-                var upper = document.getElementById('upper_lim').value;
-                var taskid = document.getElementById("taskid");
+                lower = document.getElementById('lower_lim').value;
+                upper = document.getElementById('upper_lim').value;
+                taskid = document.getElementById("taskid");
+                taskname = taskid.options[taskid.selectedIndex].text;
                 taskid = taskid.options[taskid.selectedIndex].value;
-                var e = document.getElementById("truck");
+                e = document.getElementById("truck");
                 truck = e.options[e.selectedIndex].value;
-
+                
                 if(lower >= upper || lower == "" || upper == "") {
                     alert("Por favor ingrese una combinación de fechas válida");
                 }else {

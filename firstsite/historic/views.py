@@ -290,7 +290,7 @@ def getData(request, lower='', upper='', taskid='',idT=''):
     tmp = [dat[x][2] for x in range(len(dat))]
     val = [dat[x][3] for x in range(len(dat))]
 
-    time_dict = dateToList(tmp[0],tmp[-1])
+    time_dict = dateToList(com1,com2)
     vector_y = dataGrouper(time_dict, tmp, val)
     cont = 0
     for i in vector_y :
@@ -298,16 +298,22 @@ def getData(request, lower='', upper='', taskid='',idT=''):
             suma = 0
             for j in i:
                 suma = suma + int(j)
-
             vector_y[cont] = str(int(suma/len(i)))
         else:
             vector_y[cont] = vector_y[cont][0]
-
         cont += 1
+
     vector_x = str(time_dict['array'])
     vector_x = vector_x.split(',')
+    if len(vector_x) > len(vector_y):
+        diff = len(vector_x) - len(vector_y)
+        vector_y.extend(['0']*diff)
+
     x=';'.join(vector_x)
     y=';'.join(vector_y)
+
+
+
     dictionary['x'] = x 
     dictionary['y'] = y
     dictionary['scale'] = time_dict['scale']
