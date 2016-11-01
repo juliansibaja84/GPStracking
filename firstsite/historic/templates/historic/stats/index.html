@@ -9,11 +9,10 @@
             var tmp = [];
             var val = [];
             var prett = {};
-            var taskid = 0;
             var truck = "1";
 
             function getValuesAndPlot(idT, taskid, lower, upper){
-                alert(taskid);
+                window.alert(taskid);
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -61,7 +60,8 @@
             function drawChart() {
                 var lower = document.getElementById('lower_lim').value;
                 var upper = document.getElementById('upper_lim').value;
-                taskid = document.getElementById("taskid").selectedIndex;
+                var taskid = document.getElementById("taskid");
+                taskid = taskid.options[taskid.selectedIndex].value;
                 var e = document.getElementById("truck");
                 truck = e.options[e.selectedIndex].value;
 
@@ -95,15 +95,15 @@
                 <option value="2" >Truck 2</option>
             </select>
             <select id="taskid">
-              <option value="0">Trouble codes</option>
-              <option value="1">Engine RPM</option>
-              <option value="2">Engine load</option>
-              <option value="3">Fuel pressure</option>
-              <option value="4">Vehicle speed</option>
-              <option value="5">Throttle position</option>
-              <option value="6">Time since engine start</option>
-              <option value="7">Distance Traveled</option>
-              <option value="8">Battery voltage</option>
+              <option value="1">Trouble codes</option>
+              <option value="2">Engine RPM</option>
+              <option value="3">Engine load</option>
+              <option value="4">Fuel pressure</option>
+              <option value="5">Vehicle speed</option>
+              <option value="6">Throttle position</option>
+              <option value="7">Time since engine start</option>
+              <option value="8">Distance Traveled</option>
+              <option value="9">Battery voltage</option>
             </select>
             
             Initial date:
