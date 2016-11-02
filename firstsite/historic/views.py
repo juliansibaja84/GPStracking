@@ -248,8 +248,7 @@ def savePosCopy(vals):
     lon = vals['lon']
     time = vals['datetime']
     idT = vals['idT']
-    lat = "+"+lat[0:2]+"."+lat[2:7]
-    lon = "-"+lon[0:3]+"."+lon[3:8]
+    lat = "+"+lat
     time = time.replace("_", " ")
 
     data = (time, lat, lon)

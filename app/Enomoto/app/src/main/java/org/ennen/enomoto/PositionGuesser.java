@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
@@ -32,7 +35,9 @@ public class PositionGuesser implements LocationListener
     @Override
     public void onLocationChanged(Location loc)
     {
-        stack.push("taskid=11&datetime=00-00-00_00:00:00&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude() + "&idT=1");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+        stack.push("taskid=11&datetime="+df.format(c.getTime())+"&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude() + "&idT=1");
         Log.d("Lon", ""+loc.getLongitude());
         Log.d("lat", ""+loc.getLatitude());
     }
