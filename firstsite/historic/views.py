@@ -267,10 +267,10 @@ def statsRequests(request):
     if request.method == 'GET':
         return HttpResponse(template.render())
     else:
-        if request.POST['taskid'] == 11:
+        if request.POST['taskid'] == '11':
             savePosCopy(request.POST)
             return HttpResponse('GOT IT')
-        elif request.POST['taskid'] == 10:
+        elif request.POST['taskid'] == '10':
             return HttpResponse('GOT IT')
 
         taskid = request.POST['taskid']
