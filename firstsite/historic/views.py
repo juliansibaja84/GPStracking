@@ -15,7 +15,6 @@ def index(request):
 
 
 def getPoints(request, lower='', upper=''):
- 
     dictio = loadElements(lower, upper)
     return JsonResponse(dictio)
 
@@ -210,9 +209,8 @@ def constructDictionary(list_of_sets):
 
     return dictionary
 
-
-
 # ---------------The real thing begins here--------------
+
 
 @csrf_exempt
 def savePos(request):
@@ -227,15 +225,16 @@ def savePos(request):
         idT = request.POST['idT']
         lat = "+"+lat[0:2]+"."+lat[2:7]
         lon = "-"+lon[0:3]+"."+lon[3:8]
-        time = time.replace("_"," ")
+        time = time.replace("_", " ")
         
-        data = (time,lat,lon)
+        data = (time, lat, lon)
         conn, cc = connectionDB(idT)
         cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
         conn.commit()
         conn.close()
         return HttpResponse("")
-    
+
+
 def connectionDB(i):
     base = os.path.abspath(os.path.join('.', os.pardir))
     conn = sqlite3.connect(base+'/firstsite/finder/static/finder/log.sqlite3')
@@ -244,9 +243,23 @@ def connectionDB(i):
     return (conn, cc)
 
 
+def savePosCopy(vals):
+    lat = vals['lat']
+    lon = vals['lon']
+    time = vals['datetime']
+    idT = vals['idT']
+    lat = "+"+lat[0:2]+"."+lat[2:7]
+    lon = "-"+lon[0:3]+"."+lon[3:8]
+    time = time.replace("_", " ")
+
+    data = (time, lat, lon)
+    conn, cc = connectionDB(idT)
+    cc.execute('INSERT INTO truck'+idT+' VALUES(null,?,?,?)', data)
+    conn.commit()
+    conn.close()
+
+
 # esto de aquí abajo corresponde a las estadisticas
-
-
 @csrf_exempt
 def statsRequests(request):
     print("GOT IT")
@@ -254,13 +267,16 @@ def statsRequests(request):
     if request.method == 'GET':
         return HttpResponse(template.render())
     else:
-    #    base = os.path.abspath(os.path.join('.', os.pardir))
-    #    with open(base + "/firstsite/historic/static/historic/posts.txt", "a") as myfile:
-    #        myfile.write('taskid: ' + request.POST['taskid'] + ' datetime: ' + request.POST['datetime'] + ' val: ' + request.POST['val'] + '\n')
+        if request.POST['taskid'] == 11:
+            savePosCopy(request.POST)
+            return HttpResponse('GOT IT')
+        elif request.POST['taskid'] == 10:
+            return HttpResponse('GOT IT')
+
         taskid = request.POST['taskid']
         val = request.POST['val']
         datetime = request.POST['datetime']
-        datetime = datetime.replace("_"," ")
+        datetime = datetime.replace("_", " ")
         # Guardar en base de datos
         idT = request.POST['idT']
         data = (taskid, datetime, val)

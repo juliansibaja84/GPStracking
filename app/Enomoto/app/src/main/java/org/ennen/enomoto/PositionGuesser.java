@@ -32,7 +32,7 @@ public class PositionGuesser implements LocationListener
     @Override
     public void onLocationChanged(Location loc)
     {
-        stack.push("taskid=11&datetime=00-00-00_00:00:00&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude());
+        stack.push("taskid=11&datetime=00-00-00_00:00:00&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude() + "&idT=1");
         Log.d("Lon", ""+loc.getLongitude());
         Log.d("lat", ""+loc.getLatitude());
     }
