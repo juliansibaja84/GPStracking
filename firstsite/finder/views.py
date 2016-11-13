@@ -18,12 +18,25 @@ def req(request):
 
 def reqOne(request):
     dictio = loadElement()
-    return JsonResponse(dictio) 
+    return JsonResponse(dictio)
 
 
 def reqOneAnother(request):
     dictio = loadElementAnother()
     return JsonResponse(dictio)
+
+
+def reqMany(request):
+    dictio1 = loadElement()
+    dictio2 = loadElementAnother()
+    d = dict()
+    d['tmp1'] = dictio1['tmp']
+    d['tmp2'] = dictio2['tmp']
+    d['lat1'] = dictio1['lat']
+    d['lat2'] = dictio2['lat']
+    d['lon1'] = dictio1['lon']
+    d['lon2'] = dictio2['lon']
+    return JsonResponse(d)
 
 
 def loadElement():

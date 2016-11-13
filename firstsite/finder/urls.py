@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^req/all/', views.req),
     url(r'^req/one/', views.reqOne),
     url(r'^req/oneanother/', views.reqOneAnother),
+    url(r'^req/many/', views.reqMany),
 ]

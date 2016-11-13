@@ -1,10 +1,14 @@
 var map;
 var polyline;
 var old_marker;
+var old_marker_aux;
 var cur_input = "";
+var cur_input_aux = "";
 var poly_pos = [];
+var poly_pos_aux = [];
 var truck = 'truck1';
 var truck_last = 'truck1';
+var id;
 
 function initMap()
 {
@@ -18,7 +22,7 @@ function initMap()
         map: map,
     });
 
-    setInterval(queryServerOne, 2000);
+    id = setInterval(queryServerOne, 4000);
 
 }
 
@@ -37,6 +41,9 @@ function queryServerOne()
     }else if (truck == "truck2") {
         xhttp.open("GET", "req/oneanother", true);
         xhttp.send();
+    }else if (truck == "truckb") {
+        xhttp.open("GET", "req/many", true);
+        xhttp.send();
     }
 }
 
@@ -45,33 +52,86 @@ function comprehendInput(input)
 
     prett = JSON.parse(input);
 
-    latitude  = prett.lat;
-    longitude = prett.lon;
-    tim = prett.tmp;
+    if(truck != "truckb") {
+        latitude  = prett.lat;
+        longitude = prett.lon;
+        tim = prett.tmp;
 
-    document.getElementById('long').innerHTML = longitude;
-    document.getElementById('lati').innerHTML = latitude;
-    document.getElementById('time').innerHTML = tim;
-    if (truck == truck_last){
-        if(cur_input != prett.tmp) {
-            cur_input = prett.tmp;
-            drawPoint(latitude, longitude, tim);
+        document.getElementById('long').innerHTML = " " + longitude;
+        document.getElementById('lati').innerHTML = " " + latitude;
+        document.getElementById('time').innerHTML = " " + tim;
+        if (truck == truck_last){
+            if(cur_input != prett.tmp) {
+                cur_input = prett.tmp;
+                drawPoint(latitude, longitude, tim, truck);
+            }
+        }else{
+            drawPoint(latitude, longitude, tim, truck);
+            truck_last = truck;
+            cur_input = "";
         }
-    }else{
-        drawPoint(latitude, longitude, tim);
-        truck_last = truck;
-        cur_input = "";
-    }
+    }else {
+        lat1 = prett.lat1;
+        lon1 = prett.lon1;
+        tim1 = prett.tmp1;
 
+        lat2 = prett.lat2;
+        lon2 = prett.lon2;
+        tim2 = prett.tmp2;
+
+        document.getElementById('long').innerHTML = " " + lon1 + "  " + lon2;
+        document.getElementById('lati').innerHTML = " " + lat1 + "  " + lat2;
+        document.getElementById('time').innerHTML = " " + tim1 + "  " + tim2;
+        if (cur_input != tim1) {
+            cur_input = tim1;
+            drawPoint(lat1, lon1, tim1, 'truck1');
+        }
+        if (cur_input_aux != tim2) {
+            cur_input_aux = tim2;
+            drawPointAux(lat2, lon2, tim2);
+        }
+    }
 }
 
-function drawPoint(latitude, longitude, time)
+function drawPointAux(latitude, longitude, time)
+{
+    //determine_poly_set(time)
+    poly_pos_aux.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
+    var colorin = '#017f18';
+    polyline = new google.maps.Polyline({
+        path: poly_pos_aux,
+        geodesic: true,
+        strokeColor: colorin,
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+    
+    polyline.setMap(map);
+
+    if (old_marker_aux != undefined){
+        old_marker_aux.setIcon('/static/finder/markerAnother.png');
+    }
+
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: map,
+        title: time,
+        icon: '/static/finder/markeraAnother.png',
+    });
+
+    map.setCenter(new google.maps.LatLng(latitude, longitude));
+    map.setZoom(13);
+    old_marker_aux = marker;
+}
+
+function drawPoint(latitude, longitude, time, trk)
 {
     //determine_poly_set(time)
     poly_pos.push({lat: parseFloat(latitude),lng: parseFloat(longitude)});
-    var colorin = '#FF0000'
-    if (truck == 'truck2')
+    var colorin = '#FF0000';
+    if (trk == 'truck2') {
         colorin = '#017f18';
+    }
     polyline = new google.maps.Polyline({
         path: poly_pos,
         geodesic: true,
@@ -81,7 +141,8 @@ function drawPoint(latitude, longitude, time)
     });
     
     polyline.setMap(map);
-    if (truck == "truck1"){
+
+    if (trk == "truck1"){
         if (old_marker != undefined){
             old_marker.setIcon('/static/finder/marker.png');
         }
@@ -92,7 +153,7 @@ function drawPoint(latitude, longitude, time)
             title: time,
             icon: '/static/finder/markera.png',
         });
-    }else if (truck == "truck2"){
+    }else if (trk == "truck2"){
         if (old_marker != undefined){
             old_marker.setIcon('/static/finder/markerAnother.png');
         }
@@ -114,7 +175,11 @@ function getTruck(){
     truck = e.options[e.selectedIndex].value;
     old_marker = null;
     poly_pos = [];
+    poly_pos_aux = [];
+    cur_input = "";
+    cur_input_aux = "";
     polyline.setPath(poly_pos);
+    clearInterval(id);
     initMap();
 }
 
