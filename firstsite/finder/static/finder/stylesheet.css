@@ -98,7 +98,7 @@ h1{
 
 }
 #pdata{
-  height: 18em;
+  height: 20em;
   width: 25em;
   background-color:#edfff0;
   padding-left: 1em;
@@ -147,4 +147,12 @@ p span{
     font-weight: normal;
     font-style: normal;
 
+}
+
+#data1 {
+    color: red;
+}
+
+#data2 {
+    color: green;
 }

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         LocationListener locationListener = new PositionGuesser(this.collected_info_stack);
         try {
             locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                    LocationManager.GPS_PROVIDER, 3000, 10, locationListener);
         }
         catch(SecurityException e) {Log.d("SecExc", e.toString());}
 

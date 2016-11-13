@@ -38,11 +38,23 @@
       <select id="truck" onchange = "getTruck()">
         <option value="truck1" >Truck 1</option>
         <option value="truck2" >Truck 2</option>
-
-
-
-
+        <option value="truckb" >Truck 1 and 2</option>
       </select>
+      <select id="obd_measure" onchange = "changeOBDMeasure()">
+        <option value="0" >--</option>
+        <option value="1" >Trouble codes</option>
+        <option value="2" >Engine RPM</option>
+        <option value="3" >Engine load</option>
+        <option value="4" >Fuel pressure</option>
+        <option value="5" >Vehicle speed</option>
+        <option value="6" >Throttle position</option>
+        <option value="7" >Time since engine start</option>
+        <option value="8" >Distance traveled</option>
+        <option value="9" >Battery voltage</option>
+      </select>
+
+      <p id="data1">You are not measuring any data from your vehicle. <span id="span_data1"></span></p>
+      <p id="data2"> <span id="span_data2"></span></p>
     </div>
   </div>
 </div>

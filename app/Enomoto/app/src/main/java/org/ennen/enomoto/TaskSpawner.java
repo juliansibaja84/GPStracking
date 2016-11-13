@@ -160,7 +160,7 @@ public class TaskSpawner implements Executor
 
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss");
             Calendar c = Calendar.getInstance();
-            master.collected_info_stack.push("taskid=" + id + "&datetime=" + df.format(c.getTime()) + "&val=" + result);
+            master.collected_info_stack.push("taskid=" + id + "&datetime=" + df.format(c.getTime()) + "&val=" + result+"&idT=1");
         }
     }
 }
