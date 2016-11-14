@@ -86,14 +86,14 @@ public class TaskSpawner implements Executor
         public void run()
         {
             while(!shutdown) {
-                if(master.bl_conn != null && master.bl_conn.conn_status == true) {
+            //    if(master.bl_conn != null && master.bl_conn.conn_status == true) {
                     try {
                         Log.d("tasking2", "HELLO FROM TASK " + task_id);
-                        initializeOBD(master.bl_conn.getSocket());
+            //            initializeOBD(master.bl_conn.getSocket());
                         queryOBD(task_id);
                     }
                     catch (Exception e) {}
-                }
+            //    }
                 try {
                     Thread.sleep(3000);
                 }
@@ -125,8 +125,8 @@ public class TaskSpawner implements Executor
                     result = TR_CMD.getFormattedResult();
                     break;
                 case 2:
-                    RPM_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
-                    result = RPM_CMD.getFormattedResult();
+            //        RPM_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
+            //        result = RPM_CMD.getFormattedResult();
                     break;
                 case 3:
                     LD_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
@@ -137,8 +137,8 @@ public class TaskSpawner implements Executor
                     result = F_PR_CMD.getFormattedResult();
                     break;
                 case 5:
-                    SP_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
-                    result = SP_CMD.getFormattedResult();
+            //        SP_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
+            //        result = SP_CMD.getFormattedResult();
                     break;
                 case 6:
                     THR_CMD.run(master.bl_conn.getSocket().getInputStream(), master.bl_conn.getSocket().getOutputStream());
