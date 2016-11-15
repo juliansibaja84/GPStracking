@@ -329,7 +329,7 @@ def getData(request, lower='', upper='', taskid='',idT=''):
 
 
 
-    dictionary['x'] = x 
+    dictionary['x'] = x
     dictionary['y'] = y
     dictionary['scale'] = time_dict['scale']
 

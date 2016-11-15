@@ -9,6 +9,10 @@ var poly_pos_aux = [];
 var truck = 'truck1';
 var truck_last = 'truck1';
 var id;
+var id_aux;
+var OBD_id = 0;
+
+id_aux = setInterval(queryOBDData, 4000);
 
 function initMap()
 {
@@ -24,6 +28,30 @@ function initMap()
 
     id = setInterval(queryServerOne, 4000);
 
+}
+
+function queryOBDData()
+{
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            fillOBDData(xhttp.responseText);
+        }
+    };
+    if (OBD_id != 0) {
+        xhttp.open("GET", "obd/" + truck + "/" + OBD_id, true);
+        xhttp.send();
+    }
+}
+
+function fillOBDData(response)
+{
+    var resp = JSON.parse(response);
+    var obd_info1 = document.getElementById("span_data1");
+    var obd_info2 = document.getElementById("span_data2");
+
+    obd_info1.innerHTML = resp.val1;
+    obd_info2.innerHTML = resp.val2;
 }
 
 function queryServerOne()
@@ -194,42 +222,52 @@ function changeOBDMeasure()
     truck = e.options[e.selectedIndex].value;
     switch(truck) {
         case '0':
+            OBD_id = 0;
             obd_info1_g.innerHTML = 'You are not measuring any data from your vehicle. <span id="span_data1"></span>';
             obd_info2_g.innerHTML = '<span id="span_data2"></span>';
             break;
         case '1':
+            OBD_id = 1;
             obd_info1_g.innerHTML = 'Trouble codes: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Trouble codes: <span id="span_data2"></span>';
             break;
         case '2':
+            OBD_id = 2;
             obd_info1_g.innerHTML = 'Engine RPM: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Engine RPM: <span id="span_data2"></span>';
             break;
         case '3':
+            OBD_id = 3;
             obd_info1_g.innerHTML = 'Engine load: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Engine load: <span id="span_data2"></span>';
             break;
         case '4':
+            OBD_id = 4;
             obd_info1_g.innerHTML = 'Fuel pressure: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Fuel pressure: <span id="span_data2"></span>';
             break;
         case '5':
+            OBD_id = 5;
             obd_info1_g.innerHTML = 'Vehicle speed: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Vehicle speed: <span id="span_data2"></span>';
             break;
         case '6':
+            OBD_id = 6;
             obd_info1_g.innerHTML = 'Throttle position: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Throttle position: <span id="span_data2"></span>';
             break;
         case '7':
+            OBD_id = 7;
             obd_info1_g.innerHTML = 'Time since engine start: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Time since engine start: <span id="span_data2"></span>';
             break;
         case '8':
+            OBD_id = 8;
             obd_info1_g.innerHTML = 'Distance traveled: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Distance traveled: <span id="span_data2"></span>';
             break;
         case '9':
+            OBD_id = 9;
             obd_info1_g.innerHTML = 'Battery voltage: <span id="span_data1"></span>';
             obd_info2_g.innerHTML = 'Battery voltage: <span id="span_data2"></span>';
             break;
