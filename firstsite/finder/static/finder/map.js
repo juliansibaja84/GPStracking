@@ -220,8 +220,8 @@ function changeOBDMeasure()
     var obd_info1 = document.getElementById("span_data1");
     var obd_info2 = document.getElementById("span_data2");
 
-    truck = e.options[e.selectedIndex].value;
-    switch(truck) {
+    var i = e.options[e.selectedIndex].value;
+    switch(i) {
         case '0':
             OBD_id = 0;
             obd_info1_g.innerHTML = 'You are not measuring any data from your vehicle. <span id="span_data1"></span>';
