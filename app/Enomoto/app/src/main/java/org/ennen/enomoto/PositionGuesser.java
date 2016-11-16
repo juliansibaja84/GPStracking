@@ -44,16 +44,16 @@ public class PositionGuesser implements LocationListener
     {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy_HH:mm:ss");
         Calendar c = Calendar.getInstance();
-        stack.push("taskid=11&datetime="+df.format(c.getTime())+"&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude() + "&idT=1");
+        stack.push("taskid=11&datetime="+df.format(c.getTime())+"&lon=" + loc.getLongitude() + "&lat=" + loc.getLatitude() + "&idT=2");
         Log.d("Lon", ""+loc.getLongitude());
         Log.d("lat", ""+loc.getLatitude());
         if(prev_lat != 0 && prev_lon != 0) {
             dis = distanceCalculator(prev_lat, prev_lon, loc.getLatitude(), loc.getLongitude());
             speed = 3600000*dis/abs(System.currentTimeMillis() - prev_tim);
-            stack.push("taskid=" + 5 + "&datetime=" + df.format(c.getTime()) + "&val=" + speed + "&idT=1");
+            stack.push("taskid=" + 5 + "&datetime=" + df.format(c.getTime()) + "&val=" + speed + "&idT=2");
             Log.d("speed", "" + speed);
             rpm = (1000*speed/3600)/0.5291328;
-            stack.push("taskid=" + 2 + "&datetime=" + df.format(c.getTime()) + "&val=" + rpm + "&idT=1");
+            stack.push("taskid=" + 2 + "&datetime=" + df.format(c.getTime()) + "&val=" + rpm + "&idT=2");
             Log.d("rpm", "" + rpm);
         }
         else {
