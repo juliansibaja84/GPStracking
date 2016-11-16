@@ -45,11 +45,11 @@ def reqOBD(request, truck='', code=''):
     if truck == 'truck1':
         dat1 = c.execute(query[0]+'data'+str(1)+query[1]+code+query[2])
         dat1 = dat1.fetchone()
-        dat2 = ''
+        dat2 = ' '
     elif truck == 'truck2':
         dat1 = c.execute(query[0]+'data'+str(2)+query[1]+code+query[2])
         dat1 = dat1.fetchone()
-        dat2 = ''
+        dat2 = ' '
     else:
         dat1 = c.execute(query[0]+'data'+str(1)+query[1]+code+query[2])
         dat1 = dat1.fetchone()
