@@ -45,19 +45,23 @@ def reqOBD(request, truck='', code=''):
     if truck == 'truck1':
         dat1 = c.execute(query[0]+'data'+str(1)+query[1]+code+query[2])
         dat1 = dat1.fetchone()
-        dat2 = ' '
+        dat2 = [' ']
     elif truck == 'truck2':
-        dat1 = c.execute(query[0]+'data'+str(2)+query[1]+code+query[2])
-        dat1 = dat1.fetchone()
-        dat2 = ' '
+        dat2 = c.execute(query[0]+'data'+str(2)+query[1]+code+query[2])
+        dat2 = dat2.fetchone()
+        dat1 = [' ']
     else:
         dat1 = c.execute(query[0]+'data'+str(1)+query[1]+code+query[2])
         dat1 = dat1.fetchone()
         dat2 = c.execute(query[0]+'data'+str(2)+query[1]+code+query[2])
         dat2 = dat2.fetchone()
+    if dat1 is None:
+        dat1 = [' ']
+    if dat2 is None:
+        dat2 = [' ']
     d = dict()
-    d['val1'] = dat1
-    d['val2'] = dat2
+    d['val1'] = dat1[0]
+    d['val2'] = dat2[0]
     return JsonResponse(d)
 
 
