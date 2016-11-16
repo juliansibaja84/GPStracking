@@ -39,7 +39,6 @@ function queryOBDData()
         }
     };
     if (OBD_id != 0) {
-        alert(truck);
         xhttp.open("GET", "obd/" + truck + "/" + OBD_id, true);
         xhttp.send();
     }
