@@ -148,7 +148,6 @@ function drawPointAux(latitude, longitude, time)
     });
 
     map.setCenter(new google.maps.LatLng(latitude, longitude));
-    map.setZoom(13);
     old_marker_aux = marker;
 }
 
